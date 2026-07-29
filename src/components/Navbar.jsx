@@ -50,55 +50,6 @@ export default function Navbar({ onOpenSearch }) {
           >
             Home (హోమ్)
           </Link>
-
-          <Link
-            to="/book/numerology"
-            className={`flex items-center gap-1.5 transition hover:text-blue-600 ${
-              location.pathname === '/book/numerology' ? 'text-blue-600 font-bold border-b-2 border-blue-600 pb-0.5' : 'text-slate-700'
-            }`}
-          >
-            <Sparkles className="w-4 h-4 text-amber-500" />
-            <span>Numerology</span>
-          </Link>
-
-          <Link
-            to="/book/personal-numerology"
-            className={`flex items-center gap-1.5 transition hover:text-purple-600 ${
-              location.pathname.includes('/book/personal-numerology') ? 'text-purple-600 font-bold border-b-2 border-purple-600 pb-0.5' : 'text-slate-700'
-            }`}
-          >
-            <span className="bg-purple-100 text-purple-700 text-xs px-1.5 py-0.5 rounded font-bold">New</span>
-            <span>Personal Numerology</span>
-          </Link>
-
-          <Link
-            to="/book/astrology"
-            className={`flex items-center gap-1.5 transition hover:text-blue-600 ${
-              location.pathname.includes('/book/astrology') ? 'text-blue-600 font-bold border-b-2 border-blue-600 pb-0.5' : 'text-slate-700'
-            }`}
-          >
-            <span>Astrology</span>
-          </Link>
-
-          <Link
-            to="/book/vastu"
-            className={`flex items-center gap-1.5 transition hover:text-blue-600 ${
-              location.pathname.includes('/book/vastu') ? 'text-blue-600 font-bold border-b-2 border-blue-600 pb-0.5' : 'text-slate-700'
-            }`}
-          >
-            <Compass className="w-4 h-4 text-teal-600" />
-            <span>Vastu Shastra</span>
-          </Link>
-
-          <Link
-            to="/bookmarks"
-            className={`flex items-center gap-1.5 transition hover:text-blue-600 ${
-              location.pathname === '/bookmarks' ? 'text-blue-600 font-bold border-b-2 border-blue-600 pb-0.5' : 'text-slate-700'
-            }`}
-          >
-            <Bookmark className="w-4 h-4 text-slate-500" />
-            <span>Bookmarks</span>
-          </Link>
         </nav>
 
         {/* Action Controls */}
@@ -141,34 +92,6 @@ export default function Navbar({ onOpenSearch }) {
               className="block py-2 text-slate-800 hover:text-blue-600 font-telugu"
             >
               హోమ్ (Home)
-            </Link>
-            <Link
-              to="/book/numerology"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block py-2 text-slate-800 hover:text-blue-600"
-            >
-              🔢 Numerology (న్యూమరాలజీ)
-            </Link>
-            <Link
-              to="/book/astrology"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block py-2 text-slate-800 hover:text-blue-600"
-            >
-              🔮 Astrology (జ్యోతిషం)
-            </Link>
-            <Link
-              to="/book/vastu"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block py-2 text-slate-800 hover:text-blue-600"
-            >
-              🏠 Vastu Shastra (వాస్తు శాస్త్రం)
-            </Link>
-            <Link
-              to="/bookmarks"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block py-2 text-slate-800 hover:text-blue-600"
-            >
-              🔖 Saved Bookmarks (దాచుకున్న పాఠాలు)
             </Link>
           </motion.div>
         )}
