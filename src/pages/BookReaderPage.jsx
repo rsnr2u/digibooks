@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { BOOKS_DATA } from '../data/booksData';
 import {
   BookOpen, ChevronRight, Bookmark, ArrowLeft, ArrowRight,
-  Menu, Share2, Check, Clock, Calendar, Sparkles, UserCheck, Briefcase, User, Compass
+  Menu, Share2, Check, Clock, Calendar, Sparkles, UserCheck, Briefcase, User, Compass, Printer
 } from 'lucide-react';
 import SyntaxHighlighter from '../components/SyntaxHighlighter';
 
@@ -84,6 +84,10 @@ export default function BookReaderPage() {
     navigator.clipboard.writeText(window.location.href);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   const goToChapter = (cId) => {
@@ -614,6 +618,15 @@ export default function BookReaderPage() {
             title="Share Article"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
+          </button>
+
+          <button
+            onClick={handlePrint}
+            className="p-2 bg-purple-50 border border-purple-200 text-purple-700 hover:bg-purple-100 rounded-xl transition flex items-center gap-1.5 text-xs font-bold shadow-sm"
+            title="Print / Save PDF (పిడిఎఫ్ ప్రింట్ / సేవ్)"
+          >
+            <Printer className="w-4 h-4 text-purple-600" />
+            <span className="hidden sm:inline font-telugu">PDF / Print</span>
           </button>
 
           <button
