@@ -586,31 +586,6 @@ export default function BookReaderPage() {
 
           {/* Right: Unified Action Controls */}
           <div className="flex items-center gap-2 shrink-0">
-            {/* Font Size Adjuster Pill */}
-            <div className="hidden sm:flex items-center bg-white border border-slate-200 rounded-xl p-0.5 text-xs font-bold text-slate-600 shadow-xs">
-              <button
-                onClick={() => setFontSize('text-sm')}
-                className={`px-2 py-1 rounded-lg ${fontSize === 'text-sm' ? 'bg-blue-600 text-white shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
-                title="Small Text"
-              >
-                A-
-              </button>
-              <button
-                onClick={() => setFontSize('text-base')}
-                className={`px-2 py-1 rounded-lg ${fontSize === 'text-base' ? 'bg-blue-600 text-white shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
-                title="Normal Text"
-              >
-                A
-              </button>
-              <button
-                onClick={() => setFontSize('text-lg')}
-                className={`px-2 py-1 rounded-lg ${fontSize === 'text-lg' ? 'bg-blue-600 text-white shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
-                title="Large Text"
-              >
-                A+
-              </button>
-            </div>
-
             {/* Share Button */}
             <button
               onClick={handleShare}
