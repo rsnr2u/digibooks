@@ -569,100 +569,83 @@ export default function BookReaderPage() {
         />
       </div>
 
-      {/* Reader Sub-Header (Corporate Action Toolbar) */}
-      <div className="sticky top-[65px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 py-3 px-4 sm:px-8 flex items-center justify-between shadow-xs">
-        {/* Left: Breadcrumb Navigation & Directory Toggle */}
-        <div className="flex items-center gap-3 text-xs sm:text-sm overflow-x-auto whitespace-nowrap scrollbar-none pr-4">
+      {/* Reader Sub-Header (Content-Constrained Toolbar) */}
+      <div className="sticky top-[65px] z-40 bg-slate-50/95 backdrop-blur-md border-b border-slate-200/80 py-2.5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* Left: Toggle Directory Icon & Button */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-200 transition font-medium text-xs shrink-0"
-            title="Toggle Chapter Directory"
+            className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 shadow-xs rounded-xl text-slate-800 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 transition font-bold text-xs"
+            title={isSidebarOpen ? "Hide Directory" : "Show Directory"}
           >
-            <Menu className="w-3.5 h-3.5 text-slate-600" />
-            <span className="hidden sm:inline font-telugu">అధ్యాయాలు</span>
-          </button>
-
-          <div className="h-4 w-px bg-slate-200 shrink-0" />
-
-          <Link to="/" className="flex items-center gap-1 text-slate-500 hover:text-blue-600 transition font-telugu text-xs font-semibold">
-            <Home className="w-3.5 h-3.5" />
-            <span>Home</span>
-          </Link>
-
-          <span className="text-slate-300 font-bold text-xs">/</span>
-
-          <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold border border-blue-200 text-[11px] font-telugu shrink-0">
-            {currentBook.title}
-          </span>
-
-          <span className="text-slate-300 font-bold text-xs hidden md:inline">/</span>
-
-          <span className="text-slate-800 font-bold hidden md:inline truncate max-w-[280px] text-xs font-telugu">
-            {activeChapter.title}
-          </span>
-        </div>
-
-        {/* Right: Unified Action Controls */}
-        <div className="flex items-center gap-2 shrink-0">
-          {/* Font Size Adjuster Pill */}
-          <div className="hidden sm:flex items-center bg-slate-100 border border-slate-200 rounded-lg p-0.5 text-xs font-bold text-slate-600">
-            <button
-              onClick={() => setFontSize('text-sm')}
-              className={`px-2 py-1 rounded ${fontSize === 'text-sm' ? 'bg-white text-blue-600 shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
-              title="Small Text"
-            >
-              A-
-            </button>
-            <button
-              onClick={() => setFontSize('text-base')}
-              className={`px-2 py-1 rounded ${fontSize === 'text-base' ? 'bg-white text-blue-600 shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
-              title="Normal Text"
-            >
-              A
-            </button>
-            <button
-              onClick={() => setFontSize('text-lg')}
-              className={`px-2 py-1 rounded ${fontSize === 'text-lg' ? 'bg-white text-blue-600 shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
-              title="Large Text"
-            >
-              A+
-            </button>
-          </div>
-
-          {/* Share Button */}
-          <button
-            onClick={handleShare}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 rounded-lg text-xs font-bold transition"
-            title="Share Link"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 text-slate-600" />}
-            <span className="hidden sm:inline">{copied ? 'Copied' : 'Share'}</span>
-          </button>
-
-          {/* Print / Save PDF Button */}
-          <button
-            onClick={handlePrint}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition shadow-xs"
-            title="Print or Save Chapter as PDF"
-          >
-            <Printer className="w-3.5 h-3.5 text-white" />
-            <span className="hidden sm:inline font-telugu">PDF / Print</span>
-          </button>
-
-          {/* Bookmark / Save Button */}
-          <button
-            onClick={toggleBookmark}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-bold transition ${
-              isBookmarked
-                ? 'bg-amber-500 text-white border-amber-500 shadow-xs'
-                : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-            }`}
-          >
-            <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-white' : 'text-slate-600'}`} />
-            <span className="hidden sm:inline font-telugu">
-              {isBookmarked ? 'Saved' : 'Save'}
+            <Menu className="w-4 h-4 text-blue-600" />
+            <span className="font-telugu">
+              {isSidebarOpen ? 'అధ్యాయాలు దాచు' : 'అధ్యాయాలు చూపు'}
             </span>
           </button>
+
+          {/* Right: Unified Action Controls */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Font Size Adjuster Pill */}
+            <div className="hidden sm:flex items-center bg-white border border-slate-200 rounded-xl p-0.5 text-xs font-bold text-slate-600 shadow-xs">
+              <button
+                onClick={() => setFontSize('text-sm')}
+                className={`px-2 py-1 rounded-lg ${fontSize === 'text-sm' ? 'bg-blue-600 text-white shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
+                title="Small Text"
+              >
+                A-
+              </button>
+              <button
+                onClick={() => setFontSize('text-base')}
+                className={`px-2 py-1 rounded-lg ${fontSize === 'text-base' ? 'bg-blue-600 text-white shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
+                title="Normal Text"
+              >
+                A
+              </button>
+              <button
+                onClick={() => setFontSize('text-lg')}
+                className={`px-2 py-1 rounded-lg ${fontSize === 'text-lg' ? 'bg-blue-600 text-white shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
+                title="Large Text"
+              >
+                A+
+              </button>
+            </div>
+
+            {/* Share Button */}
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold transition shadow-xs"
+              title="Share Link"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 text-slate-600" />}
+              <span className="hidden sm:inline">{copied ? 'Copied' : 'Share'}</span>
+            </button>
+
+            {/* Print / Save PDF Button */}
+            <button
+              onClick={handlePrint}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs"
+              title="Print or Save Chapter as PDF"
+            >
+              <Printer className="w-3.5 h-3.5 text-white" />
+              <span className="hidden sm:inline font-telugu">PDF / Print</span>
+            </button>
+
+            {/* Bookmark / Save Button */}
+            <button
+              onClick={toggleBookmark}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition shadow-xs ${
+                isBookmarked
+                  ? 'bg-amber-500 text-white border-amber-500'
+                  : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+              }`}
+            >
+              <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-white' : 'text-slate-600'}`} />
+              <span className="hidden sm:inline font-telugu">
+                {isBookmarked ? 'Saved' : 'Save'}
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
