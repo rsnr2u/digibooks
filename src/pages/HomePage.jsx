@@ -5,14 +5,7 @@ import BookCard from '../components/BookCard';
 import { BOOKS_DATA } from '../data/booksData';
 
 export default function HomePage({ onOpenSearch }) {
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
-
   const booksList = Object.values(BOOKS_DATA);
-  const categories = ['ALL', 'Mystic Science', 'Personal Analysis'];
-
-  const filteredBooks = selectedCategory === 'ALL'
-    ? booksList
-    : booksList.filter(b => b.category === selectedCategory);
 
   return (
     <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -50,35 +43,16 @@ export default function HomePage({ onOpenSearch }) {
 
         {/* Courses Section */}
         <section className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
-            <div className="flex items-center gap-2.5">
-              <Layers className="w-5 h-5 text-blue-600" />
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-telugu">
-                అందుబాటులో ఉన్న పాఠ్యాంశాలు (Active Courses - {filteredBooks.length})
-              </h2>
-            </div>
-
-            {/* Category Filter Pills */}
-            <div className="flex items-center gap-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
-                    selectedCategory === cat
-                      ? 'bg-blue-600 text-white shadow-sm'
-                      : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+          <div className="flex items-center gap-2.5 pb-2 border-b border-slate-200">
+            <Layers className="w-5 h-5 text-blue-600" />
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-telugu">
+              అందుబాటులో ఉన్న పాఠ్యాంశాలు (Active Courses - {booksList.length})
+            </h2>
           </div>
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {filteredBooks.map((book, index) => (
+            {booksList.map((book, index) => (
               <BookCard key={book.id} book={book} index={index} />
             ))}
           </div>
