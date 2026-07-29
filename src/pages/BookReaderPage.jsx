@@ -570,7 +570,7 @@ export default function BookReaderPage() {
       </div>
 
       {/* Reader Sub-Header (Content-Constrained Toolbar) */}
-      <div className="sticky top-[65px] z-40 bg-slate-50/95 backdrop-blur-md border-b border-slate-200/80 py-2.5">
+      <div className="sticky top-[49px] z-40 bg-slate-50/95 backdrop-blur-md border-b border-slate-200/80 py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Left: Toggle Directory Icon & Button */}
           <button
@@ -630,7 +630,7 @@ export default function BookReaderPage() {
         <aside
           className={`${
             isSidebarOpen ? 'w-80 translate-x-0' : 'w-0 -translate-x-full overflow-hidden'
-          } transition-all duration-300 fixed md:sticky top-[125px] h-[calc(100vh-140px)] z-30 bg-white border border-slate-200 rounded-2xl shadow-sm shrink-0 overflow-y-auto p-4 mr-6`}
+          } transition-all duration-300 fixed md:sticky top-[100px] h-[calc(100vh-115px)] z-30 bg-white border border-slate-200 rounded-2xl shadow-sm shrink-0 overflow-y-auto p-4 mr-6`}
         >
           <div className="space-y-4">
             <div className="p-3.5 rounded-xl bg-gradient-to-br from-blue-50 to-slate-50 border border-blue-100">
