@@ -53,17 +53,6 @@ export default function LoginPage({ onLogin }) {
           </div>
         </div>
 
-        {/* Static Credential Helper Badge */}
-        <div className="p-3.5 bg-blue-950/60 border border-blue-800/60 rounded-2xl text-xs text-blue-300 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
-            <span>మెంబర్ లాగిన్ (Login Credentials):</span>
-          </div>
-          <code className="bg-blue-900/80 text-blue-200 px-2 py-0.5 rounded font-mono font-bold">
-            rsnr4u / password123
-          </code>
-        </div>
-
         {/* Error Alert */}
         {error && (
           <motion.div
