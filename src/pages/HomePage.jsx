@@ -21,9 +21,6 @@ export default function HomePage({ onOpenSearch }) {
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Knowledge Directory & Digital Tutorials
             </h1>
-            <p className="text-slate-600 text-sm sm:text-base font-telugu max-w-2xl font-medium leading-relaxed">
-              సంఖ్యలు (Numerology) మరియు వైయక్తిక జాతక విశ్లేషణల సంపూర్ణ డిజిటల్ పాఠ్యాంశాలు.
-            </p>
           </div>
 
           {/* Search Trigger Control */}
