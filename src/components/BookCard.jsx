@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Hash, Sparkles, Compass, Hand, Wind, ArrowRight, Clock, BookOpen, Star } from 'lucide-react';
+import { Hash, Sparkles, Compass, Hand, Wind, ArrowRight, Clock, BookOpen, Star, UserCheck } from 'lucide-react';
 
 const ICON_MAP = {
   Hash: Hash,
   Sparkles: Sparkles,
   Compass: Compass,
   Hand: Hand,
-  Wind: Wind
+  Wind: Wind,
+  UserCheck: UserCheck
 };
 
 const ACCENT_STYLES = {
   numerology: { iconBg: 'bg-blue-600 text-white', badge: 'bg-blue-50 text-blue-700 border-blue-200', topBorder: 'bg-blue-600' },
+  'personal-numerology': { iconBg: 'bg-purple-600 text-white', badge: 'bg-purple-50 text-purple-700 border-purple-200', topBorder: 'bg-purple-600' },
   astrology: { iconBg: 'bg-indigo-600 text-white', badge: 'bg-indigo-50 text-indigo-700 border-indigo-200', topBorder: 'bg-indigo-600' },
   vastu: { iconBg: 'bg-teal-600 text-white', badge: 'bg-teal-50 text-teal-700 border-teal-200', topBorder: 'bg-teal-600' },
   palmistry: { iconBg: 'bg-rose-600 text-white', badge: 'bg-rose-50 text-rose-700 border-rose-200', topBorder: 'bg-rose-600' },

@@ -54,11 +54,21 @@ export default function Navbar({ onOpenSearch }) {
           <Link
             to="/book/numerology"
             className={`flex items-center gap-1.5 transition hover:text-blue-600 ${
-              location.pathname.includes('/book/numerology') ? 'text-blue-600 font-bold border-b-2 border-blue-600 pb-0.5' : 'text-slate-700'
+              location.pathname === '/book/numerology' ? 'text-blue-600 font-bold border-b-2 border-blue-600 pb-0.5' : 'text-slate-700'
             }`}
           >
             <Sparkles className="w-4 h-4 text-amber-500" />
             <span>Numerology</span>
+          </Link>
+
+          <Link
+            to="/book/personal-numerology"
+            className={`flex items-center gap-1.5 transition hover:text-purple-600 ${
+              location.pathname.includes('/book/personal-numerology') ? 'text-purple-600 font-bold border-b-2 border-purple-600 pb-0.5' : 'text-slate-700'
+            }`}
+          >
+            <span className="bg-purple-100 text-purple-700 text-xs px-1.5 py-0.5 rounded font-bold">New</span>
+            <span>Personal Numerology</span>
           </Link>
 
           <Link
