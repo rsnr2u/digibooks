@@ -6,8 +6,12 @@ import SearchModal from './components/SearchModal';
 import HomePage from './pages/HomePage';
 import BookReaderPage from './pages/BookReaderPage';
 import BookmarksPage from './pages/BookmarksPage';
+import LoginPage from './pages/LoginPage';
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('digibook_auth') === 'true';
+  });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
@@ -16,10 +20,20 @@ export default function App() {
     return () => window.removeEventListener('open-search', handleOpenSearch);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('digibook_auth');
+    localStorage.removeItem('digibook_user');
+    setIsAuthenticated(false);
+  };
+
+  if (!isAuthenticated) {
+    return <LoginPage onLogin={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <Router>
       <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
-        <Navbar onOpenSearch={() => setIsSearchOpen(true)} />
+        <Navbar onOpenSearch={() => setIsSearchOpen(true)} onLogout={handleLogout} />
         
         <main className="flex-1">
           <Routes>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, Search, Bookmark, Menu, X, Sparkles, Compass } from 'lucide-react';
+import { BookOpen, Search, Bookmark, Menu, X, Sparkles, Compass, LogOut, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Navbar({ onOpenSearch }) {
+export default function Navbar({ onOpenSearch, onLogout }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const username = localStorage.getItem('digibook_user') || 'rsnr4u';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,6 +67,24 @@ export default function Navbar({ onOpenSearch }) {
               Ctrl+K
             </kbd>
           </button>
+
+          {/* User Badge */}
+          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 border border-blue-100 rounded-lg text-xs font-semibold text-blue-800">
+            <UserCheck className="w-3.5 h-3.5 text-blue-600" />
+            <span>{username}</span>
+          </div>
+
+          {/* Logout Button */}
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100 hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600 border border-slate-200 rounded-lg text-slate-700 text-xs font-semibold transition"
+              title="Logout"
+            >
+              <LogOut className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">Logout</span>
+            </button>
+          )}
 
           {/* Mobile Menu Toggle Button */}
           <button
