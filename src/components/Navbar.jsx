@@ -7,7 +7,7 @@ export default function Navbar({ onOpenSearch, onLogout }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const username = localStorage.getItem('digibook_user') || 'rsnr4u';
+  const username = localStorage.getItem('digibook_user') || 'Member';
 
   useEffect(() => {
     const handleScroll = () => {
