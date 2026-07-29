@@ -18,6 +18,7 @@ export default function BookReaderPage() {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const currentBook = BOOKS_DATA[bookId] || BOOKS_DATA.numerology;
+  const isPersonalNumerology = currentBook.id === 'personal-numerology';
 
   // Flexible Chapter Finder with legacy alias support
   const currentChapterIndex = currentBook.chapters.findIndex(c => {
@@ -580,7 +581,9 @@ export default function BookReaderPage() {
           >
             <Menu className="w-4 h-4 text-blue-600 shrink-0" />
             <span className="font-telugu leading-none">
-              {isSidebarOpen ? 'అధ్యాయాలు దాచు' : 'అధ్యాయాలు చూపు'}
+              {isSidebarOpen
+                ? (isPersonalNumerology ? 'ప్రొఫైల్స్ దాచు' : 'అధ్యాయాలు దాచు')
+                : (isPersonalNumerology ? 'ప్రొఫైల్స్ చూపు' : 'అధ్యాయాలు చూపు')}
             </span>
           </button>
 
@@ -600,7 +603,7 @@ export default function BookReaderPage() {
             <button
               onClick={handlePrint}
               className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs leading-none"
-              title="Print or Save Chapter as PDF"
+              title="Print or Save Profile as PDF"
             >
               <Printer className="w-4 h-4 text-white shrink-0" />
               <span className="hidden sm:inline font-telugu leading-none">PDF / Print</span>
@@ -635,7 +638,7 @@ export default function BookReaderPage() {
           <div className="space-y-4">
             <div className="p-3.5 rounded-xl bg-gradient-to-br from-blue-50 to-slate-50 border border-blue-100">
               <span className="text-[10px] font-bold text-blue-700 uppercase tracking-widest block">
-                Article Series
+                {isPersonalNumerology ? 'Profile Series' : 'Article Series'}
               </span>
               <h3 className="text-base font-extrabold text-slate-900 font-telugu mt-0.5">
                 {currentBook.title}
@@ -648,7 +651,7 @@ export default function BookReaderPage() {
             {/* Chapter Index List */}
             <div className="space-y-1.5">
               <span className="text-[11px] font-bold text-slate-400 uppercase px-2 tracking-wider">
-                Article Directory ({currentBook.chapters.length})
+                {isPersonalNumerology ? 'Profile Directory' : 'Article Directory'} ({currentBook.chapters.length})
               </span>
               {currentBook.chapters.map((ch, idx) => {
                 const isActive = ch.id === activeChapter.id;
@@ -685,7 +688,7 @@ export default function BookReaderPage() {
             <header className="mb-8 pb-6 border-b border-slate-200 space-y-3">
               <div className="flex flex-wrap items-center gap-2.5">
                 <span className="px-3 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded-full border border-blue-200 uppercase tracking-wider">
-                  Article {safeChapterIndex + 1} of {currentBook.chapters.length}
+                  {isPersonalNumerology ? 'Profile' : 'Article'} {safeChapterIndex + 1} of {currentBook.chapters.length}
                 </span>
                 <span className="flex items-center gap-1 text-xs text-slate-500 font-medium">
                   <Clock className="w-3.5 h-3.5 text-slate-400" />

@@ -70,7 +70,7 @@ export default function BookCard({ book, index }) {
           <div className="flex items-center justify-between text-xs text-slate-500 mb-6 py-3 border-y border-slate-100 font-medium">
             <div className="flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-blue-600" />
-              <span>{book.chaptersCount} Chapters</span>
+              <span>{book.chaptersCount} {book.id === 'personal-numerology' ? 'Profiles' : 'Chapters'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-amber-600" />
