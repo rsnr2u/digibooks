@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { BOOKS_DATA } from '../data/booksData';
 import {
   BookOpen, ChevronRight, Bookmark, ArrowLeft, ArrowRight,
-  Menu, Share2, Check, Clock, Calendar, Sparkles, UserCheck, Briefcase, User, Compass, Printer
+  Menu, Share2, Check, Clock, Calendar, Sparkles, UserCheck, Briefcase, User, Compass, Printer, Home
 } from 'lucide-react';
 import SyntaxHighlighter from '../components/SyntaxHighlighter';
 
@@ -569,75 +569,96 @@ export default function BookReaderPage() {
         />
       </div>
 
-      {/* Reader Sub-Header */}
-      <div className="sticky top-[65px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 py-2.5 px-4 sm:px-8 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-600 overflow-x-auto whitespace-nowrap">
+      {/* Reader Sub-Header (Corporate Action Toolbar) */}
+      <div className="sticky top-[65px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 py-3 px-4 sm:px-8 flex items-center justify-between shadow-xs">
+        {/* Left: Breadcrumb Navigation & Directory Toggle */}
+        <div className="flex items-center gap-3 text-xs sm:text-sm overflow-x-auto whitespace-nowrap scrollbar-none pr-4">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-1.5 bg-slate-100 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-200 transition"
-            title="Toggle Directory"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-200 transition font-medium text-xs shrink-0"
+            title="Toggle Chapter Directory"
           >
-            <Menu className="w-4 h-4" />
+            <Menu className="w-3.5 h-3.5 text-slate-600" />
+            <span className="hidden sm:inline font-telugu">అధ్యాయాలు</span>
           </button>
 
-          <Link to="/" className="hover:text-blue-600 font-telugu font-medium">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-blue-600 font-bold">{currentBook.title}</span>
-          <ChevronRight className="w-3.5 h-3.5 hidden sm:inline" />
-          <span className="text-slate-900 font-semibold hidden sm:inline truncate max-w-[220px]">
+          <div className="h-4 w-px bg-slate-200 shrink-0" />
+
+          <Link to="/" className="flex items-center gap-1 text-slate-500 hover:text-blue-600 transition font-telugu text-xs font-semibold">
+            <Home className="w-3.5 h-3.5" />
+            <span>Home</span>
+          </Link>
+
+          <span className="text-slate-300 font-bold text-xs">/</span>
+
+          <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold border border-blue-200 text-[11px] font-telugu shrink-0">
+            {currentBook.title}
+          </span>
+
+          <span className="text-slate-300 font-bold text-xs hidden md:inline">/</span>
+
+          <span className="text-slate-800 font-bold hidden md:inline truncate max-w-[280px] text-xs font-telugu">
             {activeChapter.title}
           </span>
         </div>
 
-        {/* Controls */}
-        <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center bg-slate-100 border border-slate-200 rounded-xl p-1 text-xs">
+        {/* Right: Unified Action Controls */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Font Size Adjuster Pill */}
+          <div className="hidden sm:flex items-center bg-slate-100 border border-slate-200 rounded-lg p-0.5 text-xs font-bold text-slate-600">
             <button
               onClick={() => setFontSize('text-sm')}
-              className={`px-2 py-0.5 rounded-lg ${fontSize === 'text-sm' ? 'bg-blue-600 text-white font-bold' : 'text-slate-600'}`}
+              className={`px-2 py-1 rounded ${fontSize === 'text-sm' ? 'bg-white text-blue-600 shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
+              title="Small Text"
             >
               A-
             </button>
             <button
               onClick={() => setFontSize('text-base')}
-              className={`px-2 py-0.5 rounded-lg ${fontSize === 'text-base' ? 'bg-blue-600 text-white font-bold' : 'text-slate-600'}`}
+              className={`px-2 py-1 rounded ${fontSize === 'text-base' ? 'bg-white text-blue-600 shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
+              title="Normal Text"
             >
               A
             </button>
             <button
               onClick={() => setFontSize('text-lg')}
-              className={`px-2 py-0.5 rounded-lg ${fontSize === 'text-lg' ? 'bg-blue-600 text-white font-bold' : 'text-slate-600'}`}
+              className={`px-2 py-1 rounded ${fontSize === 'text-lg' ? 'bg-white text-blue-600 shadow-xs font-extrabold' : 'hover:text-slate-900'}`}
+              title="Large Text"
             >
               A+
             </button>
           </div>
 
+          {/* Share Button */}
           <button
             onClick={handleShare}
-            className="p-2 bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 rounded-xl transition"
-            title="Share Article"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 rounded-lg text-xs font-bold transition"
+            title="Share Link"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 text-slate-600" />}
+            <span className="hidden sm:inline">{copied ? 'Copied' : 'Share'}</span>
           </button>
 
+          {/* Print / Save PDF Button */}
           <button
             onClick={handlePrint}
-            className="p-2 bg-purple-50 border border-purple-200 text-purple-700 hover:bg-purple-100 rounded-xl transition flex items-center gap-1.5 text-xs font-bold shadow-sm"
-            title="Print / Save PDF (పిడిఎఫ్ ప్రింట్ / సేవ్)"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition shadow-xs"
+            title="Print or Save Chapter as PDF"
           >
-            <Printer className="w-4 h-4 text-purple-600" />
+            <Printer className="w-3.5 h-3.5 text-white" />
             <span className="hidden sm:inline font-telugu">PDF / Print</span>
           </button>
 
+          {/* Bookmark / Save Button */}
           <button
             onClick={toggleBookmark}
-            className={`p-2 rounded-xl border transition flex items-center gap-1.5 text-xs font-bold ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-bold transition ${
               isBookmarked
-                ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                ? 'bg-amber-500 text-white border-amber-500 shadow-xs'
                 : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
             }`}
           >
-            <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-white' : ''}`} />
+            <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-white' : 'text-slate-600'}`} />
             <span className="hidden sm:inline font-telugu">
               {isBookmarked ? 'Saved' : 'Save'}
             </span>
