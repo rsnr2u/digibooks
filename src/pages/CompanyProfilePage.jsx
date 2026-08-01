@@ -856,7 +856,15 @@ export default function CompanyProfilePage() {
                           </div>
                           <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
                             <Cpu className="w-4 h-4 text-[#00674f]" />
-                            <span>Enterprise Software</span>
+                            <span>Numerology SaaS</span>
+                          </div>
+                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Zap className="w-4 h-4 text-[#00674f]" />
+                            <span>Smart Automation</span>
+                          </div>
+                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <DollarSign className="w-4 h-4 text-[#00674f]" />
+                            <span>FinTech Invoicing</span>
                           </div>
                           <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
                             <Globe className="w-4 h-4 text-[#00674f]" />
@@ -887,7 +895,6 @@ export default function CompanyProfilePage() {
                     </div>
 
                     <div className="grid grid-cols-12 gap-4">
-                      {/* Overview & Tech */}
                       <div className="col-span-7 space-y-3">
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
@@ -906,7 +913,6 @@ export default function CompanyProfilePage() {
                         </div>
                       </div>
 
-                      {/* Scope & Benefits */}
                       <div className="col-span-5 space-y-3">
                         <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
@@ -1036,22 +1042,192 @@ export default function CompanyProfilePage() {
               );
             }
 
-            /* ─── PAGE 24: Capabilities ─── */
-            if (page.pageType === 'capabilities') {
+            /* ─── PAGE 24: Case Study - NumeroSansar ─── */
+            if (page.pageType === 'client-case-numerosansar') {
               return (
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={24} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
+                    <div className="flex items-start justify-between border-b border-slate-200 pb-3">
+                      <div>
+                        <span className="text-xs font-bold text-purple-600 uppercase tracking-wider font-mono">Case Study • Numerology SaaS</span>
+                        <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
+                      </div>
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-purple-50 border border-purple-300 text-purple-700 hover:bg-purple-700 hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <span>numerosansar.com</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-4">
+                      <div className="col-span-7 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
+                          <h4 className="text-xs font-bold text-purple-700 uppercase tracking-wider mb-1">Project Overview</h4>
+                          <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Technologies Used</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {page.techStack && page.techStack.map((tech, tidx) => (
+                              <span key={tidx} className="px-2 py-0.5 rounded bg-purple-50 border border-purple-200 text-slate-900 text-[11px] font-bold">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-span-5 space-y-3">
+                        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                            <CheckCircle2 className="w-4 h-4 text-purple-600" />
+                            <span>Business Benefits</span>
+                          </h4>
+                          <div className="space-y-1">
+                            {page.benefits && page.benefits.map((b, bidx) => (
+                              <div key={bidx} className="p-1.5 rounded bg-purple-50 text-[11px] font-bold text-slate-800 border border-purple-200">
+                                ✓ {b}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 25: Case Study - SCLAN.DE ─── */
+            if (page.pageType === 'client-case-sclan') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={25} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between border-b border-slate-200 pb-3">
+                      <div>
+                        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider font-mono">Case Study • Smart Building Automation (Germany)</span>
+                        <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
+                      </div>
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-blue-50 border border-blue-300 text-blue-700 hover:bg-blue-700 hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <span>sclan.de</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-4">
+                      <div className="col-span-7 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
+                          <h4 className="text-xs font-bold text-blue-700 uppercase tracking-wider mb-1">Project Overview</h4>
+                          <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Key Features</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {page.keyFeatures && page.keyFeatures.map((feat, fidx) => (
+                              <span key={fidx} className="px-2 py-0.5 rounded bg-blue-50 border border-blue-200 text-slate-800 text-[11px] font-bold">
+                                {feat}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-span-5 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-gradient-to-br from-blue-50 to-emerald-50 border border-blue-300 shadow-sm">
+                          <h4 className="text-xs font-bold text-blue-800 uppercase tracking-wider mb-1.5">Business Benefits</h4>
+                          <div className="space-y-1.5">
+                            {page.benefits && page.benefits.map((b, bidx) => (
+                              <div key={bidx} className="flex items-center gap-2 text-xs font-bold text-slate-900">
+                                <Zap className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                                <span>{b}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 26: Case Study - HUMPL ─── */
+            if (page.pageType === 'client-case-humpl') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={26} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between border-b border-slate-200 pb-3">
+                      <div>
+                        <span className="text-xs font-bold text-teal-600 uppercase tracking-wider font-mono">Case Study • FinTech / Invoicing SaaS</span>
+                        <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
+                      </div>
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-teal-50 border border-teal-300 text-teal-700 hover:bg-teal-700 hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <span>humpl.org</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-4">
+                      <div className="col-span-7 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
+                          <h4 className="text-xs font-bold text-teal-700 uppercase tracking-wider mb-1">Project Overview</h4>
+                          <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Key Features</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {page.keyFeatures && page.keyFeatures.map((feat, fidx) => (
+                              <span key={fidx} className="px-2 py-0.5 rounded bg-teal-50 border border-teal-200 text-slate-800 text-[11px] font-bold">
+                                {feat}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-span-5 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-300 shadow-sm">
+                          <h4 className="text-xs font-bold text-teal-800 uppercase tracking-wider mb-1.5">Business Benefits</h4>
+                          <div className="space-y-1.5">
+                            {page.benefits && page.benefits.map((b, bidx) => (
+                              <div key={bidx} className="flex items-center gap-2 text-xs font-bold text-slate-900">
+                                <DollarSign className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+                                <span>{b}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 27: Full-Stack Tech Matrix ─── */
+            if (page.pageType === 'tech-matrix') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={27} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Capabilities</h2>
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Technology Expertise Across Client Projects</h2>
                       <p className="text-xs text-[#00674f] font-bold uppercase tracking-wider mt-1">{page.subheading}</p>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-4 gap-3 pt-2">
-                      {page.capabilitiesList && page.capabilitiesList.map((cap, cidx) => (
-                        <div key={cidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3 hover:border-[#00674f] transition">
-                          <CheckCircle2 className="w-5 h-5 text-[#00674f] shrink-0" />
-                          <span className="text-xs font-bold text-slate-900">{cap}</span>
+                    <div className="grid grid-cols-2 gap-4">
+                      {page.categories && page.categories.map((cat, cidx) => (
+                        <div key={cidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2">
+                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">{cat.title}</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {cat.items.map((item, itidx) => (
+                              <span key={itidx} className="px-3 py-1 rounded-md bg-emerald-50 border border-emerald-300 text-slate-900 text-xs font-bold shadow-sm">
+                                {item}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -1060,10 +1236,35 @@ export default function CompanyProfilePage() {
               );
             }
 
-            /* ─── PAGE 25: Growing Together ─── */
+            /* ─── PAGE 28: Delivery Excellence ─── */
+            if (page.pageType === 'delivery-excellence') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={28} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Delivery Excellence</h2>
+                      <p className="text-xs text-[#00674f] font-bold uppercase tracking-wider mt-1">{page.subheading}</p>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3 pt-1">
+                      {page.principles && page.principles.map((pr, pridx) => (
+                        <div key={pridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
+                          <Award className="w-5 h-5 text-amber-500" />
+                          <h4 className="text-xs font-bold text-slate-900">{pr.title}</h4>
+                          <p className="text-[11px] text-slate-600 font-normal leading-snug">{pr.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 29: Growing Together ─── */
             if (page.pageType === 'growing-together') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={25} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={29} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="max-w-3xl mx-auto space-y-6 text-center">
                     <div>
                       <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Growing Together</h2>
@@ -1076,10 +1277,12 @@ export default function CompanyProfilePage() {
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-3">
+                    <div className="flex flex-wrap justify-center gap-2.5">
                       <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Banking</span>
                       <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Real Estate</span>
-                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Enterprise Software</span>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Numerology SaaS</span>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Smart Building Automation</span>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">FinTech Invoicing</span>
                       <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Healthcare</span>
                       <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Retail</span>
                     </div>
@@ -1088,10 +1291,10 @@ export default function CompanyProfilePage() {
               );
             }
 
-            /* ─── PAGE 26: Contact Us ─── */
+            /* ─── PAGE 30: Contact Us ─── */
             if (page.pageType === 'contact') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={26} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={30} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="grid grid-cols-12 gap-8 items-center">
                     <div className="col-span-7 space-y-5">
                       <div>
