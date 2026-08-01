@@ -1296,21 +1296,25 @@ export default function CompanyProfilePage() {
               return (
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={30} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="grid grid-cols-12 gap-8 items-center">
-                    <div className="col-span-7 space-y-5">
+                    <div className="col-span-7 space-y-4">
                       <div>
                         <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Contact Us</h2>
                         <h3 className="text-xl lg:text-2xl font-bold text-[#00674f] mt-1">{page.companyName || 'DIGI TALKS INDIA'}</h3>
                         <div className="w-24 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
                       </div>
 
-                      {/* Highlighted Phone Card */}
+                      {/* Highlighted Dual Phone Card */}
                       <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 shadow-md flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-[#00674f] text-white flex items-center justify-center shrink-0 shadow-md">
                           <Phone className="w-6 h-6 animate-pulse" />
                         </div>
-                        <div>
-                          <span className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Phone / WhatsApp</span>
-                          <h4 className="text-2xl font-bold text-slate-900 tracking-wide">{page.phone || '+91 9966 824 854'}</h4>
+                        <div className="space-y-0.5">
+                          <span className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Phone / WhatsApp Support</span>
+                          <div className="flex flex-wrap gap-4 items-center">
+                            <h4 className="text-xl lg:text-2xl font-bold text-slate-900 tracking-wide">+91 9966 824 854</h4>
+                            <span className="text-slate-400 font-bold">•</span>
+                            <h4 className="text-xl lg:text-2xl font-bold text-slate-900 tracking-wide">+91 891 9370 455</h4>
+                          </div>
                         </div>
                       </div>
 
@@ -1319,17 +1323,20 @@ export default function CompanyProfilePage() {
                         <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3">
                           <Mail className="w-5 h-5 text-[#00674f] shrink-0" />
                           <div>
-                            <span className="text-[11px] font-bold text-slate-500 uppercase">Email</span>
-                            <p className="text-sm font-bold text-slate-900">{page.email || 'contact@digitalksindia.com'}</p>
+                            <span className="text-[11px] font-bold text-slate-500 uppercase">Email Support</span>
+                            <p className="text-sm font-bold text-slate-900">info@digitalks.in</p>
                           </div>
                         </div>
-                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3">
-                          <Globe className="w-5 h-5 text-[#00674f] shrink-0" />
+                        <a href="https://digitalks.in/" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3 hover:border-[#00674f] transition group">
+                          <Globe className="w-5 h-5 text-[#00674f] shrink-0 group-hover:scale-110 transition" />
                           <div>
-                            <span className="text-[11px] font-bold text-slate-500 uppercase">Website</span>
-                            <p className="text-sm font-bold text-slate-900">{page.website || 'www.digitalksindia.com'}</p>
+                            <span className="text-[11px] font-bold text-slate-500 uppercase">Official Website</span>
+                            <p className="text-sm font-bold text-[#00674f] flex items-center gap-1">
+                              <span>https://digitalks.in/</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </p>
                           </div>
-                        </div>
+                        </a>
                       </div>
                     </div>
 
