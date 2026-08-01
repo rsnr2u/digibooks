@@ -115,6 +115,14 @@
     margin: 0;
   }
 
+  /* Absolutely hide all navigation headers, app footers, modals, search bars, and toolbars */
+  header, nav, footer, .no-print, .no-print * {
+    display: none !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
   /* Force exact background graphics and colors preservation across all browsers */
   *, *::before, *::after {
     -webkit-print-color-adjust: exact !important;
@@ -123,7 +131,7 @@
   }
 
   html, body, #root, main, .min-h-screen {
-    background: #000000 !important;
+    background: #ffffff !important;
     padding: 0 !important;
     margin: 0 !important;
     height: auto !important;
@@ -131,11 +139,6 @@
     overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-  }
-
-  .no-print,
-  .no-print * {
-    display: none !important;
   }
 
   .hidden-on-screen {

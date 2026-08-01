@@ -4,7 +4,7 @@ import { BookOpen } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-slate-200 py-6 text-slate-600 text-sm">
+    <footer className="bg-white border-t border-slate-200 py-6 text-slate-600 text-sm no-print">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Brand */}
         <Link to="/" className="flex items-center gap-2.5">

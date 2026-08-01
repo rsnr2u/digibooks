@@ -19,7 +19,7 @@ export default function Navbar({ onOpenSearch, onLogout }) {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-300 no-print ${
         isScrolled
           ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs py-2'
           : 'bg-white border-b border-slate-200/70 py-2.5'
