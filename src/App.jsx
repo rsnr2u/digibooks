@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import BookReaderPage from './pages/BookReaderPage';
 import BookmarksPage from './pages/BookmarksPage';
 import LoginPage from './pages/LoginPage';
+import CompanyProfilePage from './pages/CompanyProfilePage';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -38,6 +39,8 @@ export default function App() {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage onOpenSearch={() => setIsSearchOpen(true)} />} />
+            <Route path="/book/digitalks-profile" element={<CompanyProfilePage />} />
+            <Route path="/book/digitalks-profile/:chapterId" element={<CompanyProfilePage />} />
             <Route path="/book/:bookId" element={<BookReaderPage />} />
             <Route path="/book/:bookId/:chapterId" element={<BookReaderPage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />

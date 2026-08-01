@@ -3149,5 +3149,23 @@ export const BOOKS_DATA = {
         `
       }
     ]
+  },
+
+  "digitalks-profile": {
+    id: "digitalks-profile",
+    title: "Digitalks Profile",
+    teluguTitle: "Corporate Company Profile",
+    tagline: "Official Company Profile & Portfolio",
+    description: "Digitalks corporate company profile — our vision, services, portfolio, and capabilities presented in a premium A4 landscape format ready for print.",
+    iconName: "Briefcase",
+    badge: "Company Profile",
+    category: "Corporate",
+    difficulty: "Executive",
+    estimatedHours: "10 min",
+    chaptersCount: 0,
+    isA4Profile: true,
+    accentColor: "from-amber-600 to-yellow-600",
+    cardBg: "bg-white",
+    chapters: []
   }
 };

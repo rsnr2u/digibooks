@@ -134,3 +134,115 @@
     padding: 6px 10px !important;
   }
 }
+
+/* ─── A4 Landscape Company Profile Page Styles ─── */
+.a4-page-landscape {
+  width: 297mm;
+  min-height: 210mm;
+  max-width: 100%;
+  aspect-ratio: 297 / 210;
+  box-sizing: border-box;
+  background: #ffffff;
+  position: relative;
+}
+
+/* Responsive scaling for smaller screens */
+@media (max-width: 1200px) {
+  .a4-page-landscape {
+    width: 95vw;
+    min-height: auto;
+  }
+}
+
+/* A4 Reading Content Typography */
+.a4-reading-content h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.a4-reading-content h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #92400e;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(217, 179, 16, 0.25);
+  padding-bottom: 0.5rem;
+}
+
+.a4-reading-content h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.a4-reading-content p {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 0.875rem;
+}
+
+.a4-reading-content ul,
+.a4-reading-content ol {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #334155;
+}
+
+/* Hide non-active pages on screen */
+.hidden-on-screen {
+  display: none;
+}
+
+/* ─── A4 Landscape Print Rules ─── */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 12mm;
+  }
+
+  /* Show all pages in print */
+  .hidden-on-screen {
+    display: block !important;
+  }
+
+  .no-print,
+  .no-print-border {
+    display: none !important;
+  }
+
+  .a4-page-landscape {
+    width: 100% !important;
+    min-height: auto !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    page-break-after: always;
+    margin: 0 !important;
+  }
+
+  .a4-page-landscape:last-child {
+    page-break-after: auto;
+  }
+
+  .print-all-pages {
+    gap: 0 !important;
+  }
+
+  .a4-content {
+    padding: 8mm 12mm !important;
+  }
+
+  #a4-print-area {
+    padding: 0 !important;
+    background: white !important;
+  }
+}
+
