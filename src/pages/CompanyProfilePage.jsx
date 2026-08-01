@@ -363,9 +363,9 @@ export default function CompanyProfilePage() {
                   <div className="relative z-10 h-full flex flex-col items-center justify-center px-12 py-8 text-center">
                     {coverLogo && (
                       <img
-                        src={coverLogo}
+                        src={isA4Portrait ? "/assets/digitalks-blue-logo-transparent.png" : coverLogo}
                         alt="Digitalks Logo"
-                        className="w-48 h-48 object-contain mb-4 drop-shadow-2xl"
+                        className="w-60 h-60 object-contain mb-4 drop-shadow-2xl filter contrast-105"
                       />
                     )}
 
