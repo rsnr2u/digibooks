@@ -98,11 +98,21 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
       {/* Header Bar — White BG with Clean Logo & Badge Alignment */}
       <div className="relative z-10 px-8 pt-4 pb-3 flex items-center justify-between border-b border-slate-200">
         <div className="flex items-center gap-3">
-          <img
-            src={logoSrc}
-            alt="Digitalks Logo"
-            className="h-9 object-contain drop-shadow-sm"
-          />
+          {isA4Portrait ? (
+            <div className="px-3 py-1 rounded-xl bg-[#02296c] border border-blue-950 shadow-sm flex items-center shrink-0">
+              <img
+                src="/assets/digitalks-blue-logo-transparent.png"
+                alt="Digitalks Logo"
+                className="h-7 object-contain"
+              />
+            </div>
+          ) : (
+            <img
+              src={logoSrc}
+              alt="Digitalks Logo"
+              className="h-9 object-contain drop-shadow-sm"
+            />
+          )}
           <div className={`flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-bold uppercase tracking-wider shadow-sm ${badgeBgClass}`}>
             <span className={`w-2 h-2 rounded-full animate-pulse ${dotBgClass}`} />
             <span>{badge || 'Corporate Profile'}</span>
@@ -331,7 +341,7 @@ export default function CompanyProfilePage() {
       <div className="flex-1 flex items-start justify-center p-6 sm:p-8 overflow-auto" id="a4-print-area" ref={printRef}>
         <div className="space-y-10 print-all-pages">
           {pages.map((page, idx) => {
-            const coverLogo = page.logoUrl || (isA4Portrait ? '/assets/digitalks-blue-logo.png' : '/assets/digitalks-logo.png');
+            const coverLogo = page.logoUrl || (isA4Portrait ? '/assets/digitalks-blue-logo-transparent.png' : '/assets/digitalks-logo.png');
             const coverBg = isA4Portrait ? '#02296c' : (page.bgColor || '#00674f');
 
             /* ─── PAGE 1: Cover Page ─── */

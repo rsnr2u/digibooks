@@ -20,7 +20,8 @@ const ACCENT_STYLES = {
   vastu: { iconBg: 'bg-teal-600 text-white', badge: 'bg-teal-50 text-teal-700 border-teal-200', topBorder: 'bg-teal-600' },
   palmistry: { iconBg: 'bg-rose-600 text-white', badge: 'bg-rose-50 text-rose-700 border-rose-200', topBorder: 'bg-rose-600' },
   fengshui: { iconBg: 'bg-cyan-600 text-white', badge: 'bg-cyan-50 text-cyan-700 border-cyan-200', topBorder: 'bg-cyan-600' },
-  'digitalks-profile': { iconBg: 'bg-amber-600 text-white', badge: 'bg-amber-50 text-amber-700 border-amber-200', topBorder: 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600' }
+  'digitalks-profile': { iconBg: 'bg-amber-600 text-white', badge: 'bg-amber-50 text-amber-700 border-amber-200', topBorder: 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600' },
+  'digitalks-profile-a4': { iconBg: 'bg-[#02296c] text-white', badge: 'bg-blue-50 text-[#02296c] border-blue-300', topBorder: 'bg-gradient-to-r from-[#02296c] via-orange-400 to-[#02296c]' }
 };
 
 export default function BookCard({ book, index }) {
