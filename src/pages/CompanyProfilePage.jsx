@@ -345,38 +345,59 @@ export default function CompanyProfilePage() {
                   <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
 
                   {/* Main Content — Centered */}
-                  <div className="relative z-10 h-full flex flex-col items-center justify-center px-16">
+                  <div className="relative z-10 h-full flex flex-col items-center justify-center px-12 py-8 text-center">
                     {/* Logo */}
                     {page.logoUrl && (
                       <img
                         src={page.logoUrl}
                         alt="Digitalks Logo"
-                        className="w-56 h-56 object-contain mb-8 drop-shadow-2xl"
+                        className="w-44 h-44 object-contain mb-4 drop-shadow-2xl"
                       />
                     )}
 
                     {/* Company Name */}
-                    <h1 className="text-5xl font-extrabold tracking-[0.25em] text-white uppercase mb-4" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.15)' }}>
+                    <h1 className="text-4xl lg:text-5xl font-extrabold tracking-[0.2em] text-white uppercase mb-2" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
                       {page.companyName || 'DIGI TALKS INDIA'}
                     </h1>
 
+                    {/* Tagline */}
+                    <h2 className="text-lg lg:text-xl font-medium tracking-wider text-yellow-300/90 mb-3 max-w-2xl">
+                      {page.tagline || page.subtitle || 'Corporate Company Profile'}
+                    </h2>
+
                     {/* Gold Divider */}
-                    <div className="flex items-center gap-4 my-5">
+                    <div className="flex items-center gap-4 my-3">
                       <div className="w-20 h-px bg-gradient-to-r from-transparent to-yellow-400" />
                       <div className="w-2.5 h-2.5 rotate-45 bg-yellow-400 shadow-lg shadow-yellow-400/40" />
                       <div className="w-20 h-px bg-gradient-to-l from-transparent to-yellow-400" />
                     </div>
 
-                    {/* Subtitle */}
-                    <h2 className="text-2xl font-light tracking-[0.3em] text-white/80 uppercase">
-                      {page.subtitle || 'Corporate Company Profile'}
-                    </h2>
+                    {/* Services Pill / Bullet Row */}
+                    {page.services && (
+                      <div className="flex flex-wrap items-center justify-center gap-2 max-w-4xl my-3">
+                        {page.services.map((srv, sidx) => (
+                          <span
+                            key={sidx}
+                            className="px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs lg:text-sm font-semibold tracking-wide shadow-sm"
+                          >
+                            {srv}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Quote / Motto */}
+                    {page.quote && (
+                      <div className="mt-4 px-6 py-2 rounded-xl bg-black/20 border border-yellow-400/30 text-amber-200 font-serif italic text-base lg:text-lg tracking-wide shadow-inner">
+                        {page.quote}
+                      </div>
+                    )}
                   </div>
 
                   {/* Bottom info bar */}
-                  <div className="absolute bottom-8 left-0 right-0 flex justify-center">
-                    <span className="text-xs text-white/30 tracking-[0.4em] uppercase font-medium">
-                      Confidential
+                  <div className="absolute bottom-5 left-0 right-0 flex justify-center">
+                    <span className="text-[11px] text-white/30 tracking-[0.4em] uppercase font-medium">
+                      Confidential • Corporate Profile
                     </span>
                   </div>
                 </div>

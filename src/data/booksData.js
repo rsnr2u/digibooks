@@ -3173,7 +3173,9 @@ export const BOOKS_DATA = {
         title: "Page 1: Cover Page",
         pageType: "cover",
         companyName: "DIGI TALKS INDIA",
-        subtitle: "Corporate Company Profile",
+        tagline: "Empowering Businesses Through Digital Innovation",
+        services: ["Enterprise Software", "AI Solutions", "Web Applications", "Mobile Apps", "Digital Transformation"],
+        quote: '"Building Technology That Builds Businesses"',
         bgColor: "#00674f",
         logoUrl: "/assets/digitalks-logo.png"
       }
