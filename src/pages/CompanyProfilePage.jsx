@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { BOOKS_DATA } from '../data/booksData';
 import {
   Home, Printer, ChevronLeft, ChevronRight, Maximize2, Minimize2,
-  FileText, Layers, ArrowLeft, Share2, Download,
+  FileText, Layers, ArrowLeft, Share2, Download, X, Info,
   Cpu, Zap, TrendingUp, CheckCircle2, Globe, Award, ShieldCheck, Building2, Sparkles, Rocket,
   Activity, GraduationCap, ShoppingBag, Factory, DollarSign, HardHat, Utensils, Landmark, Briefcase, Truck, Store,
   Target, Eye, Code, Layout, Smartphone, Cloud, Link as LinkIcon, RefreshCw, Wrench, ChevronRightCircle,
@@ -124,6 +124,7 @@ export default function CompanyProfilePage() {
   const { chapterId } = useParams();
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showPrintModal, setShowPrintModal] = useState(false);
   const printRef = useRef(null);
 
   const book = BOOKS_DATA['digitalks-profile'];
@@ -148,8 +149,15 @@ export default function CompanyProfilePage() {
     if (found !== -1) activePageIdx = found;
   }
 
-  const handlePrint = () => {
-    window.print();
+  const handleOpenPrintModal = () => {
+    setShowPrintModal(true);
+  };
+
+  const executePrint = () => {
+    setShowPrintModal(false);
+    setTimeout(() => {
+      window.print();
+    }, 300);
   };
 
   const toggleFullscreen = () => {
@@ -209,12 +217,86 @@ export default function CompanyProfilePage() {
           <button onClick={toggleFullscreen} className="p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 hover:text-white hover:bg-slate-700 transition" title="Fullscreen">
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
-          <button onClick={handlePrint} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-900 font-bold text-sm hover:from-amber-400 hover:to-yellow-400 transition shadow-lg shadow-amber-500/20" title="Print / Save PDF">
+          <button onClick={handleOpenPrintModal} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-900 font-bold text-sm hover:from-amber-400 hover:to-yellow-400 transition shadow-lg shadow-amber-500/20" title="Print / Save PDF">
             <Printer className="w-4 h-4" />
-            <span>Print / PDF</span>
+            <span>Print / Save PDF</span>
           </button>
         </div>
       </div>
+
+      {/* PDF Export Settings Modal */}
+      <AnimatePresence>
+        {showPrintModal && (
+          <div className="no-print fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white text-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-2xl border-2 border-emerald-500 relative space-y-4"
+            >
+              <button onClick={() => setShowPrintModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1">
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
+                <div className="w-10 h-10 rounded-xl bg-[#00674f] text-white flex items-center justify-center font-bold">
+                  <Printer className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Export All 30 Pages as PDF</h3>
+                  <p className="text-xs text-slate-500">Ensure exact design & color preservation</p>
+                </div>
+              </div>
+
+              <div className="space-y-2.5 text-xs text-slate-700">
+                <p className="font-bold text-slate-900 flex items-center gap-2 text-sm">
+                  <Info className="w-4 h-4 text-[#00674f]" />
+                  <span>Important Browser Print Settings:</span>
+                </p>
+
+                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl space-y-2 font-medium">
+                  <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
+                    <span className="font-bold">1. Destination:</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#00674f] border border-emerald-300">Save as PDF</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
+                    <span className="font-bold">2. Layout / Orientation:</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#00674f] border border-emerald-300">Landscape</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
+                    <span className="font-bold">3. Margins:</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#00674f] border border-emerald-300">None</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold">4. Background graphics:</span>
+                    <span className="px-2 py-0.5 bg-emerald-600 text-white rounded font-bold">☑ ENABLED (Checked)</span>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-slate-500 italic">
+                  * Enabling "Background graphics" ensures all brand colors, logos, and custom cards print with 100% exact fidelity!
+                </p>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  onClick={() => setShowPrintModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200 transition text-xs"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={executePrint}
+                  className="px-5 py-2.5 rounded-xl bg-[#00674f] text-white font-bold hover:bg-emerald-700 transition text-xs flex items-center gap-2 shadow-md shadow-emerald-700/20"
+                >
+                  <Printer className="w-4 h-4" />
+                  <span>Open Print Dialog Now</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Page Viewer */}
       <div className="flex-1 flex items-start justify-center p-6 sm:p-8 overflow-auto" id="a4-print-area" ref={printRef}>
