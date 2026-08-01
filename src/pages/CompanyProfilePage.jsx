@@ -1383,7 +1383,7 @@ export default function CompanyProfilePage() {
                           <div className="flex flex-wrap gap-4 items-center">
                             <h4 className="text-xl lg:text-2xl font-bold text-slate-900 tracking-wide">+91 9966 824 854</h4>
                             <span className="text-slate-400 font-bold">•</span>
-                            <h4 className="text-xl lg:text-2xl font-bold text-slate-900 tracking-wide">+91 891 9370 455</h4>
+                            <h4 className="text-xl lg:text-2xl font-bold text-slate-900 tracking-wide">+91 8919 370 455</h4>
                           </div>
                         </div>
                       </div>

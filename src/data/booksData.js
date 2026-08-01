@@ -3638,7 +3638,7 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
         badge: "Get In Touch",
         heading: "Contact Us",
         companyName: "DIGI TALKS INDIA",
-        phones: ["+91 9966 824 854", "+91 891 9370 455"],
+        phones: ["+91 9966 824 854", "+91 8919 370 455"],
         email: "info@digitalks.in",
         secondaryEmail: "contact@digitalksindia.com",
         website: "https://digitalks.in/",
