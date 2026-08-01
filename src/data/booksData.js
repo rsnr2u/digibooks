@@ -3161,8 +3161,8 @@ export const BOOKS_DATA = {
     badge: "Company Profile",
     category: "Corporate",
     difficulty: "Executive",
-    estimatedHours: "10 min",
-    chaptersCount: 2,
+    estimatedHours: "15 min",
+    chaptersCount: 20,
     isA4Profile: true,
     accentColor: "from-amber-600 to-yellow-600",
     cardBg: "bg-white",
@@ -3190,6 +3190,319 @@ export const BOOKS_DATA = {
         content: `DIGI TALKS INDIA is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
 
 With a strong focus on innovation, quality, and long-term partnerships, we help organizations transform ideas into powerful digital solutions.`
+      },
+      {
+        id: "page-3-story",
+        chapterNumber: 3,
+        title: "Page 3: Our Story",
+        pageType: "story",
+        badge: "Company Heritage",
+        heading: "Our Story",
+        purpose: "To bridge the gap between business challenges and innovative technology.",
+        paragraphs: [
+          "Technology continues to reshape every industry, yet many organizations struggle to find reliable technology partners who understand both business and software.",
+          "DIGI TALKS INDIA was established with a clear purpose: To bridge the gap between business challenges and innovative technology.",
+          "Today, we continue helping businesses adopt modern technology with confidence, delivering solutions that are scalable, secure, and designed for growth."
+        ]
+      },
+      {
+        id: "page-4-vision-mission",
+        chapterNumber: 4,
+        title: "Page 4: Vision & Mission",
+        pageType: "vision-mission",
+        badge: "Strategic Purpose",
+        vision: "To become one of India's most trusted technology companies, delivering world-class digital solutions that create sustainable business growth.",
+        missions: [
+          "Deliver innovative technology solutions.",
+          "Build lasting client relationships.",
+          "Promote digital transformation.",
+          "Develop scalable products.",
+          "Maintain excellence in everything we deliver."
+        ]
+      },
+      {
+        id: "page-5-services",
+        chapterNumber: 5,
+        title: "Page 5: Core Services",
+        pageType: "services",
+        badge: "What We Do",
+        heading: "Core Services",
+        servicesList: [
+          { name: "Software Development", desc: "Custom end-to-end software built for high scalability" },
+          { name: "Enterprise Applications", desc: "Robust ERP & CRM tailored to enterprise needs" },
+          { name: "Business Automation", desc: "Automate complex workflows and boost operational speed" },
+          { name: "Website Development", desc: "High-performance responsive web portals & platforms" },
+          { name: "E-Commerce Solutions", desc: "Scalable online stores with secure payment integration" },
+          { name: "Mobile Applications", desc: "Native & cross-platform iOS & Android mobile apps" },
+          { name: "UI/UX Design", desc: "User-centric modern interfaces & interactive experiences" },
+          { name: "Cloud Solutions", desc: "Cloud architecture, migration & serverless infrastructure" },
+          { name: "API Development", desc: "RESTful & GraphQL APIs for seamless integrations" },
+          { name: "Digital Consulting", desc: "Strategic technology advisory & digital roadmap planning" },
+          { name: "Technology Modernization", desc: "Refactoring legacy code to modern tech stacks" },
+          { name: "Support & Maintenance", desc: "24/7 proactive monitoring, security & maintenance" }
+        ]
+      },
+      {
+        id: "page-6-digital-transformation",
+        chapterNumber: 6,
+        title: "Page 6: Digital Transformation Services",
+        pageType: "digital-trans",
+        badge: "Enterprise Capabilities",
+        heading: "Digital Transformation Services",
+        items: [
+          { title: "Business Process Automation", desc: "Streamline manual operations into efficient automated workflows" },
+          { title: "Workflow Management", desc: "End-to-end task tracking and operational pipeline clarity" },
+          { title: "Customer Experience Platforms", desc: "Omnichannel customer engagement & portal solutions" },
+          { title: "Enterprise Resource Planning", desc: "Centralized data management for finance, HR, & operations" },
+          { title: "CRM Solutions", desc: "Empower sales, support, and lead tracking pipelines" },
+          { title: "Document Management", desc: "Secure digital archiving, indexing, and paperless workflows" },
+          { title: "Analytics Dashboards", desc: "Real-time metrics, KPI tracking, and custom visualization" },
+          { title: "Business Intelligence", desc: "Data-driven insights to make informed executive decisions" },
+          { title: "AI-Ready Systems", desc: "Prepare infrastructure for Machine Learning & AI automation" },
+          { title: "Cloud Migration", desc: "Seamless migration of legacy infrastructure to modern cloud" }
+        ]
+      },
+      {
+        id: "page-7-engineering",
+        chapterNumber: 7,
+        title: "Page 7: Software Engineering",
+        pageType: "engineering",
+        badge: "Engineering Excellence",
+        heading: "Software Engineering",
+        subheading: "We design software that is:",
+        pillars: [
+          { title: "Scalable", desc: "Handles millions of users seamlessly" },
+          { title: "Secure", desc: "Bank-grade encryption & compliance" },
+          { title: "Reliable", desc: "99.99% uptime architecture" },
+          { title: "High Performance", desc: "Sub-second response latencies" },
+          { title: "Cloud Ready", desc: "Containerized & microservice enabled" },
+          { title: "API Driven", desc: "Modular & easily integrable" },
+          { title: "Future Ready", desc: "Built with modern adaptable tech" }
+        ],
+        outro: "Every solution follows industry best practices for architecture, security, testing, and deployment."
+      },
+      {
+        id: "page-8-industries",
+        chapterNumber: 8,
+        title: "Page 8: Industries We Serve",
+        pageType: "industries",
+        badge: "Domain Expertise",
+        heading: "Industries We Serve",
+        industriesList: [
+          { name: "Real Estate", icon: "Building2" },
+          { name: "Healthcare", icon: "Activity" },
+          { name: "Education", icon: "GraduationCap" },
+          { name: "Retail", icon: "ShoppingBag" },
+          { name: "Manufacturing", icon: "Factory" },
+          { name: "Finance", icon: "DollarSign" },
+          { name: "Construction", icon: "HardHat" },
+          { name: "Hospitality", icon: "Utensils" },
+          { name: "Government", icon: "Landmark" },
+          { name: "Professional Services", icon: "Briefcase" },
+          { name: "Logistics", icon: "Truck" },
+          { name: "Startups", icon: "Rocket" },
+          { name: "SMEs", icon: "Store" },
+          { name: "Enterprise Businesses", icon: "Globe" }
+        ]
+      },
+      {
+        id: "page-9-tech-stack",
+        chapterNumber: 9,
+        title: "Page 9: Technology Expertise",
+        pageType: "tech-stack",
+        badge: "Our Tech Stack",
+        heading: "Technology Expertise",
+        categories: [
+          {
+            title: "Frontend",
+            skills: ["React", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "Bootstrap"]
+          },
+          {
+            title: "Backend",
+            skills: ["Laravel", "PHP", "Python", "Node.js", "REST API", "GraphQL"]
+          },
+          {
+            title: "Database",
+            skills: ["MySQL", "PostgreSQL", "MongoDB"]
+          },
+          {
+            title: "Infrastructure & Cloud",
+            skills: ["Linux", "Docker", "Nginx", "Apache", "Cloud Platforms", "Git", "CI/CD"]
+          }
+        ]
+      },
+      {
+        id: "page-10-process",
+        chapterNumber: 10,
+        title: "Page 10: Our Development Process",
+        pageType: "process",
+        badge: "How We Work",
+        heading: "Our Development Process",
+        steps: [
+          { num: "01", name: "Discovery", desc: "Requirement gathering & feasibility analysis" },
+          { num: "02", name: "Planning", desc: "Architecture design & milestone roadmap" },
+          { num: "03", name: "UI/UX Design", desc: "Interactive wireframes & visual prototypes" },
+          { num: "04", name: "Development", desc: "Agile sprints & clean code implementation" },
+          { num: "05", name: "Quality Testing", desc: "Automated testing, security & QA validation" },
+          { num: "06", name: "Deployment", desc: "Production release & DevOps automation" },
+          { num: "07", name: "Support & Growth", desc: "Ongoing maintenance & continuous feature updates" }
+        ]
+      },
+      {
+        id: "page-11-why-us",
+        chapterNumber: 11,
+        title: "Page 11: Why DIGI TALKS INDIA?",
+        pageType: "why-us",
+        badge: "Our Value Proposition",
+        heading: "Why DIGI TALKS INDIA?",
+        reasons: [
+          "Experienced Professionals",
+          "Modern Technologies",
+          "Business-Focused Solutions",
+          "Transparent Communication",
+          "Quality Assurance",
+          "On-Time Delivery",
+          "Scalable Architecture",
+          "Long-Term Support",
+          "Affordable Solutions",
+          "Trusted Partnership"
+        ]
+      },
+      {
+        id: "page-12-values",
+        chapterNumber: 12,
+        title: "Page 12: Our Values",
+        pageType: "values",
+        badge: "Our Principles",
+        heading: "Our Values",
+        valuesList: [
+          { title: "Innovation", desc: "Embracing cutting-edge technology to solve complex problems" },
+          { title: "Integrity", desc: "Upholding honesty and high ethical standards in all interactions" },
+          { title: "Transparency", desc: "Open communication and clear project visibility at every stage" },
+          { title: "Customer Success", desc: "Your growth and measurable business results are our top priority" },
+          { title: "Quality", desc: "Uncompromising standards in code, security, and performance" },
+          { title: "Commitment", desc: "Dedicated ownership and long-term accountability" },
+          { title: "Responsibility", desc: "Taking pride in reliable execution and data privacy" },
+          { title: "Continuous Learning", desc: "Constantly upgrading skills to deliver modern solutions" }
+        ]
+      },
+      {
+        id: "page-13-differentiators",
+        chapterNumber: 13,
+        title: "Page 13: What Makes Us Different",
+        pageType: "differentiators",
+        badge: "Competitive Edge",
+        heading: "What Makes Us Different",
+        points: [
+          "Business-first approach",
+          "Customized solutions",
+          "Flexible engagement models",
+          "Latest technology stack",
+          "High-quality coding standards",
+          "Performance optimization",
+          "Security-first development",
+          "Future scalability",
+          "Dedicated support"
+        ]
+      },
+      {
+        id: "page-14-engagement",
+        chapterNumber: 14,
+        title: "Page 14: Engagement Models",
+        pageType: "engagement",
+        badge: "Flexible Collaboration",
+        heading: "Engagement Models",
+        models: [
+          { name: "Dedicated Development Team", desc: "Full-time engineers & managers extended to your team" },
+          { name: "Fixed Cost Projects", desc: "Clear scope, fixed timeline, and predictable budget" },
+          { name: "Time & Material", desc: "Pay for actual resources used with high flexibility" },
+          { name: "Technology Consulting", desc: "Expert advisory for architecture, security, & stack choice" },
+          { name: "Product Development", desc: "End-to-end MVP to enterprise product engineering" },
+          { name: "Maintenance Contracts", desc: "SLA-backed ongoing support, bug fixes & upgrades" }
+        ]
+      },
+      {
+        id: "page-15-quality",
+        chapterNumber: 15,
+        title: "Page 15: Quality Standards",
+        pageType: "quality",
+        badge: "Engineering Standards",
+        heading: "Quality Standards",
+        standardsList: [
+          "Requirement Analysis",
+          "Code Review",
+          "Security Validation",
+          "Performance Optimization",
+          "Cross Platform Testing",
+          "Documentation",
+          "Deployment Checklist",
+          "Maintenance Planning"
+        ]
+      },
+      {
+        id: "page-16-commitment",
+        chapterNumber: 16,
+        title: "Page 16: Our Commitment",
+        pageType: "commitment",
+        badge: "Our Philosophy",
+        heading: "Our Commitment",
+        quote: "Technology should simplify business—not complicate it.",
+        statement: "We build digital products that are reliable, secure, scalable, and designed to generate measurable value for our clients."
+      },
+      {
+        id: "page-17-future-focus",
+        chapterNumber: 17,
+        title: "Page 17: Future Focus",
+        pageType: "future",
+        badge: "Next-Gen Tech",
+        heading: "Future Focus",
+        focusList: [
+          "Artificial Intelligence",
+          "Automation",
+          "Cloud Technologies",
+          "Enterprise Platforms",
+          "Digital Ecosystems",
+          "Smart Business Solutions",
+          "Data Intelligence",
+          "Innovation Labs"
+        ]
+      },
+      {
+        id: "page-18-promise",
+        chapterNumber: 18,
+        title: "Page 18: Our Promise",
+        pageType: "promise",
+        badge: "Partner Commitment",
+        heading: "Our Promise",
+        promiseSteps: [
+          "We listen.",
+          "We understand.",
+          "We innovate.",
+          "We build.",
+          "We support.",
+          "We grow together."
+        ]
+      },
+      {
+        id: "page-19-call-to-action",
+        chapterNumber: 19,
+        title: "Page 19: Let's Build Something Great Together",
+        pageType: "call-to-action",
+        badge: "Start Your Journey",
+        heading: "Let's Build Something Great Together",
+        message: "Whether you're a startup launching your first product or an enterprise transforming operations, DIGI TALKS INDIA is ready to become your trusted technology partner.",
+        highlight: "Together, we transform ideas into digital success."
+      },
+      {
+        id: "page-20-contact",
+        chapterNumber: 20,
+        title: "Page 20: Contact Us",
+        pageType: "contact",
+        badge: "Get In Touch",
+        heading: "Contact Us",
+        companyName: "DIGI TALKS INDIA",
+        servicesSummary: ["Technology Solutions", "Software Development", "Digital Transformation", "Enterprise Applications", "Web & Mobile Solutions", "AI Ready Platforms"],
+        tagline: "Empowering Businesses Through Digital Innovation"
       }
     ]
   }

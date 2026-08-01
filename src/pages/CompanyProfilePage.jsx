@@ -5,7 +5,10 @@ import { BOOKS_DATA } from '../data/booksData';
 import {
   Home, Printer, ChevronLeft, ChevronRight, Maximize2, Minimize2,
   FileText, Layers, ArrowLeft, Share2, Download,
-  Cpu, Zap, TrendingUp, CheckCircle2, Globe, Award, ShieldCheck, Building2, Sparkles, Rocket
+  Cpu, Zap, TrendingUp, CheckCircle2, Globe, Award, ShieldCheck, Building2, Sparkles, Rocket,
+  Activity, GraduationCap, ShoppingBag, Factory, DollarSign, HardHat, Utensils, Landmark, Briefcase, Truck, Store,
+  Target, Eye, Code, Layout, Smartphone, Cloud, Link as LinkIcon, RefreshCw, Wrench, ChevronRightCircle,
+  Mail, Phone, MapPin, ExternalLink, HelpCircle, Lock, Server, Database, GitBranch, HeartHandshake, Check, Compass
 } from 'lucide-react';
 import SyntaxHighlighter from '../components/SyntaxHighlighter';
 
@@ -18,17 +21,11 @@ function renderMarkdown(text) {
 
   while (i < lines.length) {
     const line = lines[i];
-
-    // Blank line
     if (line.trim() === '') { i++; continue; }
-
-    // HR
     if (/^---+$/.test(line.trim())) {
       elements.push(<hr key={i} className="my-6 border-amber-200/40" />);
       i++; continue;
     }
-
-    // Headings
     if (line.startsWith('# ')) {
       elements.push(<h1 key={i} className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">{parseInline(line.slice(2))}</h1>);
       i++; continue;
@@ -41,110 +38,9 @@ function renderMarkdown(text) {
       elements.push(<h3 key={i} className="text-xl font-semibold text-slate-800 mt-5 mb-2">{parseInline(line.slice(4))}</h3>);
       i++; continue;
     }
-
-    // Code blocks
-    if (line.trim().startsWith('```')) {
-      const lang = line.trim().replace(/```/g, '').trim();
-      const codeLines = [];
-      i++;
-      while (i < lines.length && !lines[i].trim().startsWith('```')) {
-        codeLines.push(lines[i]);
-        i++;
-      }
-      i++;
-      elements.push(
-        <div key={`code-${i}`} className="my-4">
-          <SyntaxHighlighter code={codeLines.join('\n')} language={lang || 'text'} />
-        </div>
-      );
-      continue;
-    }
-
-    // Blockquote
-    if (line.startsWith('> ')) {
-      elements.push(
-        <blockquote key={i} className="border-l-4 border-amber-500 bg-amber-50/60 pl-4 py-3 my-4 text-slate-700 italic rounded-r-lg">
-          {parseInline(line.slice(2))}
-        </blockquote>
-      );
-      i++; continue;
-    }
-
-    // Table
-    if (line.includes('|') && line.trim().startsWith('|')) {
-      const tableRows = [];
-      while (i < lines.length && lines[i].includes('|') && lines[i].trim().startsWith('|')) {
-        tableRows.push(lines[i]);
-        i++;
-      }
-      const rows = tableRows.filter(r => !/^\|[\s-:|]+\|$/.test(r.trim()));
-      if (rows.length > 0) {
-        const headerCells = rows[0].split('|').filter(c => c.trim());
-        const bodyRows = rows.slice(1);
-        elements.push(
-          <div key={`table-${i}`} className="my-5 overflow-x-auto rounded-xl border border-slate-200/80 shadow-sm">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-gradient-to-r from-slate-800 to-slate-700 text-white">
-                  {headerCells.map((cell, ci) => (
-                    <th key={ci} className="px-4 py-3 text-left font-bold whitespace-nowrap">{parseInline(cell.trim())}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {bodyRows.map((row, ri) => {
-                  const cells = row.split('|').filter(c => c.trim());
-                  return (
-                    <tr key={ri} className={ri % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                      {cells.map((cell, ci) => (
-                        <td key={ci} className="px-4 py-2.5 border-t border-slate-100">{parseInline(cell.trim())}</td>
-                      ))}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        );
-      }
-      continue;
-    }
-
-    // Unordered list
-    if (/^\s*[-*]\s/.test(line)) {
-      const listItems = [];
-      while (i < lines.length && /^\s*[-*]\s/.test(lines[i])) {
-        listItems.push(lines[i].replace(/^\s*[-*]\s/, ''));
-        i++;
-      }
-      elements.push(
-        <ul key={`ul-${i}`} className="list-disc list-inside space-y-1.5 mb-4 text-slate-700 text-base pl-2">
-          {listItems.map((item, li) => <li key={li}>{parseInline(item)}</li>)}
-        </ul>
-      );
-      continue;
-    }
-
-    // Ordered list
-    if (/^\s*\d+\.\s/.test(line)) {
-      const listItems = [];
-      while (i < lines.length && /^\s*\d+\.\s/.test(lines[i])) {
-        listItems.push(lines[i].replace(/^\s*\d+\.\s/, ''));
-        i++;
-      }
-      elements.push(
-        <ol key={`ol-${i}`} className="list-decimal list-inside space-y-1.5 mb-4 text-slate-700 text-base pl-2">
-          {listItems.map((item, li) => <li key={li}>{parseInline(item)}</li>)}
-        </ol>
-      );
-      continue;
-    }
-
-    // Paragraph
     elements.push(<p key={i} className="text-slate-700 text-base leading-relaxed mb-4">{parseInline(line)}</p>);
     i++;
   }
-
   return elements;
 }
 
@@ -167,6 +63,60 @@ function parseInline(text) {
     }
   }
   return parts;
+}
+
+/* ───────────────── Reusable Internal Page Frame ───────────────── */
+function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePageIdx }) {
+  return (
+    <div
+      className={`widescreen-page-16-9 relative bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden print-page flex flex-col justify-between ${activePageIdx !== undefined && activePageIdx !== (pageNumber - 1) ? 'hidden-on-screen' : ''}`}
+    >
+      {/* Subtle decorative background grid */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
+        backgroundImage: `repeating-linear-gradient(45deg, #000, #000 40px, transparent 40px, transparent 80px)`,
+      }} />
+
+      {/* Top & Bottom Accent Lines */}
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00674f] via-amber-400 to-[#00674f]" />
+      <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00674f] via-amber-400 to-[#00674f]" />
+
+      {/* Corner Accent Frames */}
+      <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-emerald-600/20 rounded-tl-lg pointer-events-none" />
+      <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-emerald-600/20 rounded-tr-lg pointer-events-none" />
+      <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-emerald-600/20 rounded-bl-lg pointer-events-none" />
+      <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-emerald-600/20 rounded-br-lg pointer-events-none" />
+
+      {/* Header Bar — White BG with Official Logo */}
+      <div className="relative z-10 px-10 pt-5 pb-3 flex items-center justify-between border-b border-slate-200/80">
+        <div className="flex items-center gap-4">
+          <img
+            src="/assets/digitalks-logo.png"
+            alt="Digitalks Logo"
+            className="h-10 object-contain drop-shadow-sm"
+          />
+          <div className="h-4 w-px bg-slate-300" />
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-[#00674f] text-xs font-bold uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>{badge || 'Corporate Profile'}</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-slate-400 font-mono font-semibold">DIGI TALKS INDIA • Page {pageNumber} of {totalPages}</span>
+        </div>
+      </div>
+
+      {/* Page Body Content */}
+      <div className="relative z-10 px-10 py-5 flex-1 flex flex-col justify-center">
+        {children}
+      </div>
+
+      {/* Footer Bar */}
+      <div className="relative z-10 px-10 py-2.5 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-400">
+        <span className="tracking-widest uppercase font-medium">DIGI TALKS INDIA • Corporate Profile</span>
+        <span className="font-mono">Confidential Document</span>
+      </div>
+    </div>
+  );
 }
 
 /* ───────────────── Main Component ───────────────── */
@@ -192,14 +142,11 @@ export default function CompanyProfilePage() {
   const pages = book.chapters || [];
   const hasPages = pages.length > 0;
 
-  // Find page by chapterId or use index
   let activePageIdx = currentPageIndex;
   if (chapterId) {
     const found = pages.findIndex(p => p.id === chapterId);
     if (found !== -1) activePageIdx = found;
   }
-
-  const activePage = hasPages ? pages[activePageIdx] : null;
 
   const handlePrint = () => {
     window.print();
@@ -215,61 +162,15 @@ export default function CompanyProfilePage() {
     }
   };
 
-  /* ─── Empty State (No pages yet) ─── */
   if (!hasPages) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col">
-        {/* Top Bar */}
-        <div className="no-print bg-slate-900/90 backdrop-blur-xl border-b border-slate-700/50 px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link to="/" className="flex items-center gap-2 text-slate-400 hover:text-white transition text-sm font-medium">
-              <Home className="w-4 h-4" />
-              <span>Home</span>
-            </Link>
-            <span className="text-slate-600">/</span>
-            <span className="text-amber-400 font-bold text-sm">{book.title}</span>
-          </div>
-        </div>
-
-        {/* Empty Cover */}
-        <div className="flex-1 flex items-center justify-center p-8">
-          <div className="a4-page-landscape relative bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col items-center justify-center">
-            {/* Gold border accent */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-amber-300/30 pointer-events-none" />
-            <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500" />
-            <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500" />
-
-            {/* Decorative corners */}
-            <div className="absolute top-4 left-4 w-16 h-16 border-t-2 border-l-2 border-amber-400/50 rounded-tl-lg" />
-            <div className="absolute top-4 right-4 w-16 h-16 border-t-2 border-r-2 border-amber-400/50 rounded-tr-lg" />
-            <div className="absolute bottom-4 left-4 w-16 h-16 border-b-2 border-l-2 border-amber-400/50 rounded-bl-lg" />
-            <div className="absolute bottom-4 right-4 w-16 h-16 border-b-2 border-r-2 border-amber-400/50 rounded-br-lg" />
-
-            {/* Watermark pattern */}
-            <div className="absolute inset-0 opacity-[0.03]" style={{
-              backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 50px, #b45309 50px, #b45309 51px)`,
-            }} />
-
-            <div className="text-center space-y-6 z-10">
-              <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-amber-500/20">
-                <FileText className="w-10 h-10 text-white" />
-              </div>
-              <div>
-                <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">{book.title}</h1>
-                <p className="text-lg text-slate-500 mt-2 font-medium">{book.tagline}</p>
-              </div>
-              <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-yellow-400 mx-auto rounded-full" />
-              <p className="text-slate-400 text-sm max-w-md mx-auto leading-relaxed">
-                This profile is being crafted. Pages will appear here as content is added.
-              </p>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white">
+        <h2 className="text-2xl font-bold">No Pages Available</h2>
+        <Link to="/" className="mt-4 text-emerald-400 hover:underline">Return Home</Link>
       </div>
     );
   }
 
-  /* ─── Active Profile Viewer ─── */
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col">
       {/* Top Toolbar */}
@@ -284,12 +185,10 @@ export default function CompanyProfilePage() {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Page Counter */}
           <span className="text-slate-400 text-sm font-mono">
             Page {activePageIdx + 1} of {pages.length}
           </span>
 
-          {/* Navigation */}
           <div className="flex items-center gap-1 bg-slate-800 rounded-lg p-1 border border-slate-700">
             <button
               onClick={() => activePageIdx > 0 && setCurrentPageIndex(activePageIdx - 1)}
@@ -307,7 +206,6 @@ export default function CompanyProfilePage() {
             </button>
           </div>
 
-          {/* Action Buttons */}
           <button onClick={toggleFullscreen} className="p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 hover:text-white hover:bg-slate-700 transition" title="Fullscreen">
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
@@ -322,33 +220,27 @@ export default function CompanyProfilePage() {
       <div className="flex-1 flex items-start justify-center p-6 sm:p-8 overflow-auto" id="a4-print-area" ref={printRef}>
         <div className="space-y-10 print-all-pages">
           {pages.map((page, idx) => {
-            /* ─── Cover Page ─── */
+            /* ─── PAGE 1: Cover Page ─── */
             if (page.pageType === 'cover') {
               return (
                 <div
                   key={page.id}
-                  className={`a4-page-landscape relative rounded-2xl shadow-2xl overflow-hidden print-page ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
+                  className={`widescreen-page-16-9 relative rounded-2xl shadow-2xl overflow-hidden print-page ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
                   style={{ backgroundColor: page.bgColor || '#00674f' }}
                 >
-                  {/* Subtle diagonal pattern overlay */}
                   <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
                     backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 41px)`,
                   }} />
 
-                  {/* Elegant gold corner frames */}
                   <div className="absolute top-6 left-6 w-24 h-24 border-t-2 border-l-2 border-white/25 rounded-tl-xl" />
                   <div className="absolute top-6 right-6 w-24 h-24 border-t-2 border-r-2 border-white/25 rounded-tr-xl" />
                   <div className="absolute bottom-6 left-6 w-24 h-24 border-b-2 border-l-2 border-white/25 rounded-bl-xl" />
                   <div className="absolute bottom-6 right-6 w-24 h-24 border-b-2 border-r-2 border-white/25 rounded-br-xl" />
 
-                  {/* Top gold accent line */}
                   <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
-                  {/* Bottom gold accent line */}
                   <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
 
-                  {/* Main Content — Centered */}
                   <div className="relative z-10 h-full flex flex-col items-center justify-center px-12 py-8 text-center">
-                    {/* Logo */}
                     {page.logoUrl && (
                       <img
                         src={page.logoUrl}
@@ -357,24 +249,20 @@ export default function CompanyProfilePage() {
                       />
                     )}
 
-                    {/* Company Name */}
                     <h1 className="text-4xl lg:text-5xl font-extrabold tracking-[0.2em] text-white uppercase mb-2" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
                       {page.companyName || 'DIGI TALKS INDIA'}
                     </h1>
 
-                    {/* Tagline */}
                     <h2 className="text-lg lg:text-xl font-medium tracking-wider text-yellow-300/90 mb-3 max-w-2xl">
                       {page.tagline || page.subtitle || 'Corporate Company Profile'}
                     </h2>
 
-                    {/* Gold Divider */}
                     <div className="flex items-center gap-4 my-3">
                       <div className="w-20 h-px bg-gradient-to-r from-transparent to-yellow-400" />
                       <div className="w-2.5 h-2.5 rotate-45 bg-yellow-400 shadow-lg shadow-yellow-400/40" />
                       <div className="w-20 h-px bg-gradient-to-l from-transparent to-yellow-400" />
                     </div>
 
-                    {/* Services Pill / Bullet Row */}
                     {page.services && (
                       <div className="flex flex-wrap items-center justify-center gap-2 max-w-4xl my-3">
                         {page.services.map((srv, sidx) => (
@@ -388,7 +276,6 @@ export default function CompanyProfilePage() {
                       </div>
                     )}
 
-                    {/* Quote / Motto */}
                     {page.quote && (
                       <div className="mt-4 px-6 py-2 rounded-xl bg-black/20 border border-yellow-400/30 text-amber-200 font-serif italic text-base lg:text-lg tracking-wide shadow-inner">
                         {page.quote}
@@ -396,7 +283,6 @@ export default function CompanyProfilePage() {
                     )}
                   </div>
 
-                  {/* Bottom info bar */}
                   <div className="absolute bottom-5 left-0 right-0 flex justify-center">
                     <span className="text-[11px] text-white/30 tracking-[0.4em] uppercase font-medium">
                       Confidential • Corporate Profile
@@ -406,169 +292,587 @@ export default function CompanyProfilePage() {
               );
             }
 
-            /* ─── About Page ─── */
+            /* ─── PAGE 2: About DIGI TALKS INDIA ─── */
             if (page.pageType === 'about') {
               return (
-                <div
-                  key={page.id}
-                  className={`a4-page-landscape relative rounded-2xl shadow-2xl overflow-hidden print-page flex flex-col justify-between ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
-                  style={{ background: 'linear-gradient(135deg, #041813 0%, #082920 50%, #031410 100%)' }}
-                >
-                  {/* Glowing background highlights */}
-                  <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-                  <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
-
-                  {/* Corner Frames */}
-                  <div className="absolute top-4 left-4 w-16 h-16 border-t border-l border-emerald-500/30 rounded-tl-lg" />
-                  <div className="absolute top-4 right-4 w-16 h-16 border-t border-r border-emerald-500/30 rounded-tr-lg" />
-                  <div className="absolute bottom-4 left-4 w-16 h-16 border-b border-l border-emerald-500/30 rounded-bl-lg" />
-                  <div className="absolute bottom-4 right-4 w-16 h-16 border-b border-r border-emerald-500/30 rounded-br-lg" />
-
-                  {/* Top & Bottom Accent Lines */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-yellow-400 to-emerald-500" />
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-yellow-400 to-emerald-500" />
-
-                  {/* Header Bar */}
-                  <div className="relative z-10 px-10 pt-6 pb-4 flex items-center justify-between border-b border-emerald-800/30">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-bold uppercase tracking-widest shadow-inner">
-                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>{page.badge || 'Company Overview'}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-emerald-400/60 font-mono">DIGI TALKS INDIA • Page 2 of {pages.length}</span>
-                    </div>
-                  </div>
-
-                  {/* Main Grid Content */}
-                  <div className="relative z-10 px-10 py-6 flex-1 grid grid-cols-12 gap-8 items-center">
-                    {/* Left Column: Text & Features (7 Cols) */}
-                    <motion.div
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="col-span-7 space-y-4"
-                    >
-                      {/* Heading */}
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={2} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="grid grid-cols-12 gap-8 items-center">
+                    <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="col-span-7 space-y-4">
                       <div>
-                        <h2 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
                           <span>About</span>
-                          <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-yellow-400 bg-clip-text text-transparent">
-                            DIGI TALKS INDIA
-                          </span>
+                          <span className="text-[#00674f]">DIGI TALKS INDIA</span>
                         </h2>
-                        <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-yellow-400 rounded-full mt-2" />
+                        <div className="w-20 h-1 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
                       </div>
 
-                      {/* Paragraph 1 */}
-                      <p className="text-slate-200 text-xs lg:text-sm leading-relaxed font-normal bg-emerald-950/40 border border-emerald-800/40 p-4 rounded-xl backdrop-blur-sm shadow-inner">
-                        <strong className="text-emerald-300 font-bold">DIGI TALKS INDIA</strong> is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
+                      <p className="text-slate-800 text-xs lg:text-sm leading-relaxed font-normal bg-emerald-50/80 border border-emerald-200 p-4 rounded-xl shadow-sm">
+                        <strong className="text-[#00674f] font-bold">DIGI TALKS INDIA</strong> is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
                       </p>
 
-                      {/* Paragraph 2 */}
-                      <p className="text-slate-300 text-xs lg:text-sm leading-relaxed font-normal">
+                      <p className="text-slate-600 text-xs lg:text-sm leading-relaxed font-normal">
                         With a strong focus on innovation, quality, and long-term partnerships, we help organizations transform ideas into powerful digital solutions.
                       </p>
 
-                      {/* Highlight Pillars */}
                       <div className="grid grid-cols-3 gap-3 pt-1">
-                        <div className="p-3 rounded-xl bg-slate-900/70 border border-emerald-500/30 flex flex-col gap-1 hover:border-emerald-400/60 transition group">
-                          <Cpu className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition" />
-                          <h4 className="text-xs font-bold text-white">Software & AI</h4>
-                          <p className="text-[11px] text-slate-400">Scalable Engineering</p>
+                        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-emerald-500 transition group">
+                          <Cpu className="w-5 h-5 text-[#00674f] group-hover:scale-110 transition" />
+                          <h4 className="text-xs font-bold text-slate-900">Software & AI</h4>
+                          <p className="text-[11px] text-slate-500">Scalable Engineering</p>
                         </div>
-                        <div className="p-3 rounded-xl bg-slate-900/70 border border-emerald-500/30 flex flex-col gap-1 hover:border-yellow-400/60 transition group">
-                          <Zap className="w-5 h-5 text-yellow-400 group-hover:scale-110 transition" />
-                          <h4 className="text-xs font-bold text-white">Automation</h4>
-                          <p className="text-[11px] text-slate-400">Enterprise Workflows</p>
+                        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-amber-500 transition group">
+                          <Zap className="w-5 h-5 text-amber-600 group-hover:scale-110 transition" />
+                          <h4 className="text-xs font-bold text-slate-900">Automation</h4>
+                          <p className="text-[11px] text-slate-500">Enterprise Workflows</p>
                         </div>
-                        <div className="p-3 rounded-xl bg-slate-900/70 border border-emerald-500/30 flex flex-col gap-1 hover:border-emerald-400/60 transition group">
-                          <TrendingUp className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition" />
-                          <h4 className="text-xs font-bold text-white">Growth & ROI</h4>
-                          <p className="text-[11px] text-slate-400">Measurable Value</p>
+                        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-emerald-500 transition group">
+                          <TrendingUp className="w-5 h-5 text-[#00674f] group-hover:scale-110 transition" />
+                          <h4 className="text-xs font-bold text-slate-900">Growth & ROI</h4>
+                          <p className="text-[11px] text-slate-500">Measurable Value</p>
                         </div>
                       </div>
                     </motion.div>
 
-                    {/* Right Column: Image Display (5 Cols) */}
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="col-span-5 relative"
-                    >
-                      <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/40 shadow-2xl group">
-                        {/* Glow effect */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 to-yellow-500/20 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none" />
-                        
+                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="col-span-5 relative">
+                      <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-600/30 shadow-xl group">
                         <img
                           src={page.image || '/assets/about-digitalks.jpg'}
                           alt="About DIGI TALKS INDIA"
-                          className="w-full h-[260px] lg:h-[300px] object-cover rounded-xl transform group-hover:scale-105 transition duration-700"
+                          className="w-full h-[260px] lg:h-[290px] object-cover rounded-xl transform group-hover:scale-105 transition duration-700"
                         />
-
-                        {/* Image overlay badge */}
-                        <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-950/85 backdrop-blur-md rounded-xl border border-emerald-500/30 flex items-center justify-between">
+                        <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-emerald-500/30 flex items-center justify-between text-white">
                           <div className="flex items-center gap-2">
                             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                            <span className="text-xs font-bold text-white">Digital Transformation</span>
+                            <span className="text-xs font-bold">Digital Transformation</span>
                           </div>
-                          <span className="text-[11px] font-mono text-yellow-300 font-semibold">Innovation & Scale</span>
+                          <span className="text-[11px] font-mono text-amber-300 font-semibold">Innovation & Scale</span>
                         </div>
                       </div>
                     </motion.div>
                   </div>
-
-                  {/* Footer Bar */}
-                  <div className="relative z-10 px-10 py-3 border-t border-emerald-800/30 flex items-center justify-between text-xs text-emerald-400/50">
-                    <span className="tracking-widest uppercase font-medium">DIGI TALKS INDIA • Corporate Profile</span>
-                    <span className="font-mono">Confidential Document</span>
-                  </div>
-                </div>
+                </InternalPageWrapper>
               );
             }
 
-            /* ─── Standard Markdown Page ─── */
-            return (
-            <div
-              key={page.id}
-              className={`a4-page-landscape relative bg-white rounded-2xl shadow-2xl overflow-hidden print-page ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
-            >
-              {/* Gold top & bottom borders */}
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 no-print-border" />
-              <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 no-print-border" />
-
-              {/* Corner accents */}
-              <div className="absolute top-3 left-3 w-12 h-12 border-t-2 border-l-2 border-amber-400/30 rounded-tl-lg" />
-              <div className="absolute top-3 right-3 w-12 h-12 border-t-2 border-r-2 border-amber-400/30 rounded-tr-lg" />
-              <div className="absolute bottom-3 left-3 w-12 h-12 border-b-2 border-l-2 border-amber-400/30 rounded-bl-lg" />
-              <div className="absolute bottom-3 right-3 w-12 h-12 border-b-2 border-r-2 border-amber-400/30 rounded-br-lg" />
-
-              {/* Watermark */}
-              <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
-                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 60px, #b45309 60px, #b45309 61px)`,
-              }} />
-
-              {/* Content Area */}
-              <div className="relative z-10 px-16 py-12 h-full overflow-auto a4-content">
-                {/* Page header */}
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-200">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center shadow-sm">
-                      <FileText className="w-4 h-4 text-white" />
+            /* ─── PAGE 3: Our Story ─── */
+            if (page.pageType === 'story') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={3} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="max-w-4xl mx-auto space-y-6">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                        <Building2 className="w-8 h-8 text-[#00674f]" />
+                        <span>Our Story</span>
+                      </h2>
+                      <div className="w-20 h-1 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
                     </div>
-                    <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">Digitalks</span>
-                  </div>
-                  <span className="text-xs text-slate-400 font-mono">Page {idx + 1} / {pages.length}</span>
-                </div>
 
-                {/* Page Content */}
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                      <div className="md:col-span-7 space-y-4">
+                        {page.paragraphs && page.paragraphs.map((p, pidx) => (
+                          <p key={pidx} className="text-slate-700 text-sm lg:text-base leading-relaxed">
+                            {p}
+                          </p>
+                        ))}
+                      </div>
+
+                      <div className="md:col-span-5 bg-gradient-to-br from-emerald-50 to-amber-50/50 border-2 border-emerald-600/30 p-6 rounded-2xl shadow-md text-center space-y-3">
+                        <div className="w-12 h-12 bg-[#00674f] text-white rounded-xl flex items-center justify-center mx-auto shadow-md">
+                          <Target className="w-6 h-6" />
+                        </div>
+                        <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-widest">Our Core Purpose</h4>
+                        <p className="text-slate-900 font-bold text-base leading-snug">
+                          "{page.purpose}"
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 4: Vision & Mission ─── */
+            if (page.pageType === 'vision-mission') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={4} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="grid grid-cols-12 gap-8 items-stretch">
+                    {/* Vision Card */}
+                    <div className="col-span-5 bg-gradient-to-br from-[#00674f] to-slate-900 text-white p-7 rounded-2xl shadow-xl flex flex-col justify-between relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+                      <div>
+                        <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/20">
+                          <Eye className="w-6 h-6 text-yellow-300" />
+                        </div>
+                        <h3 className="text-2xl font-extrabold text-white mb-2">Our Vision</h3>
+                        <div className="w-16 h-1 bg-yellow-400 rounded-full mb-4" />
+                        <p className="text-slate-200 text-sm lg:text-base leading-relaxed font-normal">
+                          "{page.vision}"
+                        </p>
+                      </div>
+                      <div className="pt-6 border-t border-white/15 flex items-center gap-2 text-xs text-amber-300 font-mono">
+                        <Sparkles className="w-4 h-4" />
+                        <span>Sustainable Business Growth</span>
+                      </div>
+                    </div>
+
+                    {/* Mission Card */}
+                    <div className="col-span-7 bg-white border border-slate-200 p-7 rounded-2xl shadow-sm flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <Rocket className="w-6 h-6 text-[#00674f]" />
+                          <h3 className="text-2xl font-extrabold text-slate-900">Our Mission</h3>
+                        </div>
+                        <div className="w-16 h-1 bg-[#00674f] rounded-full mb-5" />
+
+                        <div className="space-y-3">
+                          {page.missions && page.missions.map((m, midx) => (
+                            <div key={midx} className="flex items-start gap-3 p-3 rounded-xl bg-emerald-50/60 border border-emerald-200/60">
+                              <CheckCircle2 className="w-5 h-5 text-[#00674f] shrink-0 mt-0.5" />
+                              <span className="text-slate-800 text-sm font-semibold">{m}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 5: Core Services ─── */
+            if (page.pageType === 'services') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={5} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div className="text-center max-w-2xl mx-auto">
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Core Services</h2>
+                      <div className="w-20 h-1 bg-[#00674f] mx-auto rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3 pt-2">
+                      {page.servicesList && page.servicesList.map((srv, sidx) => (
+                        <div key={sidx} className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-[#00674f] hover:shadow-md transition group">
+                          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#00674f] flex items-center justify-center mb-2 group-hover:bg-[#00674f] group-hover:text-white transition">
+                            <Code className="w-4 h-4" />
+                          </div>
+                          <h4 className="text-xs font-bold text-slate-900 mb-0.5">{srv.name}</h4>
+                          <p className="text-[10px] text-slate-500 leading-tight">{srv.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 6: Digital Transformation ─── */
+            if (page.pageType === 'digital-trans') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={6} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                        <Zap className="w-7 h-7 text-amber-500" />
+                        <span>Digital Transformation Services</span>
+                      </h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 pt-2">
+                      {page.items && page.items.map((item, iidx) => (
+                        <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3 hover:border-emerald-500 transition">
+                          <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center shrink-0 mt-0.5 font-mono text-xs font-bold">
+                            0{iidx + 1}
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-bold text-slate-900 mb-0.5">{item.title}</h4>
+                            <p className="text-[11px] text-slate-500 leading-snug">{item.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 7: Software Engineering ─── */
+            if (page.pageType === 'engineering') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={7} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-5">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Software Engineering</h2>
+                      <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">{page.subheading}</p>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3">
+                      {page.pillars && page.pillars.map((p, pidx) => (
+                        <div key={pidx} className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-200 text-center space-y-1 shadow-sm">
+                          <ShieldCheck className="w-6 h-6 text-[#00674f] mx-auto" />
+                          <h4 className="text-sm font-extrabold text-slate-900">{p.title}</h4>
+                          <p className="text-[11px] text-slate-500">{p.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-slate-900 text-white text-center border border-slate-800 shadow-md">
+                      <p className="text-xs lg:text-sm font-semibold tracking-wide text-emerald-300">
+                        ✨ {page.outro}
+                      </p>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 8: Industries We Serve ─── */
+            if (page.pageType === 'industries') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={8} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Industries We Serve</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-5 gap-3 pt-2">
+                      {page.industriesList && page.industriesList.map((ind, iidx) => (
+                        <div key={iidx} className="p-3 rounded-xl bg-white border border-slate-200 text-center shadow-sm hover:border-[#00674f] hover:bg-emerald-50/50 transition">
+                          <Building2 className="w-5 h-5 text-[#00674f] mx-auto mb-1" />
+                          <h4 className="text-xs font-bold text-slate-800">{ind.name}</h4>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 9: Technology Expertise ─── */
+            if (page.pageType === 'tech-stack') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={9} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Technology Expertise</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      {page.categories && page.categories.map((cat, cidx) => (
+                        <div key={cidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2">
+                          <h4 className="text-xs font-extrabold text-[#00674f] uppercase tracking-wider">{cat.title}</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {cat.skills.map((skill, skidx) => (
+                              <span key={skidx} className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold">
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 10: Process ─── */
+            if (page.pageType === 'process') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={10} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-5">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Development Process</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-7 gap-2 pt-2">
+                      {page.steps && page.steps.map((st, stidx) => (
+                        <div key={stidx} className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm text-center relative space-y-1">
+                          <span className="text-[10px] font-mono font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">{st.num}</span>
+                          <h4 className="text-xs font-bold text-slate-900">{st.name}</h4>
+                          <p className="text-[10px] text-slate-500 leading-tight">{st.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 11: Why Us ─── */
+            if (page.pageType === 'why-us') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={11} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Why DIGI TALKS INDIA?</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      {page.reasons && page.reasons.map((r, ridx) => (
+                        <div key={ridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3">
+                          <div className="w-6 h-6 rounded-full bg-emerald-100 text-[#00674f] flex items-center justify-center shrink-0">
+                            <Check className="w-4 h-4" />
+                          </div>
+                          <span className="text-sm font-bold text-slate-800">{r}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 12: Values ─── */
+            if (page.pageType === 'values') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={12} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Values</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3">
+                      {page.valuesList && page.valuesList.map((val, vidx) => (
+                        <div key={vidx} className="p-3.5 rounded-xl bg-white border border-emerald-200/80 shadow-sm space-y-1">
+                          <HeartHandshake className="w-5 h-5 text-[#00674f]" />
+                          <h4 className="text-xs font-bold text-slate-900">{val.title}</h4>
+                          <p className="text-[10px] text-slate-500 leading-tight">{val.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 13: What Makes Us Different ─── */
+            if (page.pageType === 'differentiators') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={13} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">What Makes Us Different</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-3">
+                      {page.points && page.points.map((pt, pidx) => (
+                        <div key={pidx} className="p-4 rounded-xl bg-gradient-to-br from-white to-emerald-50/50 border border-slate-200 shadow-sm flex items-center gap-3">
+                          <Sparkles className="w-5 h-5 text-amber-500 shrink-0" />
+                          <span className="text-xs font-bold text-slate-800">{pt}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 14: Engagement Models ─── */
+            if (page.pageType === 'engagement') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={14} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Engagement Models</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-3">
+                      {page.models && page.models.map((mod, midx) => (
+                        <div key={midx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1">
+                          <div className="w-7 h-7 rounded-lg bg-emerald-50 text-[#00674f] flex items-center justify-center font-bold text-xs mb-1">
+                            0{midx + 1}
+                          </div>
+                          <h4 className="text-xs font-extrabold text-slate-900">{mod.name}</h4>
+                          <p className="text-[11px] text-slate-500 leading-tight">{mod.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 15: Quality Standards ─── */
+            if (page.pageType === 'quality') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={15} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Quality Standards</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3">
+                      {page.standardsList && page.standardsList.map((std, sidx) => (
+                        <div key={sidx} className="p-4 rounded-xl bg-white border border-emerald-200 text-center shadow-sm space-y-1">
+                          <ShieldCheck className="w-6 h-6 text-[#00674f] mx-auto" />
+                          <h4 className="text-xs font-bold text-slate-900">{std}</h4>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 16: Our Commitment ─── */
+            if (page.pageType === 'commitment') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={16} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="max-w-3xl mx-auto space-y-6 text-center">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Commitment</h2>
+                      <div className="w-20 h-1 bg-[#00674f] mx-auto rounded-full mt-2" />
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-amber-50 border-2 border-emerald-600/30 shadow-md">
+                      <p className="text-xl font-extrabold text-[#00674f] italic">
+                        "{page.quote}"
+                      </p>
+                    </div>
+
+                    <p className="text-slate-700 text-base leading-relaxed">
+                      {page.statement}
+                    </p>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 17: Future Focus ─── */
+            if (page.pageType === 'future') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={17} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Future Focus</h2>
+                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3">
+                      {page.focusList && page.focusList.map((f, fidx) => (
+                        <div key={fidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1">
+                          <Rocket className="w-5 h-5 text-amber-500 mx-auto" />
+                          <h4 className="text-xs font-bold text-slate-900">{f}</h4>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 18: Our Promise ─── */
+            if (page.pageType === 'promise') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={18} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-6">
+                    <div className="text-center">
+                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Promise</h2>
+                      <div className="w-20 h-1 bg-[#00674f] mx-auto rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-6 gap-3 pt-2">
+                      {page.promiseSteps && page.promiseSteps.map((p, pidx) => (
+                        <div key={pidx} className="p-4 rounded-xl bg-gradient-to-b from-white to-emerald-50 border border-emerald-200 text-center shadow-sm space-y-2">
+                          <div className="w-8 h-8 rounded-full bg-[#00674f] text-white flex items-center justify-center mx-auto text-xs font-bold">
+                            {pidx + 1}
+                          </div>
+                          <h4 className="text-xs font-extrabold text-slate-900">{p}</h4>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 19: Call To Action ─── */
+            if (page.pageType === 'call-to-action') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={19} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="max-w-3xl mx-auto space-y-6 text-center">
+                    <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+                      Let's Build Something Great Together
+                    </h2>
+                    <div className="w-20 h-1 bg-[#00674f] mx-auto rounded-full" />
+
+                    <p className="text-slate-700 text-base leading-relaxed">
+                      {page.message}
+                    </p>
+
+                    <div className="p-5 rounded-2xl bg-[#00674f] text-white shadow-xl">
+                      <h3 className="text-xl font-extrabold text-amber-300">
+                        {page.highlight}
+                      </h3>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 20: Contact Us ─── */
+            if (page.pageType === 'contact') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={20} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="grid grid-cols-12 gap-8 items-center">
+                    <div className="col-span-7 space-y-4">
+                      <div>
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Contact Us</h2>
+                        <h3 className="text-xl font-bold text-[#00674f] mt-1">{page.companyName}</h3>
+                        <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      </div>
+
+                      <div className="space-y-2 pt-2">
+                        <div className="flex items-center gap-3 text-sm text-slate-700">
+                          <Mail className="w-4 h-4 text-[#00674f]" />
+                          <span>contact@digitalksindia.com</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-sm text-slate-700">
+                          <Globe className="w-4 h-4 text-[#00674f]" />
+                          <span>www.digitalksindia.com</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-sm text-slate-700">
+                          <Phone className="w-4 h-4 text-[#00674f]" />
+                          <span>+91 (Contact Support)</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-span-5 bg-gradient-to-br from-emerald-50 to-amber-50 p-6 rounded-2xl border border-emerald-200 shadow-sm space-y-3">
+                      <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Services Summary</h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {page.servicesSummary && page.servicesSummary.map((s, sidx) => (
+                          <span key={sidx} className="px-2.5 py-1 bg-white border border-emerald-200 text-xs font-bold text-slate-800 rounded-md">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-xs italic text-slate-600 font-serif pt-2 border-t border-emerald-200">
+                        "{page.tagline}"
+                      </p>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── Standard Markdown Page Fallback ─── */
+            return (
+              <InternalPageWrapper key={page.id} badge={page.badge || 'Document'} pageNumber={idx + 1} totalPages={pages.length} activePageIdx={activePageIdx}>
                 <div className="a4-reading-content">
                   {renderMarkdown(page.content)}
                 </div>
-              </div>
-            </div>
+              </InternalPageWrapper>
             );
           })}
         </div>
@@ -577,13 +881,13 @@ export default function CompanyProfilePage() {
       {/* Bottom Page Thumbnails */}
       {pages.length > 1 && (
         <div className="no-print bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 px-6 py-3">
-          <div className="flex items-center gap-3 overflow-x-auto">
-            <Layers className="w-4 h-4 text-slate-500 shrink-0" />
+          <div className="flex items-center gap-2 overflow-x-auto">
+            <Layers className="w-4 h-4 text-slate-500 shrink-0 mr-1" />
             {pages.map((page, idx) => (
               <button
                 key={page.id}
                 onClick={() => setCurrentPageIndex(idx)}
-                className={`shrink-0 px-4 py-2 rounded-lg text-xs font-bold transition ${
+                className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
                   idx === activePageIdx
                     ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
                     : 'bg-slate-800 text-slate-400 border border-slate-700 hover:bg-slate-700 hover:text-white'
