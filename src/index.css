@@ -135,28 +135,31 @@
   }
 }
 
-/* ─── A4 Landscape Company Profile Page Styles ─── */
+/* ─── Widescreen (16:9) Company Profile Page Styles (13.33" x 7.5" / 1920x1080) ─── */
+.widescreen-page-16-9,
 .a4-page-landscape {
-  width: 297mm;
-  min-height: 210mm;
+  width: 13.33in;
+  min-height: 7.5in;
   max-width: 100%;
-  aspect-ratio: 297 / 210;
+  aspect-ratio: 16 / 9;
   box-sizing: border-box;
   background: #ffffff;
   position: relative;
 }
 
 /* Responsive scaling for smaller screens */
-@media (max-width: 1200px) {
+@media (max-width: 1350px) {
+  .widescreen-page-16-9,
   .a4-page-landscape {
     width: 95vw;
+    height: auto;
     min-height: auto;
   }
 }
 
-/* A4 Reading Content Typography */
+/* 16:9 Reading Content Typography */
 .a4-reading-content h1 {
-  font-size: 1.75rem;
+  font-size: 1.85rem;
   font-weight: 800;
   color: #0f172a;
   margin-bottom: 1rem;
@@ -164,7 +167,7 @@
 }
 
 .a4-reading-content h2 {
-  font-size: 1.375rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: #92400e;
   margin-top: 1.5rem;
@@ -174,7 +177,7 @@
 }
 
 .a4-reading-content h3 {
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #1e293b;
   margin-top: 1.25rem;
@@ -182,16 +185,16 @@
 }
 
 .a4-reading-content p {
-  font-size: 0.9375rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.75;
   color: #334155;
   margin-bottom: 0.875rem;
 }
 
 .a4-reading-content ul,
 .a4-reading-content ol {
-  font-size: 0.9375rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.75;
   color: #334155;
 }
 
@@ -200,11 +203,11 @@
   display: none;
 }
 
-/* ─── A4 Landscape Print Rules ─── */
+/* ─── Widescreen 16:9 Print Rules ─── */
 @media print {
   @page {
-    size: A4 landscape;
-    margin: 12mm;
+    size: 13.33in 7.5in;
+    margin: 0;
   }
 
   /* Show all pages in print */
@@ -217,9 +220,11 @@
     display: none !important;
   }
 
+  .widescreen-page-16-9,
   .a4-page-landscape {
-    width: 100% !important;
-    min-height: auto !important;
+    width: 13.33in !important;
+    height: 7.5in !important;
+    min-height: 7.5in !important;
     max-width: 100% !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -228,6 +233,7 @@
     margin: 0 !important;
   }
 
+  .widescreen-page-16-9:last-child,
   .a4-page-landscape:last-child {
     page-break-after: auto;
   }

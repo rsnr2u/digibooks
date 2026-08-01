@@ -3156,7 +3156,7 @@ export const BOOKS_DATA = {
     title: "Digitalks Profile",
     teluguTitle: "Corporate Company Profile",
     tagline: "Official Company Profile & Portfolio",
-    description: "Digitalks corporate company profile — our vision, services, portfolio, and capabilities presented in a premium A4 landscape format ready for print.",
+    description: "Digitalks corporate company profile — our vision, services, portfolio, and capabilities presented in a premium Widescreen 16:9 format (13.33 x 7.5 in / 1920x1080) ready for presentation & print.",
     iconName: "Briefcase",
     badge: "Company Profile",
     category: "Corporate",
