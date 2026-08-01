@@ -76,32 +76,25 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
         backgroundImage: `repeating-linear-gradient(45deg, #000, #000 40px, transparent 40px, transparent 80px)`,
       }} />
 
-      {/* Top & Bottom Accent Lines */}
+      {/* Top & Bottom Accent Color Bar */}
       <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00674f] via-amber-400 to-[#00674f]" />
       <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00674f] via-amber-400 to-[#00674f]" />
 
-      {/* Corner Accent Frames */}
-      <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-emerald-600/30 rounded-tl-lg pointer-events-none" />
-      <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-emerald-600/30 rounded-tr-lg pointer-events-none" />
-      <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-emerald-600/30 rounded-bl-lg pointer-events-none" />
-      <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-emerald-600/30 rounded-br-lg pointer-events-none" />
-
-      {/* Header Bar — White BG with Official Logo */}
-      <div className="relative z-10 px-10 pt-5 pb-3 flex items-center justify-between border-b border-slate-200">
-        <div className="flex items-center gap-4">
+      {/* Header Bar — White BG with Clean Logo & Badge Alignment */}
+      <div className="relative z-10 px-8 pt-4 pb-3 flex items-center justify-between border-b border-slate-200">
+        <div className="flex items-center gap-3">
           <img
             src="/assets/digitalks-logo.png"
             alt="Digitalks Logo"
-            className="h-10 object-contain drop-shadow-sm"
+            className="h-9 object-contain drop-shadow-sm"
           />
-          <div className="h-5 w-px bg-slate-300" />
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-[#00674f] text-xs font-bold uppercase tracking-wider shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>{badge || 'Corporate Profile'}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-700 font-mono font-bold">DIGI TALKS INDIA • Page {pageNumber} of {totalPages}</span>
+          <span className="text-xs text-slate-600 font-mono font-bold">DIGI TALKS INDIA • Page {pageNumber} of {totalPages}</span>
         </div>
       </div>
 
@@ -110,10 +103,10 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
         {children}
       </div>
 
-      {/* Footer Bar */}
-      <div className="relative z-10 px-10 py-2.5 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
-        <span className="tracking-widest uppercase font-bold">DIGI TALKS INDIA • Corporate Profile</span>
-        <span className="font-mono font-semibold">Confidential Document</span>
+      {/* Footer Bar — Clean, uncluttered, no overlapping corner lines, no confidential label */}
+      <div className="relative z-10 px-8 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-medium">
+        <span className="tracking-wider uppercase font-bold text-slate-600">DIGI TALKS INDIA • Corporate Profile</span>
+        <span className="font-mono font-bold text-slate-400">Page {pageNumber} of {totalPages}</span>
       </div>
     </div>
   );
@@ -314,11 +307,6 @@ export default function CompanyProfilePage() {
                     backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 41px)`,
                   }} />
 
-                  <div className="absolute top-6 left-6 w-24 h-24 border-t-2 border-l-2 border-white/25 rounded-tl-xl" />
-                  <div className="absolute top-6 right-6 w-24 h-24 border-t-2 border-r-2 border-white/25 rounded-tr-xl" />
-                  <div className="absolute bottom-6 left-6 w-24 h-24 border-b-2 border-l-2 border-white/25 rounded-bl-xl" />
-                  <div className="absolute bottom-6 right-6 w-24 h-24 border-b-2 border-r-2 border-white/25 rounded-br-xl" />
-
                   <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
                   <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
 
@@ -366,8 +354,8 @@ export default function CompanyProfilePage() {
                   </div>
 
                   <div className="absolute bottom-5 left-0 right-0 flex justify-center">
-                    <span className="text-[11px] text-white/40 tracking-[0.4em] uppercase font-bold">
-                      Confidential • Corporate Profile
+                    <span className="text-[11px] text-white/50 tracking-[0.4em] uppercase font-bold">
+                      DIGI TALKS INDIA • Corporate Profile
                     </span>
                   </div>
                 </div>
