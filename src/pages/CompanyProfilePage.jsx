@@ -8,7 +8,7 @@ import {
   Cpu, Zap, TrendingUp, CheckCircle2, Globe, Award, ShieldCheck, Building2, Sparkles, Rocket,
   Activity, GraduationCap, ShoppingBag, Factory, DollarSign, HardHat, Utensils, Landmark, Briefcase, Truck, Store,
   Target, Eye, Code, Layout, Smartphone, Cloud, Link as LinkIcon, RefreshCw, Wrench, ChevronRightCircle,
-  Mail, Phone, MapPin, ExternalLink, HelpCircle, Lock, Server, Database, GitBranch, HeartHandshake, Check, Compass
+  Mail, Phone, MapPin, ExternalLink, HelpCircle, Lock, Server, Database, GitBranch, HeartHandshake, Check, Compass, Users
 } from 'lucide-react';
 import SyntaxHighlighter from '../components/SyntaxHighlighter';
 
@@ -820,10 +820,278 @@ export default function CompanyProfilePage() {
               );
             }
 
-            /* ─── PAGE 20: Contact Us ─── */
-            if (page.pageType === 'contact') {
+            /* ─── PAGE 20: Our Clients Overview ─── */
+            if (page.pageType === 'clients-overview') {
               return (
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={20} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-5">
+                    <div>
+                      <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
+                        <Users className="w-8 h-8 text-[#00674f]" />
+                        <span>OUR CLIENTS</span>
+                      </h2>
+                      <p className="text-sm font-bold text-[#00674f] mt-1">{page.subheading}</p>
+                      <div className="w-24 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-6 items-center">
+                      <div className="col-span-7 space-y-4">
+                        {page.paragraphs && page.paragraphs.map((p, pidx) => (
+                          <p key={pidx} className="text-slate-800 text-sm lg:text-base font-normal leading-relaxed bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                            {p}
+                          </p>
+                        ))}
+                      </div>
+
+                      <div className="col-span-5 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-3">
+                        <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Key Sectors Served</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Landmark className="w-4 h-4 text-[#00674f]" />
+                            <span>Banking & Finance</span>
+                          </div>
+                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Building2 className="w-4 h-4 text-[#00674f]" />
+                            <span>Real Estate</span>
+                          </div>
+                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Cpu className="w-4 h-4 text-[#00674f]" />
+                            <span>Enterprise Software</span>
+                          </div>
+                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Globe className="w-4 h-4 text-[#00674f]" />
+                            <span>Digital Marketing</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 21: Case Study - Guntur Urban Bank ─── */
+            if (page.pageType === 'client-case-bank') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={21} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between border-b border-slate-200 pb-3">
+                      <div>
+                        <span className="text-xs font-bold text-amber-600 uppercase tracking-wider font-mono">Case Study • Banking</span>
+                        <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
+                      </div>
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-[#00674f] hover:bg-[#00674f] hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <span>guntururban.bank.in</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-4">
+                      {/* Overview & Tech */}
+                      <div className="col-span-7 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
+                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
+                          <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Technologies Used</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {page.techStack && page.techStack.map((tech, tidx) => (
+                              <span key={tidx} className="px-2.5 py-1 rounded-md bg-emerald-100/70 border border-emerald-300 text-slate-900 text-[11px] font-bold">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Scope & Benefits */}
+                      <div className="col-span-5 space-y-3">
+                        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                            <CheckCircle2 className="w-4 h-4 text-[#00674f]" />
+                            <span>Business Benefits</span>
+                          </h4>
+                          <div className="grid grid-cols-2 gap-1.5">
+                            {page.benefits && page.benefits.map((b, bidx) => (
+                              <div key={bidx} className="p-1.5 rounded bg-emerald-50 text-[11px] font-bold text-slate-800 border border-emerald-200">
+                                ✓ {b}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 22: Case Study - Sri Savithru Infra Projects ─── */
+            if (page.pageType === 'client-case-realestate-1') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={22} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between border-b border-slate-200 pb-3">
+                      <div>
+                        <span className="text-xs font-bold text-amber-600 uppercase tracking-wider font-mono">Case Study • Real Estate</span>
+                        <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
+                      </div>
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-[#00674f] hover:bg-[#00674f] hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <span>srisavithru.in</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-4">
+                      <div className="col-span-7 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
+                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
+                          <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Services Delivered</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {page.servicesDelivered && page.servicesDelivered.map((srv, sidx) => (
+                              <span key={sidx} className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-slate-800 text-[11px] font-bold">
+                                {srv}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-span-5 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 shadow-sm">
+                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1.5">Business Outcomes</h4>
+                          <div className="space-y-1.5">
+                            {page.outcomes && page.outcomes.map((o, oidx) => (
+                              <div key={oidx} className="flex items-center gap-2 text-xs font-bold text-slate-900">
+                                <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                                <span>{o}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 23: Case Study - Pulagam Properties ─── */
+            if (page.pageType === 'client-case-realestate-2') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={23} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between border-b border-slate-200 pb-3">
+                      <div>
+                        <span className="text-xs font-bold text-amber-600 uppercase tracking-wider font-mono">Case Study • Real Estate</span>
+                        <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
+                      </div>
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-[#00674f] hover:bg-[#00674f] hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <span>pulagamproperties.com</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-4">
+                      <div className="col-span-7 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
+                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
+                          <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Services Delivered</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {page.servicesDelivered && page.servicesDelivered.map((srv, sidx) => (
+                              <span key={sidx} className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-slate-800 text-[11px] font-bold">
+                                {srv}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-span-5 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 shadow-sm">
+                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1.5">Business Outcomes</h4>
+                          <div className="space-y-1.5">
+                            {page.outcomes && page.outcomes.map((o, oidx) => (
+                              <div key={oidx} className="flex items-center gap-2 text-xs font-bold text-slate-900">
+                                <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                                <span>{o}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 24: Capabilities ─── */
+            if (page.pageType === 'capabilities') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={24} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Capabilities</h2>
+                      <p className="text-xs text-[#00674f] font-bold uppercase tracking-wider mt-1">{page.subheading}</p>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3 pt-2">
+                      {page.capabilitiesList && page.capabilitiesList.map((cap, cidx) => (
+                        <div key={cidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3 hover:border-[#00674f] transition">
+                          <CheckCircle2 className="w-5 h-5 text-[#00674f] shrink-0" />
+                          <span className="text-xs font-bold text-slate-900">{cap}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 25: Growing Together ─── */
+            if (page.pageType === 'growing-together') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={25} totalPages={pages.length} activePageIdx={activePageIdx}>
+                  <div className="max-w-3xl mx-auto space-y-6 text-center">
+                    <div>
+                      <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Growing Together</h2>
+                      <div className="w-24 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-300 shadow-md">
+                      <p className="text-slate-800 text-base lg:text-lg font-bold leading-relaxed">
+                        "{page.message}"
+                      </p>
+                    </div>
+
+                    <div className="flex justify-center gap-3">
+                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Banking</span>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Real Estate</span>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Enterprise Software</span>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Healthcare</span>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Retail</span>
+                    </div>
+                  </div>
+                </InternalPageWrapper>
+              );
+            }
+
+            /* ─── PAGE 26: Contact Us ─── */
+            if (page.pageType === 'contact') {
+              return (
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={26} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="grid grid-cols-12 gap-8 items-center">
                     <div className="col-span-7 space-y-5">
                       <div>
