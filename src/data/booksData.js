@@ -3162,7 +3162,7 @@ export const BOOKS_DATA = {
     category: "Corporate",
     difficulty: "Executive",
     estimatedHours: "10 min",
-    chaptersCount: 1,
+    chaptersCount: 2,
     isA4Profile: true,
     accentColor: "from-amber-600 to-yellow-600",
     cardBg: "bg-white",
@@ -3178,6 +3178,18 @@ export const BOOKS_DATA = {
         quote: '"Building Technology That Builds Businesses"',
         bgColor: "#00674f",
         logoUrl: "/assets/digitalks-logo.png"
+      },
+      {
+        id: "page-2-about",
+        chapterNumber: 2,
+        title: "Page 2: About DIGI TALKS INDIA",
+        pageType: "about",
+        heading: "About DIGI TALKS INDIA",
+        badge: "Company Overview",
+        image: "/assets/about-digitalks.jpg",
+        content: `DIGI TALKS INDIA is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
+
+With a strong focus on innovation, quality, and long-term partnerships, we help organizations transform ideas into powerful digital solutions.`
       }
     ]
   }

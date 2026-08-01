@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { BOOKS_DATA } from '../data/booksData';
 import {
   Home, Printer, ChevronLeft, ChevronRight, Maximize2, Minimize2,
-  FileText, Layers, ArrowLeft, Share2, Download
+  FileText, Layers, ArrowLeft, Share2, Download,
+  Cpu, Zap, TrendingUp, CheckCircle2, Globe, Award, ShieldCheck, Building2, Sparkles, Rocket
 } from 'lucide-react';
 import SyntaxHighlighter from '../components/SyntaxHighlighter';
 
@@ -191,7 +193,7 @@ export default function CompanyProfilePage() {
   const hasPages = pages.length > 0;
 
   // Find page by chapterId or use index
-  let activePageIdx = 0;
+  let activePageIdx = currentPageIndex;
   if (chapterId) {
     const found = pages.findIndex(p => p.id === chapterId);
     if (found !== -1) activePageIdx = found;
@@ -399,6 +401,129 @@ export default function CompanyProfilePage() {
                     <span className="text-[11px] text-white/30 tracking-[0.4em] uppercase font-medium">
                       Confidential • Corporate Profile
                     </span>
+                  </div>
+                </div>
+              );
+            }
+
+            /* ─── About Page ─── */
+            if (page.pageType === 'about') {
+              return (
+                <div
+                  key={page.id}
+                  className={`a4-page-landscape relative rounded-2xl shadow-2xl overflow-hidden print-page flex flex-col justify-between ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
+                  style={{ background: 'linear-gradient(135deg, #041813 0%, #082920 50%, #031410 100%)' }}
+                >
+                  {/* Glowing background highlights */}
+                  <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+                  <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
+
+                  {/* Corner Frames */}
+                  <div className="absolute top-4 left-4 w-16 h-16 border-t border-l border-emerald-500/30 rounded-tl-lg" />
+                  <div className="absolute top-4 right-4 w-16 h-16 border-t border-r border-emerald-500/30 rounded-tr-lg" />
+                  <div className="absolute bottom-4 left-4 w-16 h-16 border-b border-l border-emerald-500/30 rounded-bl-lg" />
+                  <div className="absolute bottom-4 right-4 w-16 h-16 border-b border-r border-emerald-500/30 rounded-br-lg" />
+
+                  {/* Top & Bottom Accent Lines */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-yellow-400 to-emerald-500" />
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-yellow-400 to-emerald-500" />
+
+                  {/* Header Bar */}
+                  <div className="relative z-10 px-10 pt-6 pb-4 flex items-center justify-between border-b border-emerald-800/30">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-bold uppercase tracking-widest shadow-inner">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>{page.badge || 'Company Overview'}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-emerald-400/60 font-mono">DIGI TALKS INDIA • Page 2 of {pages.length}</span>
+                    </div>
+                  </div>
+
+                  {/* Main Grid Content */}
+                  <div className="relative z-10 px-10 py-6 flex-1 grid grid-cols-12 gap-8 items-center">
+                    {/* Left Column: Text & Features (7 Cols) */}
+                    <motion.div
+                      initial={{ opacity: 0, x: -30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="col-span-7 space-y-4"
+                    >
+                      {/* Heading */}
+                      <div>
+                        <h2 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                          <span>About</span>
+                          <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-yellow-400 bg-clip-text text-transparent">
+                            DIGI TALKS INDIA
+                          </span>
+                        </h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-yellow-400 rounded-full mt-2" />
+                      </div>
+
+                      {/* Paragraph 1 */}
+                      <p className="text-slate-200 text-xs lg:text-sm leading-relaxed font-normal bg-emerald-950/40 border border-emerald-800/40 p-4 rounded-xl backdrop-blur-sm shadow-inner">
+                        <strong className="text-emerald-300 font-bold">DIGI TALKS INDIA</strong> is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
+                      </p>
+
+                      {/* Paragraph 2 */}
+                      <p className="text-slate-300 text-xs lg:text-sm leading-relaxed font-normal">
+                        With a strong focus on innovation, quality, and long-term partnerships, we help organizations transform ideas into powerful digital solutions.
+                      </p>
+
+                      {/* Highlight Pillars */}
+                      <div className="grid grid-cols-3 gap-3 pt-1">
+                        <div className="p-3 rounded-xl bg-slate-900/70 border border-emerald-500/30 flex flex-col gap-1 hover:border-emerald-400/60 transition group">
+                          <Cpu className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition" />
+                          <h4 className="text-xs font-bold text-white">Software & AI</h4>
+                          <p className="text-[11px] text-slate-400">Scalable Engineering</p>
+                        </div>
+                        <div className="p-3 rounded-xl bg-slate-900/70 border border-emerald-500/30 flex flex-col gap-1 hover:border-yellow-400/60 transition group">
+                          <Zap className="w-5 h-5 text-yellow-400 group-hover:scale-110 transition" />
+                          <h4 className="text-xs font-bold text-white">Automation</h4>
+                          <p className="text-[11px] text-slate-400">Enterprise Workflows</p>
+                        </div>
+                        <div className="p-3 rounded-xl bg-slate-900/70 border border-emerald-500/30 flex flex-col gap-1 hover:border-emerald-400/60 transition group">
+                          <TrendingUp className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition" />
+                          <h4 className="text-xs font-bold text-white">Growth & ROI</h4>
+                          <p className="text-[11px] text-slate-400">Measurable Value</p>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Right Column: Image Display (5 Cols) */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="col-span-5 relative"
+                    >
+                      <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/40 shadow-2xl group">
+                        {/* Glow effect */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 to-yellow-500/20 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none" />
+                        
+                        <img
+                          src={page.image || '/assets/about-digitalks.jpg'}
+                          alt="About DIGI TALKS INDIA"
+                          className="w-full h-[260px] lg:h-[300px] object-cover rounded-xl transform group-hover:scale-105 transition duration-700"
+                        />
+
+                        {/* Image overlay badge */}
+                        <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-950/85 backdrop-blur-md rounded-xl border border-emerald-500/30 flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                            <span className="text-xs font-bold text-white">Digital Transformation</span>
+                          </div>
+                          <span className="text-[11px] font-mono text-yellow-300 font-semibold">Innovation & Scale</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Footer Bar */}
+                  <div className="relative z-10 px-10 py-3 border-t border-emerald-800/30 flex items-center justify-between text-xs text-emerald-400/50">
+                    <span className="tracking-widest uppercase font-medium">DIGI TALKS INDIA • Corporate Profile</span>
+                    <span className="font-mono">Confidential Document</span>
                   </div>
                 </div>
               );
