@@ -3501,6 +3501,9 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
         badge: "Get In Touch",
         heading: "Contact Us",
         companyName: "DIGI TALKS INDIA",
+        phone: "+91 9966 824 854",
+        email: "contact@digitalksindia.com",
+        website: "www.digitalksindia.com",
         servicesSummary: ["Technology Solutions", "Software Development", "Digital Transformation", "Enterprise Applications", "Web & Mobile Solutions", "AI Ready Platforms"],
         tagline: "Empowering Businesses Through Digital Innovation"
       }

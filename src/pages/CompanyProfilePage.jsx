@@ -23,22 +23,22 @@ function renderMarkdown(text) {
     const line = lines[i];
     if (line.trim() === '') { i++; continue; }
     if (/^---+$/.test(line.trim())) {
-      elements.push(<hr key={i} className="my-6 border-amber-200/40" />);
+      elements.push(<hr key={i} className="my-6 border-emerald-300" />);
       i++; continue;
     }
     if (line.startsWith('# ')) {
-      elements.push(<h1 key={i} className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">{parseInline(line.slice(2))}</h1>);
+      elements.push(<h1 key={i} className="text-3xl font-bold text-slate-900 mb-4 tracking-tight">{parseInline(line.slice(2))}</h1>);
       i++; continue;
     }
     if (line.startsWith('## ')) {
-      elements.push(<h2 key={i} className="text-2xl font-bold text-amber-800 mt-6 mb-3 border-b border-amber-200/50 pb-2">{parseInline(line.slice(3))}</h2>);
+      elements.push(<h2 key={i} className="text-2xl font-bold text-[#00674f] mt-6 mb-3 border-b border-emerald-200 pb-2">{parseInline(line.slice(3))}</h2>);
       i++; continue;
     }
     if (line.startsWith('### ')) {
       elements.push(<h3 key={i} className="text-xl font-semibold text-slate-800 mt-5 mb-2">{parseInline(line.slice(4))}</h3>);
       i++; continue;
     }
-    elements.push(<p key={i} className="text-slate-700 text-base leading-relaxed mb-4">{parseInline(line)}</p>);
+    elements.push(<p key={i} className="text-slate-800 text-base font-normal leading-relaxed mb-4">{parseInline(line)}</p>);
     i++;
   }
   return elements;
@@ -72,7 +72,7 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
       className={`widescreen-page-16-9 relative bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden print-page flex flex-col justify-between ${activePageIdx !== undefined && activePageIdx !== (pageNumber - 1) ? 'hidden-on-screen' : ''}`}
     >
       {/* Subtle decorative background grid */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: `repeating-linear-gradient(45deg, #000, #000 40px, transparent 40px, transparent 80px)`,
       }} />
 
@@ -81,27 +81,27 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
       <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00674f] via-amber-400 to-[#00674f]" />
 
       {/* Corner Accent Frames */}
-      <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-emerald-600/20 rounded-tl-lg pointer-events-none" />
-      <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-emerald-600/20 rounded-tr-lg pointer-events-none" />
-      <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-emerald-600/20 rounded-bl-lg pointer-events-none" />
-      <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-emerald-600/20 rounded-br-lg pointer-events-none" />
+      <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-emerald-600/30 rounded-tl-lg pointer-events-none" />
+      <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-emerald-600/30 rounded-tr-lg pointer-events-none" />
+      <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-emerald-600/30 rounded-bl-lg pointer-events-none" />
+      <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-emerald-600/30 rounded-br-lg pointer-events-none" />
 
       {/* Header Bar — White BG with Official Logo */}
-      <div className="relative z-10 px-10 pt-5 pb-3 flex items-center justify-between border-b border-slate-200/80">
+      <div className="relative z-10 px-10 pt-5 pb-3 flex items-center justify-between border-b border-slate-200">
         <div className="flex items-center gap-4">
           <img
             src="/assets/digitalks-logo.png"
             alt="Digitalks Logo"
             className="h-10 object-contain drop-shadow-sm"
           />
-          <div className="h-4 w-px bg-slate-300" />
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-[#00674f] text-xs font-bold uppercase tracking-wider">
+          <div className="h-5 w-px bg-slate-300" />
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-[#00674f] text-xs font-bold uppercase tracking-wider shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>{badge || 'Corporate Profile'}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400 font-mono font-semibold">DIGI TALKS INDIA • Page {pageNumber} of {totalPages}</span>
+          <span className="text-xs text-slate-700 font-mono font-bold">DIGI TALKS INDIA • Page {pageNumber} of {totalPages}</span>
         </div>
       </div>
 
@@ -111,9 +111,9 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
       </div>
 
       {/* Footer Bar */}
-      <div className="relative z-10 px-10 py-2.5 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-400">
-        <span className="tracking-widest uppercase font-medium">DIGI TALKS INDIA • Corporate Profile</span>
-        <span className="font-mono">Confidential Document</span>
+      <div className="relative z-10 px-10 py-2.5 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
+        <span className="tracking-widest uppercase font-bold">DIGI TALKS INDIA • Corporate Profile</span>
+        <span className="font-mono font-semibold">Confidential Document</span>
       </div>
     </div>
   );
@@ -249,11 +249,11 @@ export default function CompanyProfilePage() {
                       />
                     )}
 
-                    <h1 className="text-4xl lg:text-5xl font-extrabold tracking-[0.2em] text-white uppercase mb-2" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
+                    <h1 className="text-4xl lg:text-5xl font-bold tracking-[0.2em] text-white uppercase mb-2" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
                       {page.companyName || 'DIGI TALKS INDIA'}
                     </h1>
 
-                    <h2 className="text-lg lg:text-xl font-medium tracking-wider text-yellow-300/90 mb-3 max-w-2xl">
+                    <h2 className="text-lg lg:text-xl font-semibold tracking-wider text-yellow-300 mb-3 max-w-2xl">
                       {page.tagline || page.subtitle || 'Corporate Company Profile'}
                     </h2>
 
@@ -268,7 +268,7 @@ export default function CompanyProfilePage() {
                         {page.services.map((srv, sidx) => (
                           <span
                             key={sidx}
-                            className="px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs lg:text-sm font-semibold tracking-wide shadow-sm"
+                            className="px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white text-xs lg:text-sm font-semibold tracking-wide shadow-sm"
                           >
                             {srv}
                           </span>
@@ -277,14 +277,14 @@ export default function CompanyProfilePage() {
                     )}
 
                     {page.quote && (
-                      <div className="mt-4 px-6 py-2 rounded-xl bg-black/20 border border-yellow-400/30 text-amber-200 font-serif italic text-base lg:text-lg tracking-wide shadow-inner">
+                      <div className="mt-4 px-6 py-2 rounded-xl bg-black/25 border border-yellow-400/40 text-amber-200 font-serif italic text-base lg:text-lg font-semibold tracking-wide shadow-inner">
                         {page.quote}
                       </div>
                     )}
                   </div>
 
                   <div className="absolute bottom-5 left-0 right-0 flex justify-center">
-                    <span className="text-[11px] text-white/30 tracking-[0.4em] uppercase font-medium">
+                    <span className="text-[11px] text-white/40 tracking-[0.4em] uppercase font-bold">
                       Confidential • Corporate Profile
                     </span>
                   </div>
@@ -299,53 +299,53 @@ export default function CompanyProfilePage() {
                   <div className="grid grid-cols-12 gap-8 items-center">
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="col-span-7 space-y-4">
                       <div>
-                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                        <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
                           <span>About</span>
                           <span className="text-[#00674f]">DIGI TALKS INDIA</span>
                         </h2>
-                        <div className="w-20 h-1 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
+                        <div className="w-24 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
                       </div>
 
-                      <p className="text-slate-800 text-xs lg:text-sm leading-relaxed font-normal bg-emerald-50/80 border border-emerald-200 p-4 rounded-xl shadow-sm">
+                      <p className="text-slate-800 text-sm lg:text-base leading-relaxed font-normal bg-emerald-50 border border-emerald-200 p-4 rounded-xl shadow-sm">
                         <strong className="text-[#00674f] font-bold">DIGI TALKS INDIA</strong> is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
                       </p>
 
-                      <p className="text-slate-600 text-xs lg:text-sm leading-relaxed font-normal">
+                      <p className="text-slate-700 text-sm lg:text-base leading-relaxed font-normal">
                         With a strong focus on innovation, quality, and long-term partnerships, we help organizations transform ideas into powerful digital solutions.
                       </p>
 
                       <div className="grid grid-cols-3 gap-3 pt-1">
-                        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-emerald-500 transition group">
-                          <Cpu className="w-5 h-5 text-[#00674f] group-hover:scale-110 transition" />
-                          <h4 className="text-xs font-bold text-slate-900">Software & AI</h4>
-                          <p className="text-[11px] text-slate-500">Scalable Engineering</p>
+                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-[#00674f] transition group">
+                          <Cpu className="w-6 h-6 text-[#00674f] group-hover:scale-110 transition" />
+                          <h4 className="text-sm font-bold text-slate-900">Software & AI</h4>
+                          <p className="text-xs text-slate-600 font-normal">Scalable Engineering</p>
                         </div>
-                        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-amber-500 transition group">
-                          <Zap className="w-5 h-5 text-amber-600 group-hover:scale-110 transition" />
-                          <h4 className="text-xs font-bold text-slate-900">Automation</h4>
-                          <p className="text-[11px] text-slate-500">Enterprise Workflows</p>
+                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-amber-500 transition group">
+                          <Zap className="w-6 h-6 text-amber-600 group-hover:scale-110 transition" />
+                          <h4 className="text-sm font-bold text-slate-900">Automation</h4>
+                          <p className="text-xs text-slate-600 font-normal">Enterprise Workflows</p>
                         </div>
-                        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-emerald-500 transition group">
-                          <TrendingUp className="w-5 h-5 text-[#00674f] group-hover:scale-110 transition" />
-                          <h4 className="text-xs font-bold text-slate-900">Growth & ROI</h4>
-                          <p className="text-[11px] text-slate-500">Measurable Value</p>
+                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-[#00674f] transition group">
+                          <TrendingUp className="w-6 h-6 text-[#00674f] group-hover:scale-110 transition" />
+                          <h4 className="text-sm font-bold text-slate-900">Growth & ROI</h4>
+                          <p className="text-xs text-slate-600 font-normal">Measurable Value</p>
                         </div>
                       </div>
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="col-span-5 relative">
-                      <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-600/30 shadow-xl group">
+                      <div className="relative rounded-2xl overflow-hidden border border-[#00674f]/40 shadow-xl group">
                         <img
                           src={page.image || '/assets/about-digitalks.jpg'}
                           alt="About DIGI TALKS INDIA"
                           className="w-full h-[260px] lg:h-[290px] object-cover rounded-xl transform group-hover:scale-105 transition duration-700"
                         />
-                        <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-emerald-500/30 flex items-center justify-between text-white">
+                        <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-emerald-400/40 flex items-center justify-between text-white">
                           <div className="flex items-center gap-2">
                             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                             <span className="text-xs font-bold">Digital Transformation</span>
                           </div>
-                          <span className="text-[11px] font-mono text-amber-300 font-semibold">Innovation & Scale</span>
+                          <span className="text-[11px] font-mono text-amber-300 font-bold">Innovation & Scale</span>
                         </div>
                       </div>
                     </motion.div>
@@ -360,28 +360,28 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={3} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="max-w-4xl mx-auto space-y-6">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
                         <Building2 className="w-8 h-8 text-[#00674f]" />
                         <span>Our Story</span>
                       </h2>
-                      <div className="w-20 h-1 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
+                      <div className="w-20 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                       <div className="md:col-span-7 space-y-4">
                         {page.paragraphs && page.paragraphs.map((p, pidx) => (
-                          <p key={pidx} className="text-slate-700 text-sm lg:text-base leading-relaxed">
+                          <p key={pidx} className="text-slate-800 text-sm lg:text-base font-normal leading-relaxed">
                             {p}
                           </p>
                         ))}
                       </div>
 
-                      <div className="md:col-span-5 bg-gradient-to-br from-emerald-50 to-amber-50/50 border-2 border-emerald-600/30 p-6 rounded-2xl shadow-md text-center space-y-3">
+                      <div className="md:col-span-5 bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 p-6 rounded-2xl shadow-md text-center space-y-3">
                         <div className="w-12 h-12 bg-[#00674f] text-white rounded-xl flex items-center justify-center mx-auto shadow-md">
                           <Target className="w-6 h-6" />
                         </div>
                         <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-widest">Our Core Purpose</h4>
-                        <p className="text-slate-900 font-bold text-base leading-snug">
+                        <p className="text-slate-900 font-bold text-base lg:text-lg leading-snug">
                           "{page.purpose}"
                         </p>
                       </div>
@@ -400,35 +400,35 @@ export default function CompanyProfilePage() {
                     <div className="col-span-5 bg-gradient-to-br from-[#00674f] to-slate-900 text-white p-7 rounded-2xl shadow-xl flex flex-col justify-between relative overflow-hidden">
                       <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-2xl pointer-events-none" />
                       <div>
-                        <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/20">
+                        <div className="w-12 h-12 bg-white/15 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/30">
                           <Eye className="w-6 h-6 text-yellow-300" />
                         </div>
-                        <h3 className="text-2xl font-extrabold text-white mb-2">Our Vision</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2">Our Vision</h3>
                         <div className="w-16 h-1 bg-yellow-400 rounded-full mb-4" />
-                        <p className="text-slate-200 text-sm lg:text-base leading-relaxed font-normal">
+                        <p className="text-slate-100 text-sm lg:text-base leading-relaxed font-normal">
                           "{page.vision}"
                         </p>
                       </div>
-                      <div className="pt-6 border-t border-white/15 flex items-center gap-2 text-xs text-amber-300 font-mono">
+                      <div className="pt-6 border-t border-white/20 flex items-center gap-2 text-xs text-amber-300 font-bold font-mono">
                         <Sparkles className="w-4 h-4" />
                         <span>Sustainable Business Growth</span>
                       </div>
                     </div>
 
                     {/* Mission Card */}
-                    <div className="col-span-7 bg-white border border-slate-200 p-7 rounded-2xl shadow-sm flex flex-col justify-between">
+                    <div className="col-span-7 bg-white border border-slate-200 p-7 rounded-2xl shadow-md flex flex-col justify-between">
                       <div>
                         <div className="flex items-center gap-3 mb-2">
-                          <Rocket className="w-6 h-6 text-[#00674f]" />
-                          <h3 className="text-2xl font-extrabold text-slate-900">Our Mission</h3>
+                          <Rocket className="w-7 h-7 text-[#00674f]" />
+                          <h3 className="text-2xl font-bold text-slate-900">Our Mission</h3>
                         </div>
-                        <div className="w-16 h-1 bg-[#00674f] rounded-full mb-5" />
+                        <div className="w-16 h-1.5 bg-[#00674f] rounded-full mb-5" />
 
                         <div className="space-y-3">
                           {page.missions && page.missions.map((m, midx) => (
-                            <div key={midx} className="flex items-start gap-3 p-3 rounded-xl bg-emerald-50/60 border border-emerald-200/60">
+                            <div key={midx} className="flex items-start gap-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200">
                               <CheckCircle2 className="w-5 h-5 text-[#00674f] shrink-0 mt-0.5" />
-                              <span className="text-slate-800 text-sm font-semibold">{m}</span>
+                              <span className="text-slate-900 text-sm lg:text-base font-bold">{m}</span>
                             </div>
                           ))}
                         </div>
@@ -445,18 +445,18 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={5} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div className="text-center max-w-2xl mx-auto">
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Core Services</h2>
-                      <div className="w-20 h-1 bg-[#00674f] mx-auto rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Core Services</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-4 gap-3 pt-2">
                       {page.servicesList && page.servicesList.map((srv, sidx) => (
-                        <div key={sidx} className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-[#00674f] hover:shadow-md transition group">
-                          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#00674f] flex items-center justify-center mb-2 group-hover:bg-[#00674f] group-hover:text-white transition">
-                            <Code className="w-4 h-4" />
+                        <div key={sidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-[#00674f] hover:bg-emerald-50/40 transition group">
+                          <div className="w-8 h-8 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center mb-2 group-hover:bg-[#00674f] group-hover:text-white transition">
+                            <Code className="w-4.5 h-4.5" />
                           </div>
-                          <h4 className="text-xs font-bold text-slate-900 mb-0.5">{srv.name}</h4>
-                          <p className="text-[10px] text-slate-500 leading-tight">{srv.desc}</p>
+                          <h4 className="text-xs font-bold text-slate-900 mb-1">{srv.name}</h4>
+                          <p className="text-[11px] text-slate-600 font-normal leading-snug">{srv.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -471,22 +471,22 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={6} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
                         <Zap className="w-7 h-7 text-amber-500" />
                         <span>Digital Transformation Services</span>
                       </h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 pt-2">
                       {page.items && page.items.map((item, iidx) => (
-                        <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3 hover:border-emerald-500 transition">
+                        <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3 hover:border-[#00674f] transition">
                           <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center shrink-0 mt-0.5 font-mono text-xs font-bold">
                             0{iidx + 1}
                           </div>
                           <div>
                             <h4 className="text-xs font-bold text-slate-900 mb-0.5">{item.title}</h4>
-                            <p className="text-[11px] text-slate-500 leading-snug">{item.desc}</p>
+                            <p className="text-[11px] text-slate-600 font-normal leading-snug">{item.desc}</p>
                           </div>
                         </div>
                       ))}
@@ -502,23 +502,23 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={7} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-5">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Software Engineering</h2>
-                      <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">{page.subheading}</p>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Software Engineering</h2>
+                      <p className="text-xs text-[#00674f] font-bold uppercase tracking-wider mt-1">{page.subheading}</p>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-4 gap-3">
                       {page.pillars && page.pillars.map((p, pidx) => (
-                        <div key={pidx} className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-200 text-center space-y-1 shadow-sm">
+                        <div key={pidx} className="p-4 rounded-xl bg-white border border-emerald-200 text-center space-y-1 shadow-sm hover:border-[#00674f] transition">
                           <ShieldCheck className="w-6 h-6 text-[#00674f] mx-auto" />
-                          <h4 className="text-sm font-extrabold text-slate-900">{p.title}</h4>
-                          <p className="text-[11px] text-slate-500">{p.desc}</p>
+                          <h4 className="text-sm font-bold text-slate-900">{p.title}</h4>
+                          <p className="text-[11px] text-slate-600 font-normal">{p.desc}</p>
                         </div>
                       ))}
                     </div>
 
-                    <div className="p-4 rounded-xl bg-slate-900 text-white text-center border border-slate-800 shadow-md">
-                      <p className="text-xs lg:text-sm font-semibold tracking-wide text-emerald-300">
+                    <div className="p-4 rounded-xl bg-[#00674f] text-white text-center border border-emerald-400 shadow-md">
+                      <p className="text-xs lg:text-sm font-bold tracking-wide text-amber-200">
                         ✨ {page.outro}
                       </p>
                     </div>
@@ -533,15 +533,15 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={8} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Industries We Serve</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Industries We Serve</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-5 gap-3 pt-2">
                       {page.industriesList && page.industriesList.map((ind, iidx) => (
-                        <div key={iidx} className="p-3 rounded-xl bg-white border border-slate-200 text-center shadow-sm hover:border-[#00674f] hover:bg-emerald-50/50 transition">
-                          <Building2 className="w-5 h-5 text-[#00674f] mx-auto mb-1" />
-                          <h4 className="text-xs font-bold text-slate-800">{ind.name}</h4>
+                        <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 text-center shadow-sm hover:border-[#00674f] hover:bg-emerald-50/60 transition">
+                          <Building2 className="w-6 h-6 text-[#00674f] mx-auto mb-1.5" />
+                          <h4 className="text-xs font-bold text-slate-900">{ind.name}</h4>
                         </div>
                       ))}
                     </div>
@@ -556,17 +556,17 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={9} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Technology Expertise</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Technology Expertise</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       {page.categories && page.categories.map((cat, cidx) => (
                         <div key={cidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2">
-                          <h4 className="text-xs font-extrabold text-[#00674f] uppercase tracking-wider">{cat.title}</h4>
-                          <div className="flex flex-wrap gap-1.5">
+                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">{cat.title}</h4>
+                          <div className="flex flex-wrap gap-2">
                             {cat.skills.map((skill, skidx) => (
-                              <span key={skidx} className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold">
+                              <span key={skidx} className="px-3 py-1 rounded-md bg-emerald-50 border border-emerald-300 text-slate-900 text-xs font-bold shadow-sm">
                                 {skill}
                               </span>
                             ))}
@@ -585,16 +585,16 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={10} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-5">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Development Process</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Development Process</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-7 gap-2 pt-2">
                       {page.steps && page.steps.map((st, stidx) => (
-                        <div key={stidx} className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm text-center relative space-y-1">
-                          <span className="text-[10px] font-mono font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">{st.num}</span>
-                          <h4 className="text-xs font-bold text-slate-900">{st.name}</h4>
-                          <p className="text-[10px] text-slate-500 leading-tight">{st.desc}</p>
+                        <div key={stidx} className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1 hover:border-[#00674f] transition">
+                          <span className="text-xs font-mono font-bold text-[#00674f] bg-emerald-100 px-2 py-0.5 rounded-full">{st.num}</span>
+                          <h4 className="text-xs font-bold text-slate-900 mt-1">{st.name}</h4>
+                          <p className="text-[10px] text-slate-600 font-normal leading-tight">{st.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -609,17 +609,17 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={11} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Why DIGI TALKS INDIA?</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Why DIGI TALKS INDIA?</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       {page.reasons && page.reasons.map((r, ridx) => (
-                        <div key={ridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3">
-                          <div className="w-6 h-6 rounded-full bg-emerald-100 text-[#00674f] flex items-center justify-center shrink-0">
+                        <div key={ridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3 hover:border-emerald-500 transition">
+                          <div className="w-7 h-7 rounded-full bg-[#00674f] text-white flex items-center justify-center shrink-0 shadow-sm">
                             <Check className="w-4 h-4" />
                           </div>
-                          <span className="text-sm font-bold text-slate-800">{r}</span>
+                          <span className="text-sm font-bold text-slate-900">{r}</span>
                         </div>
                       ))}
                     </div>
@@ -634,16 +634,16 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={12} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Values</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Values</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-4 gap-3">
                       {page.valuesList && page.valuesList.map((val, vidx) => (
-                        <div key={vidx} className="p-3.5 rounded-xl bg-white border border-emerald-200/80 shadow-sm space-y-1">
-                          <HeartHandshake className="w-5 h-5 text-[#00674f]" />
+                        <div key={vidx} className="p-4 rounded-xl bg-white border border-emerald-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
+                          <HeartHandshake className="w-6 h-6 text-[#00674f]" />
                           <h4 className="text-xs font-bold text-slate-900">{val.title}</h4>
-                          <p className="text-[10px] text-slate-500 leading-tight">{val.desc}</p>
+                          <p className="text-[11px] text-slate-600 font-normal leading-tight">{val.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -658,15 +658,15 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={13} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">What Makes Us Different</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">What Makes Us Different</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-3 gap-3">
                       {page.points && page.points.map((pt, pidx) => (
-                        <div key={pidx} className="p-4 rounded-xl bg-gradient-to-br from-white to-emerald-50/50 border border-slate-200 shadow-sm flex items-center gap-3">
+                        <div key={pidx} className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 shadow-sm flex items-center gap-3">
                           <Sparkles className="w-5 h-5 text-amber-500 shrink-0" />
-                          <span className="text-xs font-bold text-slate-800">{pt}</span>
+                          <span className="text-xs font-bold text-slate-900">{pt}</span>
                         </div>
                       ))}
                     </div>
@@ -681,18 +681,18 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={14} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Engagement Models</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Engagement Models</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-3 gap-3">
                       {page.models && page.models.map((mod, midx) => (
-                        <div key={midx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1">
-                          <div className="w-7 h-7 rounded-lg bg-emerald-50 text-[#00674f] flex items-center justify-center font-bold text-xs mb-1">
+                        <div key={midx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
+                          <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center font-bold text-xs mb-1">
                             0{midx + 1}
                           </div>
-                          <h4 className="text-xs font-extrabold text-slate-900">{mod.name}</h4>
-                          <p className="text-[11px] text-slate-500 leading-tight">{mod.desc}</p>
+                          <h4 className="text-xs font-bold text-slate-900">{mod.name}</h4>
+                          <p className="text-[11px] text-slate-600 font-normal leading-tight">{mod.desc}</p>
                         </div>
                       ))}
                     </div>
@@ -707,8 +707,8 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={15} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Quality Standards</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Quality Standards</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-4 gap-3">
@@ -730,17 +730,17 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={16} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="max-w-3xl mx-auto space-y-6 text-center">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Commitment</h2>
-                      <div className="w-20 h-1 bg-[#00674f] mx-auto rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Commitment</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
                     </div>
 
-                    <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-amber-50 border-2 border-emerald-600/30 shadow-md">
-                      <p className="text-xl font-extrabold text-[#00674f] italic">
+                    <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-300 shadow-md">
+                      <p className="text-xl lg:text-2xl font-bold text-[#00674f] italic">
                         "{page.quote}"
                       </p>
                     </div>
 
-                    <p className="text-slate-700 text-base leading-relaxed">
+                    <p className="text-slate-800 text-base font-medium leading-relaxed">
                       {page.statement}
                     </p>
                   </div>
@@ -754,14 +754,14 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={17} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-4">
                     <div>
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Future Focus</h2>
-                      <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Future Focus</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-4 gap-3">
                       {page.focusList && page.focusList.map((f, fidx) => (
-                        <div key={fidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1">
-                          <Rocket className="w-5 h-5 text-amber-500 mx-auto" />
+                        <div key={fidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1 hover:border-[#00674f] transition">
+                          <Rocket className="w-6 h-6 text-amber-500 mx-auto" />
                           <h4 className="text-xs font-bold text-slate-900">{f}</h4>
                         </div>
                       ))}
@@ -777,17 +777,17 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={18} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="space-y-6">
                     <div className="text-center">
-                      <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Promise</h2>
-                      <div className="w-20 h-1 bg-[#00674f] mx-auto rounded-full mt-2" />
+                      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Promise</h2>
+                      <div className="w-20 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
                     </div>
 
                     <div className="grid grid-cols-6 gap-3 pt-2">
                       {page.promiseSteps && page.promiseSteps.map((p, pidx) => (
-                        <div key={pidx} className="p-4 rounded-xl bg-gradient-to-b from-white to-emerald-50 border border-emerald-200 text-center shadow-sm space-y-2">
-                          <div className="w-8 h-8 rounded-full bg-[#00674f] text-white flex items-center justify-center mx-auto text-xs font-bold">
+                        <div key={pidx} className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center shadow-sm space-y-2">
+                          <div className="w-8 h-8 rounded-full bg-[#00674f] text-white flex items-center justify-center mx-auto text-xs font-bold shadow-md">
                             {pidx + 1}
                           </div>
-                          <h4 className="text-xs font-extrabold text-slate-900">{p}</h4>
+                          <h4 className="text-xs font-bold text-slate-900">{p}</h4>
                         </div>
                       ))}
                     </div>
@@ -801,17 +801,17 @@ export default function CompanyProfilePage() {
               return (
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={19} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="max-w-3xl mx-auto space-y-6 text-center">
-                    <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
                       Let's Build Something Great Together
                     </h2>
-                    <div className="w-20 h-1 bg-[#00674f] mx-auto rounded-full" />
+                    <div className="w-24 h-1.5 bg-[#00674f] mx-auto rounded-full" />
 
-                    <p className="text-slate-700 text-base leading-relaxed">
+                    <p className="text-slate-800 text-base font-medium leading-relaxed">
                       {page.message}
                     </p>
 
                     <div className="p-5 rounded-2xl bg-[#00674f] text-white shadow-xl">
-                      <h3 className="text-xl font-extrabold text-amber-300">
+                      <h3 className="text-xl font-bold text-amber-300">
                         {page.highlight}
                       </h3>
                     </div>
@@ -825,40 +825,57 @@ export default function CompanyProfilePage() {
               return (
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={20} totalPages={pages.length} activePageIdx={activePageIdx}>
                   <div className="grid grid-cols-12 gap-8 items-center">
-                    <div className="col-span-7 space-y-4">
+                    <div className="col-span-7 space-y-5">
                       <div>
-                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Contact Us</h2>
-                        <h3 className="text-xl font-bold text-[#00674f] mt-1">{page.companyName}</h3>
-                        <div className="w-20 h-1 bg-[#00674f] rounded-full mt-2" />
+                        <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Contact Us</h2>
+                        <h3 className="text-xl lg:text-2xl font-bold text-[#00674f] mt-1">{page.companyName || 'DIGI TALKS INDIA'}</h3>
+                        <div className="w-24 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
                       </div>
 
-                      <div className="space-y-2 pt-2">
-                        <div className="flex items-center gap-3 text-sm text-slate-700">
-                          <Mail className="w-4 h-4 text-[#00674f]" />
-                          <span>contact@digitalksindia.com</span>
+                      {/* Highlighted Phone Card */}
+                      <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 shadow-md flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-[#00674f] text-white flex items-center justify-center shrink-0 shadow-md">
+                          <Phone className="w-6 h-6 animate-pulse" />
                         </div>
-                        <div className="flex items-center gap-3 text-sm text-slate-700">
-                          <Globe className="w-4 h-4 text-[#00674f]" />
-                          <span>www.digitalksindia.com</span>
+                        <div>
+                          <span className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Phone / WhatsApp</span>
+                          <h4 className="text-2xl font-bold text-slate-900 tracking-wide">{page.phone || '+91 9966 824 854'}</h4>
                         </div>
-                        <div className="flex items-center gap-3 text-sm text-slate-700">
-                          <Phone className="w-4 h-4 text-[#00674f]" />
-                          <span>+91 (Contact Support)</span>
+                      </div>
+
+                      {/* Email & Web */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3">
+                          <Mail className="w-5 h-5 text-[#00674f] shrink-0" />
+                          <div>
+                            <span className="text-[11px] font-bold text-slate-500 uppercase">Email</span>
+                            <p className="text-sm font-bold text-slate-900">{page.email || 'contact@digitalksindia.com'}</p>
+                          </div>
+                        </div>
+                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3">
+                          <Globe className="w-5 h-5 text-[#00674f] shrink-0" />
+                          <div>
+                            <span className="text-[11px] font-bold text-slate-500 uppercase">Website</span>
+                            <p className="text-sm font-bold text-slate-900">{page.website || 'www.digitalksindia.com'}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="col-span-5 bg-gradient-to-br from-emerald-50 to-amber-50 p-6 rounded-2xl border border-emerald-200 shadow-sm space-y-3">
+                    <div className="col-span-5 bg-gradient-to-br from-emerald-50 via-white to-amber-50/50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-4 text-center">
+                      <div className="w-12 h-12 bg-[#00674f] text-white rounded-full flex items-center justify-center mx-auto shadow-md">
+                        <Sparkles className="w-6 h-6 text-yellow-300" />
+                      </div>
                       <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Services Summary</h4>
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="flex flex-wrap justify-center gap-2">
                         {page.servicesSummary && page.servicesSummary.map((s, sidx) => (
-                          <span key={sidx} className="px-2.5 py-1 bg-white border border-emerald-200 text-xs font-bold text-slate-800 rounded-md">
+                          <span key={sidx} className="px-3 py-1 bg-white border border-emerald-300 text-xs font-bold text-slate-900 rounded-lg shadow-sm">
                             {s}
                           </span>
                         ))}
                       </div>
-                      <p className="text-xs italic text-slate-600 font-serif pt-2 border-t border-emerald-200">
-                        "{page.tagline}"
+                      <p className="text-xs font-bold italic text-slate-700 font-serif pt-3 border-t border-emerald-200">
+                        "{page.tagline || 'Empowering Businesses Through Digital Innovation'}"
                       </p>
                     </div>
                   </div>
