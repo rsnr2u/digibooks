@@ -129,8 +129,8 @@
 /* ───────────────────────────────────────────────────────────── */
 @media print {
   @page {
+    size: 210mm 297mm !important;
     margin: 0 !important;
-    size: auto;
   }
 
   /* Absolutely hide all navigation headers, app footers, modals, search bars, and toolbars */
@@ -179,6 +179,8 @@
     max-height: 7.5in !important;
     page-break-after: always !important;
     break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
@@ -194,12 +196,14 @@
   }
 
   .a4-portrait-page {
-    width: 8.27in !important;
-    height: 11.69in !important;
-    min-height: 11.69in !important;
-    max-height: 11.69in !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
     page-break-after: always !important;
     break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
