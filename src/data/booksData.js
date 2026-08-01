@@ -3155,16 +3155,513 @@ export const BOOKS_DATA = {
     id: "digitalks-profile",
     title: "Digitalks Profile",
     teluguTitle: "Corporate Company Profile",
-    tagline: "Official Company Profile & Portfolio",
+    tagline: "Official Company Profile & Portfolio (16:9 Widescreen)",
     description: "Digitalks corporate company profile — our vision, services, portfolio, 6 client success stories, tech stack, and capabilities presented in a premium Widescreen 16:9 format (13.33 x 7.5 in / 1920x1080) ready for presentation & print.",
     iconName: "Briefcase",
-    badge: "Company Profile",
+    badge: "16:9 Widescreen",
     category: "Corporate",
     difficulty: "Executive",
     estimatedHours: "25 min",
     chaptersCount: 30,
     isA4Profile: true,
     accentColor: "from-amber-600 to-yellow-600",
+    cardBg: "bg-white",
+    chapters: [
+      {
+        id: "page-1-cover",
+        chapterNumber: 1,
+        title: "Page 1: Cover Page",
+        pageType: "cover",
+        companyName: "DIGI TALKS INDIA",
+        tagline: "Empowering Businesses Through Digital Innovation",
+        services: ["Enterprise Software", "AI Solutions", "Web Applications", "Mobile Apps", "Digital Transformation"],
+        quote: '"Building Technology That Builds Businesses"',
+        bgColor: "#00674f",
+        logoUrl: "/assets/digitalks-logo.png"
+      },
+      {
+        id: "page-2-about",
+        chapterNumber: 2,
+        title: "Page 2: About DIGI TALKS INDIA",
+        pageType: "about",
+        heading: "About DIGI TALKS INDIA",
+        badge: "Company Overview",
+        image: "/assets/about-digitalks.jpg",
+        content: `DIGI TALKS INDIA is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
+
+With a strong focus on innovation, quality, and long-term partnerships, we help organizations transform ideas into powerful digital solutions.`
+      },
+      {
+        id: "page-3-story",
+        chapterNumber: 3,
+        title: "Page 3: Our Story",
+        pageType: "story",
+        badge: "Company Heritage",
+        heading: "Our Story",
+        purpose: "To bridge the gap between business challenges and innovative technology.",
+        paragraphs: [
+          "Technology continues to reshape every industry, yet many organizations struggle to find reliable technology partners who understand both business and software.",
+          "DIGI TALKS INDIA was established with a clear purpose: To bridge the gap between business challenges and innovative technology.",
+          "Today, we continue helping businesses adopt modern technology with confidence, delivering solutions that are scalable, secure, and designed for growth."
+        ]
+      },
+      {
+        id: "page-4-vision-mission",
+        chapterNumber: 4,
+        title: "Page 4: Vision & Mission",
+        pageType: "vision-mission",
+        badge: "Strategic Purpose",
+        vision: "To become one of India's most trusted technology companies, delivering world-class digital solutions that create sustainable business growth.",
+        missions: [
+          "Deliver innovative technology solutions.",
+          "Build lasting client relationships.",
+          "Promote digital transformation.",
+          "Develop scalable products.",
+          "Maintain excellence in everything we deliver."
+        ]
+      },
+      {
+        id: "page-5-services",
+        chapterNumber: 5,
+        title: "Page 5: Core Services",
+        pageType: "services",
+        badge: "What We Do",
+        heading: "Core Services",
+        servicesList: [
+          { name: "Software Development", desc: "Custom end-to-end software built for high scalability" },
+          { name: "Enterprise Applications", desc: "Robust ERP & CRM tailored to enterprise needs" },
+          { name: "Business Automation", desc: "Automate complex workflows and boost operational speed" },
+          { name: "Website Development", desc: "High-performance responsive web portals & platforms" },
+          { name: "E-Commerce Solutions", desc: "Scalable online stores with secure payment integration" },
+          { name: "Mobile Applications", desc: "Native & cross-platform iOS & Android mobile apps" },
+          { name: "UI/UX Design", desc: "User-centric modern interfaces & interactive experiences" },
+          { name: "Cloud Solutions", desc: "Cloud architecture, migration & serverless infrastructure" },
+          { name: "API Development", desc: "RESTful & GraphQL APIs for seamless integrations" },
+          { name: "Digital Consulting", desc: "Strategic technology advisory & digital roadmap planning" },
+          { name: "Technology Modernization", desc: "Refactoring legacy code to modern tech stacks" },
+          { name: "Support & Maintenance", desc: "24/7 proactive monitoring, security & maintenance" }
+        ]
+      },
+      {
+        id: "page-6-digital-transformation",
+        chapterNumber: 6,
+        title: "Page 6: Digital Transformation Services",
+        pageType: "digital-trans",
+        badge: "Enterprise Capabilities",
+        heading: "Digital Transformation Services",
+        items: [
+          { title: "Business Process Automation", desc: "Streamline manual operations into efficient automated workflows" },
+          { title: "Workflow Management", desc: "End-to-end task tracking and operational pipeline clarity" },
+          { title: "Customer Experience Platforms", desc: "Omnichannel customer engagement & portal solutions" },
+          { title: "Enterprise Resource Planning", desc: "Centralized data management for finance, HR, & operations" },
+          { title: "CRM Solutions", desc: "Empower sales, support, and lead tracking pipelines" },
+          { title: "Document Management", desc: "Secure digital archiving, indexing, and paperless workflows" },
+          { title: "Analytics Dashboards", desc: "Real-time metrics, KPI tracking, and custom visualization" },
+          { title: "Business Intelligence", desc: "Data-driven insights to make informed executive decisions" },
+          { title: "AI-Ready Systems", desc: "Prepare infrastructure for Machine Learning & AI automation" },
+          { title: "Cloud Migration", desc: "Seamless migration of legacy infrastructure to modern cloud" }
+        ]
+      },
+      {
+        id: "page-7-engineering",
+        chapterNumber: 7,
+        title: "Page 7: Software Engineering",
+        pageType: "engineering",
+        badge: "Engineering Excellence",
+        heading: "Software Engineering",
+        subheading: "We design software that is:",
+        pillars: [
+          { title: "Scalable", desc: "Handles millions of users seamlessly" },
+          { title: "Secure", desc: "Bank-grade encryption & compliance" },
+          { title: "Reliable", desc: "99.99% uptime architecture" },
+          { title: "High Performance", desc: "Sub-second response latencies" },
+          { title: "Cloud Ready", desc: "Containerized & microservice enabled" },
+          { title: "API Driven", desc: "Modular & easily integrable" },
+          { title: "Future Ready", desc: "Built with modern adaptable tech" }
+        ],
+        outro: "Every solution follows industry best practices for architecture, security, testing, and deployment."
+      },
+      {
+        id: "page-8-industries",
+        chapterNumber: 8,
+        title: "Page 8: Industries We Serve",
+        pageType: "industries",
+        badge: "Domain Expertise",
+        heading: "Industries We Serve",
+        industriesList: [
+          { name: "Real Estate", icon: "Building2" },
+          { name: "Healthcare", icon: "Activity" },
+          { name: "Education", icon: "GraduationCap" },
+          { name: "Retail", icon: "ShoppingBag" },
+          { name: "Manufacturing", icon: "Factory" },
+          { name: "Finance", icon: "DollarSign" },
+          { name: "Construction", icon: "HardHat" },
+          { name: "Hospitality", icon: "Utensils" },
+          { name: "Government", icon: "Landmark" },
+          { name: "Professional Services", icon: "Briefcase" },
+          { name: "Logistics", icon: "Truck" },
+          { name: "Startups", icon: "Rocket" },
+          { name: "SMEs", icon: "Store" },
+          { name: "Enterprise Businesses", icon: "Globe" }
+        ]
+      },
+      {
+        id: "page-9-tech-stack",
+        chapterNumber: 9,
+        title: "Page 9: Technology Expertise",
+        pageType: "tech-stack",
+        badge: "Our Tech Stack",
+        heading: "Technology Expertise",
+        categories: [
+          {
+            title: "Frontend",
+            skills: ["React", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "Bootstrap"]
+          },
+          {
+            title: "Backend",
+            skills: ["Laravel", "PHP", "Python", "Node.js", "REST API", "GraphQL"]
+          },
+          {
+            title: "Database",
+            skills: ["MySQL", "PostgreSQL", "MongoDB"]
+          },
+          {
+            title: "Infrastructure & Cloud",
+            skills: ["Linux", "Docker", "Nginx", "Apache", "Cloud Platforms", "Git", "CI/CD"]
+          }
+        ]
+      },
+      {
+        id: "page-10-process",
+        chapterNumber: 10,
+        title: "Page 10: Our Development Process",
+        pageType: "process",
+        badge: "How We Work",
+        heading: "Our Development Process",
+        steps: [
+          { num: "01", name: "Discovery", desc: "Requirement gathering & feasibility analysis" },
+          { num: "02", name: "Planning", desc: "Architecture design & milestone roadmap" },
+          { num: "03", name: "UI/UX Design", desc: "Interactive wireframes & visual prototypes" },
+          { num: "04", name: "Development", desc: "Agile sprints & clean code implementation" },
+          { num: "05", name: "Quality Testing", desc: "Automated testing, security & QA validation" },
+          { num: "06", name: "Deployment", desc: "Production release & DevOps automation" },
+          { num: "07", name: "Support & Growth", desc: "Ongoing maintenance & continuous feature updates" }
+        ]
+      },
+      {
+        id: "page-11-why-us",
+        chapterNumber: 11,
+        title: "Page 11: Why DIGI TALKS INDIA?",
+        pageType: "why-us",
+        badge: "Our Value Proposition",
+        heading: "Why DIGI TALKS INDIA?",
+        reasons: [
+          "Experienced Professionals",
+          "Modern Technologies",
+          "Business-Focused Solutions",
+          "Transparent Communication",
+          "Quality Assurance",
+          "On-Time Delivery",
+          "Scalable Architecture",
+          "Long-Term Support",
+          "Affordable Solutions",
+          "Trusted Partnership"
+        ]
+      },
+      {
+        id: "page-12-values",
+        chapterNumber: 12,
+        title: "Page 12: Our Values",
+        pageType: "values",
+        badge: "Our Principles",
+        heading: "Our Values",
+        valuesList: [
+          { title: "Innovation", desc: "Embracing cutting-edge technology to solve complex problems" },
+          { title: "Integrity", desc: "Upholding honesty and high ethical standards in all interactions" },
+          { title: "Transparency", desc: "Open communication and clear project visibility at every stage" },
+          { title: "Customer Success", desc: "Your growth and measurable business results are our top priority" },
+          { title: "Quality", desc: "Uncompromising standards in code, security, and performance" },
+          { title: "Commitment", desc: "Dedicated ownership and long-term accountability" },
+          { title: "Responsibility", desc: "Taking pride in reliable execution and data privacy" },
+          { title: "Continuous Learning", desc: "Constantly upgrading skills to deliver modern solutions" }
+        ]
+      },
+      {
+        id: "page-13-differentiators",
+        chapterNumber: 13,
+        title: "Page 13: What Makes Us Different",
+        pageType: "differentiators",
+        badge: "Competitive Edge",
+        heading: "What Makes Us Different",
+        points: [
+          "Business-first approach",
+          "Customized solutions",
+          "Flexible engagement models",
+          "Latest technology stack",
+          "High-quality coding standards",
+          "Performance optimization",
+          "Security-first development",
+          "Future scalability",
+          "Dedicated support"
+        ]
+      },
+      {
+        id: "page-14-engagement",
+        chapterNumber: 14,
+        title: "Page 14: Engagement Models",
+        pageType: "engagement",
+        badge: "Flexible Collaboration",
+        heading: "Engagement Models",
+        models: [
+          { name: "Dedicated Development Team", desc: "Full-time engineers & managers extended to your team" },
+          { name: "Fixed Cost Projects", desc: "Clear scope, fixed timeline, and predictable budget" },
+          { name: "Time & Material", desc: "Pay for actual resources used with high flexibility" },
+          { name: "Technology Consulting", desc: "Expert advisory for architecture, security, & stack choice" },
+          { name: "Product Development", desc: "End-to-end MVP to enterprise product engineering" },
+          { name: "Maintenance Contracts", desc: "SLA-backed ongoing support, bug fixes & upgrades" }
+        ]
+      },
+      {
+        id: "page-15-quality",
+        chapterNumber: 15,
+        title: "Page 15: Quality Standards",
+        pageType: "quality",
+        badge: "Engineering Standards",
+        heading: "Quality Standards",
+        standardsList: [
+          "Requirement Analysis",
+          "Code Review",
+          "Security Validation",
+          "Performance Optimization",
+          "Cross Platform Testing",
+          "Documentation",
+          "Deployment Checklist",
+          "Maintenance Planning"
+        ]
+      },
+      {
+        id: "page-16-commitment",
+        chapterNumber: 16,
+        title: "Page 16: Our Commitment",
+        pageType: "commitment",
+        badge: "Our Philosophy",
+        heading: "Our Commitment",
+        quote: "Technology should simplify business—not complicate it.",
+        statement: "We build digital products that are reliable, secure, scalable, and designed to generate measurable value for our clients."
+      },
+      {
+        id: "page-17-future-focus",
+        chapterNumber: 17,
+        title: "Page 17: Future Focus",
+        pageType: "future",
+        badge: "Next-Gen Tech",
+        heading: "Future Focus",
+        focusList: [
+          "Artificial Intelligence",
+          "Automation",
+          "Cloud Technologies",
+          "Enterprise Platforms",
+          "Digital Ecosystems",
+          "Smart Business Solutions",
+          "Data Intelligence",
+          "Innovation Labs"
+        ]
+      },
+      {
+        id: "page-18-promise",
+        chapterNumber: 18,
+        title: "Page 18: Our Promise",
+        pageType: "promise",
+        badge: "Partner Commitment",
+        heading: "Our Promise",
+        promiseSteps: [
+          "We listen.",
+          "We understand.",
+          "We innovate.",
+          "We build.",
+          "We support.",
+          "We grow together."
+        ]
+      },
+      {
+        id: "page-19-call-to-action",
+        chapterNumber: 19,
+        title: "Page 19: Let's Build Something Great Together",
+        pageType: "call-to-action",
+        badge: "Start Your Journey",
+        heading: "Let's Build Something Great Together",
+        message: "Whether you're a startup launching your first product or an enterprise transforming operations, DIGI TALKS INDIA is ready to become your trusted technology partner.",
+        highlight: "Together, we transform ideas into digital success."
+      },
+      {
+        id: "page-20-clients-overview",
+        chapterNumber: 20,
+        title: "Page 20: Our Clients",
+        pageType: "clients-overview",
+        badge: "Trusted Partnerships",
+        heading: "Our Clients",
+        subheading: "Delivering Digital Success Through Trusted Partnerships",
+        paragraphs: [
+          "At DIGI TALKS INDIA, every project is more than software development—it's a long-term partnership focused on innovation, business growth, and measurable results. We work closely with our clients to understand their objectives, develop tailored digital solutions, and provide continuous support that helps them stay competitive in a rapidly evolving digital landscape.",
+          "Our expertise spans enterprise software, banking solutions, real estate technology, corporate websites, digital marketing, and business automation. Every engagement is driven by quality, performance, and a commitment to delivering real business value."
+        ]
+      },
+      {
+        id: "page-21-case-guntur-bank",
+        chapterNumber: 21,
+        title: "Page 21: Case Study - Guntur Urban Bank",
+        pageType: "client-case-bank",
+        badge: "Featured Success Story",
+        clientName: "Guntur Urban Bank",
+        website: "https://guntururban.bank.in/",
+        industry: "Banking & Financial Services",
+        overview: "DIGI TALKS INDIA partnered with Guntur Urban Bank to design and develop a modern, secure, and high-performance public banking website that enhances the bank's digital presence while improving customer accessibility to banking information and services.",
+        techStack: ["React.js", "Laravel", "Tailwind CSS", "REST APIs", "MySQL", "Responsive UI", "CMS / CRM Integration", "SEO Architecture"],
+        benefits: ["Modern digital identity", "Improved customer experience", "Faster content management", "High website performance", "Mobile-friendly banking portal", "Secure & scalable architecture"]
+      },
+      {
+        id: "page-22-case-sri-savithru",
+        chapterNumber: 22,
+        title: "Page 22: Case Study - Sri Savithru Infra Projects",
+        pageType: "client-case-realestate-1",
+        badge: "Featured Success Story",
+        clientName: "Sri Savithru Infra Projects (India) Pvt. Ltd.",
+        website: "https://srisavithru.in/",
+        industry: "Real Estate (Plotted Developments)",
+        overview: "DIGI TALKS INDIA developed a complete digital marketing and web platform for Sri Savithru Infra Projects to strengthen its online presence, showcase residential and commercial plotted developments across AP & Telangana, and generate qualified customer enquiries.",
+        servicesDelivered: ["Corporate Website Design & Development", "Real Estate Portal & Interactive Pages", "Technical, On-Page & Off-Page SEO", "Search Engine Marketing (SEM)", "Social Media Optimization (SMO)", "Lead Generation Strategy", "Google Analytics & Search Console Setup", "Website Maintenance"],
+        outcomes: ["Strong online brand visibility", "Increased organic search traffic", "Improved lead generation", "Better customer engagement", "Enhanced digital marketing foundation"]
+      },
+      {
+        id: "page-23-case-pulagam",
+        chapterNumber: 23,
+        title: "Page 23: Case Study - Pulagam Properties",
+        pageType: "client-case-realestate-2",
+        badge: "Featured Success Story",
+        clientName: "Pulagam Properties",
+        website: "https://www.pulagamproperties.com/",
+        industry: "Real Estate",
+        overview: "DIGI TALKS INDIA designed and developed a modern real estate website focused on project marketing, customer engagement, and digital lead generation. The platform highlights plotted developments while supporting ongoing digital marketing campaigns.",
+        servicesDelivered: ["Corporate Website Development", "Real Estate Website Design", "SEO Strategy & Technical Optimization", "SEM & Social Media Optimization (SMO)", "Lead Generation Campaign Support", "Landing Page Development & Analytics", "Mobile Optimization & Maintenance"],
+        outcomes: ["Improved online visibility", "Increased customer enquiries", "Stronger digital brand presence", "Better search engine rankings", "Higher-quality real estate leads"]
+      },
+      {
+        id: "page-24-case-numerosansar",
+        chapterNumber: 24,
+        title: "Page 24: Case Study - NumeroSansar",
+        pageType: "client-case-numerosansar",
+        badge: "Featured Success Story",
+        clientName: "NumeroSansar",
+        website: "https://www.numerosansar.com/",
+        industry: "Numerology Technology (SaaS)",
+        overview: "DIGI TALKS INDIA designed and developed NumeroSansar, a modern SaaS platform built for professional numerologists, consultants, and astrology practitioners. The platform digitizes traditional numerology workflows (Chaldean & Pythagorean systems), client consultations, and report generation.",
+        techStack: ["React.js", "Laravel", "Tailwind CSS", "MySQL", "REST APIs", "JWT Auth", "SaaS Architecture"],
+        keyFeatures: ["Professional Numerology Dashboard", "Chaldean & Pythagorean Calculation Engine", "Client Consultation & History System", "Automated PDF Report Generation", "Multi-User & Subscription Management"],
+        benefits: ["Digitized numerology practice", "Improved consultation efficiency", "Professional report generation", "Better client relationship management", "Scalable SaaS platform"]
+      },
+      {
+        id: "page-25-case-sclan",
+        chapterNumber: 25,
+        title: "Page 25: Case Study - SCLAN.DE",
+        pageType: "client-case-sclan",
+        badge: "Featured Success Story",
+        clientName: "SCLAN.DE",
+        website: "https://sclan.de/",
+        industry: "Smart Home & Building Automation (Germany)",
+        overview: "DIGI TALKS INDIA contributed to the development of an advanced home and building automation platform for SCLAN.DE, a German smart building technology solution providing reliable, fully autonomous automation for residential and commercial environments without relying on cloud services.",
+        techStack: ["React.js", "Laravel", "Tailwind CSS", "MySQL", "REST APIs", "Automation Controllers", "Smart Device Bus Integration"],
+        keyFeatures: ["Smart Building Automation", "Lighting, Heating & AC Control", "Blind & Shutter Automation", "Centralized Device Management", "Offline Autonomous Operation", "Wired Bus Architecture & Security"],
+        benefits: ["Reduced energy consumption", "Reliable offline operation", "Long-term system stability", "Enhanced building automation", "Cloud-independent security"]
+      },
+      {
+        id: "page-26-case-humpl",
+        chapterNumber: 26,
+        title: "Page 26: Case Study - HUMPL",
+        pageType: "client-case-humpl",
+        badge: "Featured Success Story",
+        clientName: "HUMPL",
+        website: "https://humpl.org/",
+        industry: "FinTech / Multi-Tenant SaaS",
+        overview: "DIGI TALKS INDIA developed a modern cloud-based invoicing platform that enables businesses to simplify billing, invoice management, and financial workflows through a secure multi-tenant SaaS architecture tailored for startups, SMEs, and enterprise agencies.",
+        techStack: ["React.js", "Laravel", "Tailwind CSS", "MySQL", "REST APIs", "Multi-Tenant SaaS Architecture"],
+        keyFeatures: ["Invoice Creation & Management", "Multi-Tenant Tenant Isolation", "Billing & Analytics Dashboard", "Financial Reporting & Tracking", "Enterprise Security & Fast Loading"],
+        benefits: ["Faster invoice processing", "Simplified billing operations", "Centralized financial management", "Secure multi-tenant architecture", "Enterprise-ready scalability"]
+      },
+      {
+        id: "page-27-tech-matrix",
+        chapterNumber: 27,
+        title: "Page 27: Technology Expertise Across Projects",
+        pageType: "tech-matrix",
+        badge: "Full-Stack Tech Stack",
+        heading: "Our Technology Expertise Across Client Projects",
+        subheading: "DIGI TALKS INDIA delivers end-to-end technology solutions using modern frameworks and enterprise development standards.",
+        categories: [
+          { title: "Frontend", items: ["React.js", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "Bootstrap"] },
+          { title: "Backend", items: ["Laravel", "PHP", "Python", "REST APIs", "JWT Auth", "OAuth 2.0"] },
+          { title: "Database", items: ["MySQL", "PostgreSQL", "MongoDB", "Query Optimization"] },
+          { title: "Enterprise Solutions", items: ["CRM Systems", "ERP Solutions", "SaaS Platforms", "Business Automation", "Banking Portals", "Real Estate Platforms", "Smart Building Systems", "FinTech Invoicing"] }
+        ]
+      },
+      {
+        id: "page-28-delivery-excellence",
+        chapterNumber: 28,
+        title: "Page 28: Delivery Excellence",
+        pageType: "delivery-excellence",
+        badge: "Quality Standards",
+        heading: "Delivery Excellence",
+        subheading: "Every solution delivered by DIGI TALKS INDIA is built with a focus on:",
+        principles: [
+          { title: "Scalability", desc: "Designed to grow effortlessly with increasing business volume and traffic." },
+          { title: "Security", desc: "Enterprise-grade encryption, JWT authentication, and strict compliance." },
+          { title: "Performance", desc: "Sub-second response latencies and high-speed database optimization." },
+          { title: "User Experience", desc: "Intuitive, modern UI/UX engineered for maximum user engagement." },
+          { title: "Maintainability", desc: "Clean modular codebase, clear documentation, and easy upgrades." },
+          { title: "Business Value", desc: "Direct alignment with revenue, efficiency, and operational ROI." },
+          { title: "Long-Term Support", desc: "24/7 SLA-backed monitoring, bug fixes, and continuous improvements." },
+          { title: "Future Growth", desc: "Adaptable architecture ready for upcoming AI & cloud integrations." }
+        ]
+      },
+      {
+        id: "page-29-capabilities-growth",
+        chapterNumber: 29,
+        title: "Page 29: Growing Together",
+        pageType: "growing-together",
+        badge: "Our Commitment",
+        heading: "Growing Together",
+        message: "Our client portfolio continues to expand across banking, real estate, numerology SaaS, smart building automation, FinTech, education, healthcare, retail, and other industries. Every successful project strengthens our commitment to delivering innovative technology solutions that help businesses grow, compete, and succeed in the digital era."
+      },
+      {
+        id: "page-30-contact",
+        chapterNumber: 30,
+        title: "Page 30: Contact Us",
+        pageType: "contact",
+        badge: "Get In Touch",
+        heading: "Contact Us",
+        companyName: "DIGI TALKS INDIA",
+        phones: ["+91 9966 824 854", "+91 8919 370 455"],
+        email: "info@digitalks.in",
+        secondaryEmail: "contact@digitalksindia.com",
+        website: "https://digitalks.in/",
+        servicesSummary: ["Technology Solutions", "Software Development", "Digital Transformation", "Enterprise Applications", "Web & Mobile Solutions", "AI Ready Platforms"],
+        tagline: "Empowering Businesses Through Digital Innovation"
+      }
+    ]
+  },
+  "digitalks-profile-a4": {
+    id: "digitalks-profile-a4",
+    title: "Digitalks Profile (A4 Portrait)",
+    teluguTitle: "Corporate Profile (A4 Printable)",
+    tagline: "Official Company Profile • Standard A4 Printable Size",
+    description: "Digitalks corporate company profile in standard A4 Portrait layout (8.27 x 11.69 in / 210 x 297 mm) with exact pagination, logo headers, and print optimization for physical document printing.",
+    iconName: "FileText",
+    badge: "A4 Portrait",
+    category: "Corporate",
+    difficulty: "Executive",
+    estimatedHours: "25 min",
+    chaptersCount: 30,
+    isA4Profile: true,
+    isA4Portrait: true,
+    accentColor: "from-[#00674f] to-emerald-700",
     cardBg: "bg-white",
     chapters: [
       {

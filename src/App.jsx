@@ -41,6 +41,8 @@ export default function App() {
             <Route path="/" element={<HomePage onOpenSearch={() => setIsSearchOpen(true)} />} />
             <Route path="/book/digitalks-profile" element={<CompanyProfilePage />} />
             <Route path="/book/digitalks-profile/:chapterId" element={<CompanyProfilePage />} />
+            <Route path="/book/digitalks-profile-a4" element={<CompanyProfilePage />} />
+            <Route path="/book/digitalks-profile-a4/:chapterId" element={<CompanyProfilePage />} />
             <Route path="/book/:bookId" element={<BookReaderPage />} />
             <Route path="/book/:bookId/:chapterId" element={<BookReaderPage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BOOKS_DATA } from '../data/booksData';
 import {
@@ -66,10 +66,12 @@ function parseInline(text) {
 }
 
 /* ───────────────── Reusable Internal Page Frame ───────────────── */
-function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePageIdx }) {
+function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePageIdx, isA4Portrait }) {
+  const pageFrameClass = isA4Portrait ? 'a4-portrait-page' : 'widescreen-page-16-9';
+
   return (
     <div
-      className={`widescreen-page-16-9 relative bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden print-page flex flex-col justify-between ${activePageIdx !== undefined && activePageIdx !== (pageNumber - 1) ? 'hidden-on-screen' : ''}`}
+      className={`${pageFrameClass} relative bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden print-page flex flex-col justify-between ${activePageIdx !== undefined && activePageIdx !== (pageNumber - 1) ? 'hidden-on-screen' : ''}`}
     >
       {/* Subtle decorative background grid */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
@@ -99,11 +101,11 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
       </div>
 
       {/* Page Body Content */}
-      <div className="relative z-10 px-10 py-5 flex-1 flex flex-col justify-center">
+      <div className="relative z-10 px-8 lg:px-10 py-5 flex-1 flex flex-col justify-center">
         {children}
       </div>
 
-      {/* Footer Bar — Clean, uncluttered, no overlapping corner lines, no confidential label */}
+      {/* Footer Bar — Clean, uncluttered */}
       <div className="relative z-10 px-8 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-medium">
         <span className="tracking-wider uppercase font-bold text-slate-600">DIGI TALKS INDIA • Corporate Profile</span>
         <span className="font-mono font-bold text-slate-400">Page {pageNumber} of {totalPages}</span>
@@ -115,12 +117,16 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
 /* ───────────────── Main Component ───────────────── */
 export default function CompanyProfilePage() {
   const { chapterId } = useParams();
+  const location = useLocation();
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showPrintModal, setShowPrintModal] = useState(false);
   const printRef = useRef(null);
 
-  const book = BOOKS_DATA['digitalks-profile'];
+  const isA4Portrait = location.pathname.includes('digitalks-profile-a4');
+  const bookKey = isA4Portrait ? 'digitalks-profile-a4' : 'digitalks-profile';
+
+  const book = BOOKS_DATA[bookKey] || BOOKS_DATA['digitalks-profile'];
   if (!book) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-100">
@@ -183,6 +189,11 @@ export default function CompanyProfilePage() {
           </Link>
           <span className="text-slate-600">/</span>
           <span className="text-amber-400 font-bold text-sm">{book.title}</span>
+          {isA4Portrait && (
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold font-mono">
+              A4 Portrait Mode
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-3">
@@ -237,7 +248,9 @@ export default function CompanyProfilePage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-slate-900">Export All 30 Pages as PDF</h3>
-                  <p className="text-xs text-slate-500">Ensure exact design & color preservation</p>
+                  <p className="text-xs text-slate-500">
+                    {isA4Portrait ? 'Optimized for A4 Portrait Paper Printing' : 'Optimized for Widescreen 16:9 Presentation'}
+                  </p>
                 </div>
               </div>
 
@@ -254,7 +267,9 @@ export default function CompanyProfilePage() {
                   </div>
                   <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
                     <span className="font-bold">2. Layout / Orientation:</span>
-                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#00674f] border border-emerald-300">Landscape</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#00674f] border border-emerald-300">
+                      {isA4Portrait ? 'Portrait (A4 Size)' : 'Landscape (16:9)'}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
                     <span className="font-bold">3. Margins:</span>
@@ -297,10 +312,11 @@ export default function CompanyProfilePage() {
           {pages.map((page, idx) => {
             /* ─── PAGE 1: Cover Page ─── */
             if (page.pageType === 'cover') {
+              const coverClass = isA4Portrait ? 'a4-portrait-page' : 'widescreen-page-16-9';
               return (
                 <div
                   key={page.id}
-                  className={`widescreen-page-16-9 relative rounded-2xl shadow-2xl overflow-hidden print-page ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
+                  className={`${coverClass} relative rounded-2xl shadow-2xl overflow-hidden print-page ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
                   style={{ backgroundColor: page.bgColor || '#00674f' }}
                 >
                   <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
@@ -365,9 +381,9 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 2: About DIGI TALKS INDIA ─── */
             if (page.pageType === 'about') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={2} totalPages={pages.length} activePageIdx={activePageIdx}>
-                  <div className="grid grid-cols-12 gap-8 items-center">
-                    <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="col-span-7 space-y-4">
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={2} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
+                  <div className={isA4Portrait ? "space-y-6" : "grid grid-cols-12 gap-8 items-center"}>
+                    <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className={isA4Portrait ? "space-y-4" : "col-span-7 space-y-4"}>
                       <div>
                         <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
                           <span>About</span>
@@ -403,12 +419,12 @@ export default function CompanyProfilePage() {
                       </div>
                     </motion.div>
 
-                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="col-span-5 relative">
+                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className={isA4Portrait ? "relative mt-4" : "col-span-5 relative"}>
                       <div className="relative rounded-2xl overflow-hidden border border-[#00674f]/40 shadow-xl group">
                         <img
                           src={page.image || '/assets/about-digitalks.jpg'}
                           alt="About DIGI TALKS INDIA"
-                          className="w-full h-[260px] lg:h-[290px] object-cover rounded-xl transform group-hover:scale-105 transition duration-700"
+                          className="w-full h-[240px] lg:h-[290px] object-cover rounded-xl transform group-hover:scale-105 transition duration-700"
                         />
                         <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-emerald-400/40 flex items-center justify-between text-white">
                           <div className="flex items-center gap-2">
@@ -427,7 +443,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 3: Our Story ─── */
             if (page.pageType === 'story') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={3} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={3} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="max-w-4xl mx-auto space-y-6">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
@@ -437,8 +453,8 @@ export default function CompanyProfilePage() {
                       <div className="w-20 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                      <div className="md:col-span-7 space-y-4">
+                    <div className={isA4Portrait ? "space-y-6" : "grid grid-cols-1 md:grid-cols-12 gap-6 items-center"}>
+                      <div className={isA4Portrait ? "space-y-4" : "md:col-span-7 space-y-4"}>
                         {page.paragraphs && page.paragraphs.map((p, pidx) => (
                           <p key={pidx} className="text-slate-800 text-sm lg:text-base font-normal leading-relaxed">
                             {p}
@@ -446,7 +462,7 @@ export default function CompanyProfilePage() {
                         ))}
                       </div>
 
-                      <div className="md:col-span-5 bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 p-6 rounded-2xl shadow-md text-center space-y-3">
+                      <div className={isA4Portrait ? "bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 p-6 rounded-2xl shadow-md text-center space-y-3" : "md:col-span-5 bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 p-6 rounded-2xl shadow-md text-center space-y-3"}>
                         <div className="w-12 h-12 bg-[#00674f] text-white rounded-xl flex items-center justify-center mx-auto shadow-md">
                           <Target className="w-6 h-6" />
                         </div>
@@ -464,10 +480,10 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 4: Vision & Mission ─── */
             if (page.pageType === 'vision-mission') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={4} totalPages={pages.length} activePageIdx={activePageIdx}>
-                  <div className="grid grid-cols-12 gap-8 items-stretch">
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={4} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
+                  <div className={isA4Portrait ? "space-y-6" : "grid grid-cols-12 gap-8 items-stretch"}>
                     {/* Vision Card */}
-                    <div className="col-span-5 bg-gradient-to-br from-[#00674f] to-slate-900 text-white p-7 rounded-2xl shadow-xl flex flex-col justify-between relative overflow-hidden">
+                    <div className={isA4Portrait ? "bg-gradient-to-br from-[#00674f] to-slate-900 text-white p-7 rounded-2xl shadow-xl space-y-3 relative overflow-hidden" : "col-span-5 bg-gradient-to-br from-[#00674f] to-slate-900 text-white p-7 rounded-2xl shadow-xl flex flex-col justify-between relative overflow-hidden"}>
                       <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-2xl pointer-events-none" />
                       <div>
                         <div className="w-12 h-12 bg-white/15 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/30">
@@ -479,14 +495,14 @@ export default function CompanyProfilePage() {
                           "{page.vision}"
                         </p>
                       </div>
-                      <div className="pt-6 border-t border-white/20 flex items-center gap-2 text-xs text-amber-300 font-bold font-mono">
+                      <div className="pt-4 border-t border-white/20 flex items-center gap-2 text-xs text-amber-300 font-bold font-mono">
                         <Sparkles className="w-4 h-4" />
                         <span>Sustainable Business Growth</span>
                       </div>
                     </div>
 
                     {/* Mission Card */}
-                    <div className="col-span-7 bg-white border border-slate-200 p-7 rounded-2xl shadow-md flex flex-col justify-between">
+                    <div className={isA4Portrait ? "bg-white border border-slate-200 p-7 rounded-2xl shadow-md space-y-3" : "col-span-7 bg-white border border-slate-200 p-7 rounded-2xl shadow-md flex flex-col justify-between"}>
                       <div>
                         <div className="flex items-center gap-3 mb-2">
                           <Rocket className="w-7 h-7 text-[#00674f]" />
@@ -512,14 +528,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 5: Core Services ─── */
             if (page.pageType === 'services') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={5} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={5} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div className="text-center max-w-2xl mx-auto">
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Core Services</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-4 gap-3 pt-2">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3 pt-2" : "grid grid-cols-4 gap-3 pt-2"}>
                       {page.servicesList && page.servicesList.map((srv, sidx) => (
                         <div key={sidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-[#00674f] hover:bg-emerald-50/40 transition group">
                           <div className="w-8 h-8 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center mb-2 group-hover:bg-[#00674f] group-hover:text-white transition">
@@ -538,7 +554,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 6: Digital Transformation ─── */
             if (page.pageType === 'digital-trans') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={6} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={6} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
@@ -569,7 +585,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 7: Software Engineering ─── */
             if (page.pageType === 'engineering') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={7} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={7} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-5">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Software Engineering</h2>
@@ -577,7 +593,7 @@ export default function CompanyProfilePage() {
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                       {page.pillars && page.pillars.map((p, pidx) => (
                         <div key={pidx} className="p-4 rounded-xl bg-white border border-emerald-200 text-center space-y-1 shadow-sm hover:border-[#00674f] transition">
                           <ShieldCheck className="w-6 h-6 text-[#00674f] mx-auto" />
@@ -600,14 +616,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 8: Industries We Serve ─── */
             if (page.pageType === 'industries') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={8} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={8} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Industries We Serve</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-5 gap-3 pt-2">
+                    <div className={isA4Portrait ? "grid grid-cols-3 gap-3 pt-2" : "grid grid-cols-5 gap-3 pt-2"}>
                       {page.industriesList && page.industriesList.map((ind, iidx) => (
                         <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 text-center shadow-sm hover:border-[#00674f] hover:bg-emerald-50/60 transition">
                           <Building2 className="w-6 h-6 text-[#00674f] mx-auto mb-1.5" />
@@ -623,14 +639,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 9: Technology Expertise ─── */
             if (page.pageType === 'tech-stack') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={9} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={9} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Technology Expertise</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-2 gap-4"}>
                       {page.categories && page.categories.map((cat, cidx) => (
                         <div key={cidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2">
                           <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">{cat.title}</h4>
@@ -652,14 +668,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 10: Process ─── */
             if (page.pageType === 'process') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={10} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={10} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-5">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Development Process</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-7 gap-2 pt-2">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3 pt-2" : "grid grid-cols-7 gap-2 pt-2"}>
                       {page.steps && page.steps.map((st, stidx) => (
                         <div key={stidx} className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1 hover:border-[#00674f] transition">
                           <span className="text-xs font-mono font-bold text-[#00674f] bg-emerald-100 px-2 py-0.5 rounded-full">{st.num}</span>
@@ -676,7 +692,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 11: Why Us ─── */
             if (page.pageType === 'why-us') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={11} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={11} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Why DIGI TALKS INDIA?</h2>
@@ -701,14 +717,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 12: Values ─── */
             if (page.pageType === 'values') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={12} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={12} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Values</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                       {page.valuesList && page.valuesList.map((val, vidx) => (
                         <div key={vidx} className="p-4 rounded-xl bg-white border border-emerald-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
                           <HeartHandshake className="w-6 h-6 text-[#00674f]" />
@@ -725,14 +741,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 13: What Makes Us Different ─── */
             if (page.pageType === 'differentiators') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={13} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={13} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">What Makes Us Different</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-3 gap-3"}>
                       {page.points && page.points.map((pt, pidx) => (
                         <div key={pidx} className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 shadow-sm flex items-center gap-3">
                           <Sparkles className="w-5 h-5 text-amber-500 shrink-0" />
@@ -748,14 +764,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 14: Engagement Models ─── */
             if (page.pageType === 'engagement') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={14} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={14} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Engagement Models</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-3 gap-3"}>
                       {page.models && page.models.map((mod, midx) => (
                         <div key={midx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
                           <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center font-bold text-xs mb-1">
@@ -774,14 +790,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 15: Quality Standards ─── */
             if (page.pageType === 'quality') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={15} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={15} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Quality Standards</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                       {page.standardsList && page.standardsList.map((std, sidx) => (
                         <div key={sidx} className="p-4 rounded-xl bg-white border border-emerald-200 text-center shadow-sm space-y-1">
                           <ShieldCheck className="w-6 h-6 text-[#00674f] mx-auto" />
@@ -797,7 +813,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 16: Our Commitment ─── */
             if (page.pageType === 'commitment') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={16} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={16} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="max-w-3xl mx-auto space-y-6 text-center">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Commitment</h2>
@@ -821,14 +837,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 17: Future Focus ─── */
             if (page.pageType === 'future') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={17} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={17} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Future Focus</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                       {page.focusList && page.focusList.map((f, fidx) => (
                         <div key={fidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1 hover:border-[#00674f] transition">
                           <Rocket className="w-6 h-6 text-amber-500 mx-auto" />
@@ -844,14 +860,14 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 18: Our Promise ─── */
             if (page.pageType === 'promise') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={18} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={18} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-6">
                     <div className="text-center">
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Promise</h2>
                       <div className="w-20 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-6 gap-3 pt-2">
+                    <div className={isA4Portrait ? "grid grid-cols-3 gap-3 pt-2" : "grid grid-cols-6 gap-3 pt-2"}>
                       {page.promiseSteps && page.promiseSteps.map((p, pidx) => (
                         <div key={pidx} className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center shadow-sm space-y-2">
                           <div className="w-8 h-8 rounded-full bg-[#00674f] text-white flex items-center justify-center mx-auto text-xs font-bold shadow-md">
@@ -869,7 +885,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 19: Call To Action ─── */
             if (page.pageType === 'call-to-action') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={19} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={19} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="max-w-3xl mx-auto space-y-6 text-center">
                     <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
                       Let's Build Something Great Together
@@ -893,7 +909,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 20: Our Clients Overview ─── */
             if (page.pageType === 'clients-overview') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={20} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={20} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-5">
                     <div>
                       <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
@@ -904,8 +920,8 @@ export default function CompanyProfilePage() {
                       <div className="w-24 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-12 gap-6 items-center">
-                      <div className="col-span-7 space-y-4">
+                    <div className={isA4Portrait ? "space-y-4" : "grid grid-cols-12 gap-6 items-center"}>
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-4"}>
                         {page.paragraphs && page.paragraphs.map((p, pidx) => (
                           <p key={pidx} className="text-slate-800 text-sm lg:text-base font-normal leading-relaxed bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                             {p}
@@ -913,7 +929,7 @@ export default function CompanyProfilePage() {
                         ))}
                       </div>
 
-                      <div className="col-span-5 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-3">
+                      <div className={isA4Portrait ? "bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-3" : "col-span-5 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-3"}>
                         <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Key Sectors Served</h4>
                         <div className="grid grid-cols-2 gap-2">
                           <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
@@ -951,7 +967,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 21: Case Study - Guntur Urban Bank ─── */
             if (page.pageType === 'client-case-bank') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={21} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={21} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
@@ -964,8 +980,8 @@ export default function CompanyProfilePage() {
                       </a>
                     </div>
 
-                    <div className="grid grid-cols-12 gap-4">
-                      <div className="col-span-7 space-y-3">
+                    <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
@@ -983,7 +999,7 @@ export default function CompanyProfilePage() {
                         </div>
                       </div>
 
-                      <div className="col-span-5 space-y-3">
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
                         <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                             <CheckCircle2 className="w-4 h-4 text-[#00674f]" />
@@ -1007,7 +1023,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 22: Case Study - Sri Savithru Infra Projects ─── */
             if (page.pageType === 'client-case-realestate-1') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={22} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={22} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
@@ -1020,8 +1036,8 @@ export default function CompanyProfilePage() {
                       </a>
                     </div>
 
-                    <div className="grid grid-cols-12 gap-4">
-                      <div className="col-span-7 space-y-3">
+                    <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
@@ -1039,7 +1055,7 @@ export default function CompanyProfilePage() {
                         </div>
                       </div>
 
-                      <div className="col-span-5 space-y-3">
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 shadow-sm">
                           <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1.5">Business Outcomes</h4>
                           <div className="space-y-1.5">
@@ -1061,7 +1077,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 23: Case Study - Pulagam Properties ─── */
             if (page.pageType === 'client-case-realestate-2') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={23} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={23} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
@@ -1074,8 +1090,8 @@ export default function CompanyProfilePage() {
                       </a>
                     </div>
 
-                    <div className="grid grid-cols-12 gap-4">
-                      <div className="col-span-7 space-y-3">
+                    <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
@@ -1093,7 +1109,7 @@ export default function CompanyProfilePage() {
                         </div>
                       </div>
 
-                      <div className="col-span-5 space-y-3">
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 shadow-sm">
                           <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1.5">Business Outcomes</h4>
                           <div className="space-y-1.5">
@@ -1115,7 +1131,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 24: Case Study - NumeroSansar ─── */
             if (page.pageType === 'client-case-numerosansar') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={24} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={24} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
@@ -1128,8 +1144,8 @@ export default function CompanyProfilePage() {
                       </a>
                     </div>
 
-                    <div className="grid grid-cols-12 gap-4">
-                      <div className="col-span-7 space-y-3">
+                    <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-purple-700 uppercase tracking-wider mb-1">Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
@@ -1147,7 +1163,7 @@ export default function CompanyProfilePage() {
                         </div>
                       </div>
 
-                      <div className="col-span-5 space-y-3">
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
                         <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                             <CheckCircle2 className="w-4 h-4 text-purple-600" />
@@ -1171,7 +1187,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 25: Case Study - SCLAN.DE ─── */
             if (page.pageType === 'client-case-sclan') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={25} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={25} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
@@ -1184,8 +1200,8 @@ export default function CompanyProfilePage() {
                       </a>
                     </div>
 
-                    <div className="grid grid-cols-12 gap-4">
-                      <div className="col-span-7 space-y-3">
+                    <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-blue-700 uppercase tracking-wider mb-1">Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
@@ -1203,7 +1219,7 @@ export default function CompanyProfilePage() {
                         </div>
                       </div>
 
-                      <div className="col-span-5 space-y-3">
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-gradient-to-br from-blue-50 to-emerald-50 border border-blue-300 shadow-sm">
                           <h4 className="text-xs font-bold text-blue-800 uppercase tracking-wider mb-1.5">Business Benefits</h4>
                           <div className="space-y-1.5">
@@ -1225,7 +1241,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 26: Case Study - HUMPL ─── */
             if (page.pageType === 'client-case-humpl') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={26} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={26} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
@@ -1238,8 +1254,8 @@ export default function CompanyProfilePage() {
                       </a>
                     </div>
 
-                    <div className="grid grid-cols-12 gap-4">
-                      <div className="col-span-7 space-y-3">
+                    <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-teal-700 uppercase tracking-wider mb-1">Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
@@ -1257,7 +1273,7 @@ export default function CompanyProfilePage() {
                         </div>
                       </div>
 
-                      <div className="col-span-5 space-y-3">
+                      <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-300 shadow-sm">
                           <h4 className="text-xs font-bold text-teal-800 uppercase tracking-wider mb-1.5">Business Benefits</h4>
                           <div className="space-y-1.5">
@@ -1279,7 +1295,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 27: Full-Stack Tech Matrix ─── */
             if (page.pageType === 'tech-matrix') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={27} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={27} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Technology Expertise Across Client Projects</h2>
@@ -1287,7 +1303,7 @@ export default function CompanyProfilePage() {
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-2 gap-4"}>
                       {page.categories && page.categories.map((cat, cidx) => (
                         <div key={cidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2">
                           <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">{cat.title}</h4>
@@ -1309,7 +1325,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 28: Delivery Excellence ─── */
             if (page.pageType === 'delivery-excellence') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={28} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={28} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Delivery Excellence</h2>
@@ -1317,7 +1333,7 @@ export default function CompanyProfilePage() {
                       <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
                     </div>
 
-                    <div className="grid grid-cols-4 gap-3 pt-1">
+                    <div className={isA4Portrait ? "grid grid-cols-2 gap-3 pt-1" : "grid grid-cols-4 gap-3 pt-1"}>
                       {page.principles && page.principles.map((pr, pridx) => (
                         <div key={pridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
                           <Award className="w-5 h-5 text-amber-500" />
@@ -1334,7 +1350,7 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 29: Growing Together ─── */
             if (page.pageType === 'growing-together') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={29} totalPages={pages.length} activePageIdx={activePageIdx}>
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={29} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className="max-w-3xl mx-auto space-y-6 text-center">
                     <div>
                       <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Growing Together</h2>
@@ -1364,9 +1380,9 @@ export default function CompanyProfilePage() {
             /* ─── PAGE 30: Contact Us ─── */
             if (page.pageType === 'contact') {
               return (
-                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={30} totalPages={pages.length} activePageIdx={activePageIdx}>
-                  <div className="grid grid-cols-12 gap-8 items-center">
-                    <div className="col-span-7 space-y-4">
+                <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={30} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
+                  <div className={isA4Portrait ? "space-y-6" : "grid grid-cols-12 gap-8 items-center"}>
+                    <div className={isA4Portrait ? "space-y-4" : "col-span-7 space-y-4"}>
                       <div>
                         <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Contact Us</h2>
                         <h3 className="text-xl lg:text-2xl font-bold text-[#00674f] mt-1">{page.companyName || 'DIGI TALKS INDIA'}</h3>
@@ -1410,7 +1426,7 @@ export default function CompanyProfilePage() {
                       </div>
                     </div>
 
-                    <div className="col-span-5 bg-gradient-to-br from-emerald-50 via-white to-amber-50/50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-4 text-center">
+                    <div className={isA4Portrait ? "bg-gradient-to-br from-emerald-50 via-white to-amber-50/50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-4 text-center" : "col-span-5 bg-gradient-to-br from-emerald-50 via-white to-amber-50/50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-4 text-center"}>
                       <div className="w-12 h-12 bg-[#00674f] text-white rounded-full flex items-center justify-center mx-auto shadow-md">
                         <Sparkles className="w-6 h-6 text-yellow-300" />
                       </div>
@@ -1433,7 +1449,7 @@ export default function CompanyProfilePage() {
 
             /* ─── Standard Markdown Page Fallback ─── */
             return (
-              <InternalPageWrapper key={page.id} badge={page.badge || 'Document'} pageNumber={idx + 1} totalPages={pages.length} activePageIdx={activePageIdx}>
+              <InternalPageWrapper key={page.id} badge={page.badge || 'Document'} pageNumber={idx + 1} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                 <div className="a4-reading-content">
                   {renderMarkdown(page.content)}
                 </div>
