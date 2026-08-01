@@ -319,8 +319,72 @@ export default function CompanyProfilePage() {
       {/* Page Viewer */}
       <div className="flex-1 flex items-start justify-center p-6 sm:p-8 overflow-auto" id="a4-print-area" ref={printRef}>
         <div className="space-y-10 print-all-pages">
-          {/* Render all pages for print, show active page on screen */}
-          {pages.map((page, idx) => (
+          {pages.map((page, idx) => {
+            /* ─── Cover Page ─── */
+            if (page.pageType === 'cover') {
+              return (
+                <div
+                  key={page.id}
+                  className={`a4-page-landscape relative rounded-2xl shadow-2xl overflow-hidden print-page ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
+                  style={{ backgroundColor: page.bgColor || '#00674f' }}
+                >
+                  {/* Subtle diagonal pattern overlay */}
+                  <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
+                    backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 41px)`,
+                  }} />
+
+                  {/* Elegant gold corner frames */}
+                  <div className="absolute top-6 left-6 w-24 h-24 border-t-2 border-l-2 border-white/25 rounded-tl-xl" />
+                  <div className="absolute top-6 right-6 w-24 h-24 border-t-2 border-r-2 border-white/25 rounded-tr-xl" />
+                  <div className="absolute bottom-6 left-6 w-24 h-24 border-b-2 border-l-2 border-white/25 rounded-bl-xl" />
+                  <div className="absolute bottom-6 right-6 w-24 h-24 border-b-2 border-r-2 border-white/25 rounded-br-xl" />
+
+                  {/* Top gold accent line */}
+                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
+                  {/* Bottom gold accent line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
+
+                  {/* Main Content — Centered */}
+                  <div className="relative z-10 h-full flex flex-col items-center justify-center px-16">
+                    {/* Logo */}
+                    {page.logoUrl && (
+                      <img
+                        src={page.logoUrl}
+                        alt="Digitalks Logo"
+                        className="w-56 h-56 object-contain mb-8 drop-shadow-2xl"
+                      />
+                    )}
+
+                    {/* Company Name */}
+                    <h1 className="text-5xl font-extrabold tracking-[0.25em] text-white uppercase mb-4" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.15)' }}>
+                      {page.companyName || 'DIGI TALKS INDIA'}
+                    </h1>
+
+                    {/* Gold Divider */}
+                    <div className="flex items-center gap-4 my-5">
+                      <div className="w-20 h-px bg-gradient-to-r from-transparent to-yellow-400" />
+                      <div className="w-2.5 h-2.5 rotate-45 bg-yellow-400 shadow-lg shadow-yellow-400/40" />
+                      <div className="w-20 h-px bg-gradient-to-l from-transparent to-yellow-400" />
+                    </div>
+
+                    {/* Subtitle */}
+                    <h2 className="text-2xl font-light tracking-[0.3em] text-white/80 uppercase">
+                      {page.subtitle || 'Corporate Company Profile'}
+                    </h2>
+                  </div>
+
+                  {/* Bottom info bar */}
+                  <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+                    <span className="text-xs text-white/30 tracking-[0.4em] uppercase font-medium">
+                      Confidential
+                    </span>
+                  </div>
+                </div>
+              );
+            }
+
+            /* ─── Standard Markdown Page ─── */
+            return (
             <div
               key={page.id}
               className={`a4-page-landscape relative bg-white rounded-2xl shadow-2xl overflow-hidden print-page ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
@@ -359,7 +423,8 @@ export default function CompanyProfilePage() {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

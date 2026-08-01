@@ -3162,10 +3162,21 @@ export const BOOKS_DATA = {
     category: "Corporate",
     difficulty: "Executive",
     estimatedHours: "10 min",
-    chaptersCount: 0,
+    chaptersCount: 1,
     isA4Profile: true,
     accentColor: "from-amber-600 to-yellow-600",
     cardBg: "bg-white",
-    chapters: []
+    chapters: [
+      {
+        id: "page-1-cover",
+        chapterNumber: 1,
+        title: "Page 1: Cover Page",
+        pageType: "cover",
+        companyName: "DIGI TALKS INDIA",
+        subtitle: "Corporate Company Profile",
+        bgColor: "#00674f",
+        logoUrl: "/assets/digitalks-logo.png"
+      }
+    ]
   }
 };
