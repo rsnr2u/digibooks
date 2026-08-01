@@ -13,17 +13,19 @@ import {
 import SyntaxHighlighter from '../components/SyntaxHighlighter';
 
 /* ───────────────── Markdown-lite renderer ───────────────── */
-function renderMarkdown(text) {
+function renderMarkdown(text, isA4Portrait) {
   if (!text) return null;
   const lines = text.split('\n');
   const elements = [];
   let i = 0;
+  const headingColor = isA4Portrait ? 'text-[#02296c]' : 'text-[#00674f]';
+  const borderHex = isA4Portrait ? 'rgba(2, 41, 108, 0.25)' : 'rgba(0, 103, 79, 0.25)';
 
   while (i < lines.length) {
     const line = lines[i];
     if (line.trim() === '') { i++; continue; }
     if (/^---+$/.test(line.trim())) {
-      elements.push(<hr key={i} className="my-6 border-emerald-300" />);
+      elements.push(<hr key={i} className="my-6 border-slate-200" />);
       i++; continue;
     }
     if (line.startsWith('# ')) {
@@ -31,7 +33,7 @@ function renderMarkdown(text) {
       i++; continue;
     }
     if (line.startsWith('## ')) {
-      elements.push(<h2 key={i} className="text-2xl font-bold text-[#00674f] mt-6 mb-3 border-b border-emerald-200 pb-2">{parseInline(line.slice(3))}</h2>);
+      elements.push(<h2 key={i} className={`text-2xl font-bold ${headingColor} mt-6 mb-3 pb-2`} style={{ borderBottom: `1px solid ${borderHex}` }}>{parseInline(line.slice(3))}</h2>);
       i++; continue;
     }
     if (line.startsWith('### ')) {
@@ -66,8 +68,19 @@ function parseInline(text) {
 }
 
 /* ───────────────── Reusable Internal Page Frame ───────────────── */
-function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePageIdx, isA4Portrait }) {
+function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePageIdx, isA4Portrait, customLogo }) {
   const pageFrameClass = isA4Portrait ? 'a4-portrait-page' : 'widescreen-page-16-9';
+  const logoSrc = customLogo || (isA4Portrait ? '/assets/digitalks-blue-logo.png' : '/assets/digitalks-logo.png');
+
+  const badgeBgClass = isA4Portrait
+    ? 'bg-blue-50 border-blue-200 text-[#02296c]'
+    : 'bg-emerald-50 border-emerald-300 text-[#00674f]';
+
+  const dotBgClass = isA4Portrait ? 'bg-[#02296c]' : 'bg-emerald-500';
+
+  const accentGradientClass = isA4Portrait
+    ? 'from-[#02296c] via-orange-400 to-[#02296c]'
+    : 'from-[#00674f] via-amber-400 to-[#00674f]';
 
   return (
     <div
@@ -79,19 +92,19 @@ function InternalPageWrapper({ children, badge, pageNumber, totalPages, activePa
       }} />
 
       {/* Top & Bottom Accent Color Bar */}
-      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00674f] via-amber-400 to-[#00674f]" />
-      <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00674f] via-amber-400 to-[#00674f]" />
+      <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${accentGradientClass}`} />
+      <div className={`absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r ${accentGradientClass}`} />
 
       {/* Header Bar — White BG with Clean Logo & Badge Alignment */}
       <div className="relative z-10 px-8 pt-4 pb-3 flex items-center justify-between border-b border-slate-200">
         <div className="flex items-center gap-3">
           <img
-            src="/assets/digitalks-logo.png"
+            src={logoSrc}
             alt="Digitalks Logo"
             className="h-9 object-contain drop-shadow-sm"
           />
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-[#00674f] text-xs font-bold uppercase tracking-wider shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <div className={`flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-bold uppercase tracking-wider shadow-sm ${badgeBgClass}`}>
+            <span className={`w-2 h-2 rounded-full animate-pulse ${dotBgClass}`} />
             <span>{badge || 'Corporate Profile'}</span>
           </div>
         </div>
@@ -148,6 +161,14 @@ export default function CompanyProfilePage() {
     if (found !== -1) activePageIdx = found;
   }
 
+  // Dynamic Theme Colors based on A4 Royal Blue vs Widescreen Emerald
+  const primaryHex = isA4Portrait ? '#02296c' : '#00674f';
+  const primaryText = isA4Portrait ? 'text-[#02296c]' : 'text-[#00674f]';
+  const primaryBg = isA4Portrait ? 'bg-[#02296c]' : 'bg-[#00674f]';
+  const cardLightBg = isA4Portrait ? 'bg-blue-50/80 border-blue-200' : 'bg-emerald-50 border-emerald-200';
+  const cardBadgeClass = isA4Portrait ? 'bg-blue-100 text-[#02296c] border-blue-300' : 'bg-emerald-100 text-[#00674f] border-emerald-300';
+  const btnHoverBg = isA4Portrait ? 'hover:bg-[#02296c]' : 'hover:bg-[#00674f]';
+
   const handleOpenPrintModal = () => {
     setShowPrintModal(true);
   };
@@ -190,8 +211,8 @@ export default function CompanyProfilePage() {
           <span className="text-slate-600">/</span>
           <span className="text-amber-400 font-bold text-sm">{book.title}</span>
           {isA4Portrait && (
-            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold font-mono">
-              A4 Portrait Mode
+            <span className="px-2.5 py-0.5 rounded-full bg-blue-600/30 text-blue-300 border border-blue-400/40 text-xs font-bold font-mono">
+              A4 Royal Blue (#02296c)
             </span>
           )}
         </div>
@@ -236,14 +257,14 @@ export default function CompanyProfilePage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white text-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-2xl border-2 border-emerald-500 relative space-y-4"
+              className="bg-white text-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-2xl border-2 border-blue-600 relative space-y-4"
             >
               <button onClick={() => setShowPrintModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1">
                 <X className="w-5 h-5" />
               </button>
 
               <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
-                <div className="w-10 h-10 rounded-xl bg-[#00674f] text-white flex items-center justify-center font-bold">
+                <div className={`w-10 h-10 rounded-xl ${primaryBg} text-white flex items-center justify-center font-bold`}>
                   <Printer className="w-5 h-5" />
                 </div>
                 <div>
@@ -256,28 +277,28 @@ export default function CompanyProfilePage() {
 
               <div className="space-y-2.5 text-xs text-slate-700">
                 <p className="font-bold text-slate-900 flex items-center gap-2 text-sm">
-                  <Info className="w-4 h-4 text-[#00674f]" />
+                  <Info className="w-4 h-4 text-blue-700" />
                   <span>Important Browser Print Settings:</span>
                 </p>
 
-                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl space-y-2 font-medium">
-                  <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl space-y-2 font-medium">
+                  <div className="flex items-center justify-between border-b border-blue-200 pb-1.5">
                     <span className="font-bold">1. Destination:</span>
-                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#00674f] border border-emerald-300">Save as PDF</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#02296c] border border-blue-300">Save as PDF</span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
+                  <div className="flex items-center justify-between border-b border-blue-200 pb-1.5">
                     <span className="font-bold">2. Layout / Orientation:</span>
-                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#00674f] border border-emerald-300">
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#02296c] border border-blue-300">
                       {isA4Portrait ? 'Portrait (A4 Size)' : 'Landscape (16:9)'}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
+                  <div className="flex items-center justify-between border-b border-blue-200 pb-1.5">
                     <span className="font-bold">3. Margins:</span>
-                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#00674f] border border-emerald-300">None</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#02296c] border border-blue-300">None</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="font-bold">4. Background graphics:</span>
-                    <span className="px-2 py-0.5 bg-emerald-600 text-white rounded font-bold">☑ ENABLED (Checked)</span>
+                    <span className="px-2 py-0.5 bg-[#02296c] text-white rounded font-bold">☑ ENABLED (Checked)</span>
                   </div>
                 </div>
 
@@ -295,7 +316,7 @@ export default function CompanyProfilePage() {
                 </button>
                 <button
                   onClick={executePrint}
-                  className="px-5 py-2.5 rounded-xl bg-[#00674f] text-white font-bold hover:bg-emerald-700 transition text-xs flex items-center gap-2 shadow-md shadow-emerald-700/20"
+                  className={`px-5 py-2.5 rounded-xl ${primaryBg} text-white font-bold hover:opacity-90 transition text-xs flex items-center gap-2 shadow-md` }
                 >
                   <Printer className="w-4 h-4" />
                   <span>Open Print Dialog Now</span>
@@ -310,6 +331,9 @@ export default function CompanyProfilePage() {
       <div className="flex-1 flex items-start justify-center p-6 sm:p-8 overflow-auto" id="a4-print-area" ref={printRef}>
         <div className="space-y-10 print-all-pages">
           {pages.map((page, idx) => {
+            const coverLogo = page.logoUrl || (isA4Portrait ? '/assets/digitalks-blue-logo.png' : '/assets/digitalks-logo.png');
+            const coverBg = isA4Portrait ? '#02296c' : (page.bgColor || '#00674f');
+
             /* ─── PAGE 1: Cover Page ─── */
             if (page.pageType === 'cover') {
               const coverClass = isA4Portrait ? 'a4-portrait-page' : 'widescreen-page-16-9';
@@ -317,36 +341,36 @@ export default function CompanyProfilePage() {
                 <div
                   key={page.id}
                   className={`${coverClass} relative rounded-2xl shadow-2xl overflow-hidden print-page ${idx !== activePageIdx ? 'hidden-on-screen' : ''}`}
-                  style={{ backgroundColor: page.bgColor || '#00674f' }}
+                  style={{ backgroundColor: coverBg }}
                 >
                   <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
                     backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 41px)`,
                   }} />
 
-                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
-                  <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400" />
+                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-400 via-amber-300 to-orange-400" />
+                  <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-400 via-amber-300 to-orange-400" />
 
                   <div className="relative z-10 h-full flex flex-col items-center justify-center px-12 py-8 text-center">
-                    {page.logoUrl && (
+                    {coverLogo && (
                       <img
-                        src={page.logoUrl}
+                        src={coverLogo}
                         alt="Digitalks Logo"
-                        className="w-44 h-44 object-contain mb-4 drop-shadow-2xl"
+                        className="w-48 h-48 object-contain mb-4 drop-shadow-2xl"
                       />
                     )}
 
-                    <h1 className="text-4xl lg:text-5xl font-bold tracking-[0.2em] text-white uppercase mb-2" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.2)' }}>
+                    <h1 className="text-4xl lg:text-5xl font-bold tracking-[0.2em] text-white uppercase mb-2" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
                       {page.companyName || 'DIGI TALKS INDIA'}
                     </h1>
 
-                    <h2 className="text-lg lg:text-xl font-semibold tracking-wider text-yellow-300 mb-3 max-w-2xl">
+                    <h2 className="text-lg lg:text-xl font-semibold tracking-wider text-orange-300 mb-3 max-w-2xl">
                       {page.tagline || page.subtitle || 'Corporate Company Profile'}
                     </h2>
 
                     <div className="flex items-center gap-4 my-3">
-                      <div className="w-20 h-px bg-gradient-to-r from-transparent to-yellow-400" />
-                      <div className="w-2.5 h-2.5 rotate-45 bg-yellow-400 shadow-lg shadow-yellow-400/40" />
-                      <div className="w-20 h-px bg-gradient-to-l from-transparent to-yellow-400" />
+                      <div className="w-20 h-px bg-gradient-to-r from-transparent to-orange-400" />
+                      <div className="w-2.5 h-2.5 rotate-45 bg-orange-400 shadow-lg shadow-orange-400/40" />
+                      <div className="w-20 h-px bg-gradient-to-l from-transparent to-orange-400" />
                     </div>
 
                     {page.services && (
@@ -363,7 +387,7 @@ export default function CompanyProfilePage() {
                     )}
 
                     {page.quote && (
-                      <div className="mt-4 px-6 py-2 rounded-xl bg-black/25 border border-yellow-400/40 text-amber-200 font-serif italic text-base lg:text-lg font-semibold tracking-wide shadow-inner">
+                      <div className="mt-4 px-6 py-2 rounded-xl bg-black/25 border border-orange-400/40 text-amber-200 font-serif italic text-base lg:text-lg font-semibold tracking-wide shadow-inner">
                         {page.quote}
                       </div>
                     )}
@@ -387,13 +411,13 @@ export default function CompanyProfilePage() {
                       <div>
                         <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
                           <span>About</span>
-                          <span className="text-[#00674f]">DIGI TALKS INDIA</span>
+                          <span className={primaryText}>DIGI TALKS INDIA</span>
                         </h2>
-                        <div className="w-24 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
+                        <div className={`w-24 h-1.5 bg-gradient-to-r ${isA4Portrait ? 'from-[#02296c] to-orange-400' : 'from-[#00674f] to-amber-400'} rounded-full mt-2`} />
                       </div>
 
-                      <p className="text-slate-800 text-sm lg:text-base leading-relaxed font-normal bg-emerald-50 border border-emerald-200 p-4 rounded-xl shadow-sm">
-                        <strong className="text-[#00674f] font-bold">DIGI TALKS INDIA</strong> is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
+                      <p className={`text-slate-800 text-sm lg:text-base leading-relaxed font-normal p-4 rounded-xl shadow-sm ${cardLightBg}`}>
+                        <strong className={`font-bold ${primaryText}`}>DIGI TALKS INDIA</strong> is a technology company specializing in software engineering, enterprise digital solutions, and business automation. We partner with startups, SMEs, and enterprises to design and develop scalable digital products that improve efficiency, increase productivity, and create measurable business value.
                       </p>
 
                       <p className="text-slate-700 text-sm lg:text-base leading-relaxed font-normal">
@@ -401,18 +425,18 @@ export default function CompanyProfilePage() {
                       </p>
 
                       <div className="grid grid-cols-3 gap-3 pt-1">
-                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-[#00674f] transition group">
-                          <Cpu className="w-6 h-6 text-[#00674f] group-hover:scale-110 transition" />
+                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-blue-600 transition group">
+                          <Cpu className={`w-6 h-6 ${primaryText} group-hover:scale-110 transition`} />
                           <h4 className="text-sm font-bold text-slate-900">Software & AI</h4>
                           <p className="text-xs text-slate-600 font-normal">Scalable Engineering</p>
                         </div>
-                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-amber-500 transition group">
-                          <Zap className="w-6 h-6 text-amber-600 group-hover:scale-110 transition" />
+                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-orange-500 transition group">
+                          <Zap className="w-6 h-6 text-orange-600 group-hover:scale-110 transition" />
                           <h4 className="text-sm font-bold text-slate-900">Automation</h4>
                           <p className="text-xs text-slate-600 font-normal">Enterprise Workflows</p>
                         </div>
-                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-[#00674f] transition group">
-                          <TrendingUp className="w-6 h-6 text-[#00674f] group-hover:scale-110 transition" />
+                        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col gap-1 hover:border-blue-600 transition group">
+                          <TrendingUp className={`w-6 h-6 ${primaryText} group-hover:scale-110 transition`} />
                           <h4 className="text-sm font-bold text-slate-900">Growth & ROI</h4>
                           <p className="text-xs text-slate-600 font-normal">Measurable Value</p>
                         </div>
@@ -420,18 +444,18 @@ export default function CompanyProfilePage() {
                     </motion.div>
 
                     <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className={isA4Portrait ? "relative mt-4" : "col-span-5 relative"}>
-                      <div className="relative rounded-2xl overflow-hidden border border-[#00674f]/40 shadow-xl group">
+                      <div className={`relative rounded-2xl overflow-hidden border shadow-xl group ${isA4Portrait ? 'border-[#02296c]/40' : 'border-[#00674f]/40'}`}>
                         <img
                           src={page.image || '/assets/about-digitalks.jpg'}
                           alt="About DIGI TALKS INDIA"
                           className="w-full h-[240px] lg:h-[290px] object-cover rounded-xl transform group-hover:scale-105 transition duration-700"
                         />
-                        <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-emerald-400/40 flex items-center justify-between text-white">
+                        <div className="absolute bottom-3 left-3 right-3 p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-blue-400/40 flex items-center justify-between text-white">
                           <div className="flex items-center gap-2">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                            <CheckCircle2 className="w-4 h-4 text-blue-400" />
                             <span className="text-xs font-bold">Digital Transformation</span>
                           </div>
-                          <span className="text-[11px] font-mono text-amber-300 font-bold">Innovation & Scale</span>
+                          <span className="text-[11px] font-mono text-orange-300 font-bold">Innovation & Scale</span>
                         </div>
                       </div>
                     </motion.div>
@@ -447,10 +471,10 @@ export default function CompanyProfilePage() {
                   <div className="max-w-4xl mx-auto space-y-6">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
-                        <Building2 className="w-8 h-8 text-[#00674f]" />
+                        <Building2 className={`w-8 h-8 ${primaryText}`} />
                         <span>Our Story</span>
                       </h2>
-                      <div className="w-20 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 bg-gradient-to-r ${isA4Portrait ? 'from-[#02296c] to-orange-400' : 'from-[#00674f] to-amber-400'} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "space-y-6" : "grid grid-cols-1 md:grid-cols-12 gap-6 items-center"}>
@@ -462,11 +486,11 @@ export default function CompanyProfilePage() {
                         ))}
                       </div>
 
-                      <div className={isA4Portrait ? "bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 p-6 rounded-2xl shadow-md text-center space-y-3" : "md:col-span-5 bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 p-6 rounded-2xl shadow-md text-center space-y-3"}>
-                        <div className="w-12 h-12 bg-[#00674f] text-white rounded-xl flex items-center justify-center mx-auto shadow-md">
+                      <div className={isA4Portrait ? `p-6 rounded-2xl shadow-md text-center space-y-3 ${cardLightBg}` : `md:col-span-5 p-6 rounded-2xl shadow-md text-center space-y-3 ${cardLightBg}`}>
+                        <div className={`w-12 h-12 ${primaryBg} text-white rounded-xl flex items-center justify-center mx-auto shadow-md`}>
                           <Target className="w-6 h-6" />
                         </div>
-                        <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-widest">Our Core Purpose</h4>
+                        <h4 className={`text-xs font-bold uppercase tracking-widest ${primaryText}`}>Our Core Purpose</h4>
                         <p className="text-slate-900 font-bold text-base lg:text-lg leading-snug">
                           "{page.purpose}"
                         </p>
@@ -483,19 +507,19 @@ export default function CompanyProfilePage() {
                 <InternalPageWrapper key={page.id} badge={page.badge} pageNumber={4} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                   <div className={isA4Portrait ? "space-y-6" : "grid grid-cols-12 gap-8 items-stretch"}>
                     {/* Vision Card */}
-                    <div className={isA4Portrait ? "bg-gradient-to-br from-[#00674f] to-slate-900 text-white p-7 rounded-2xl shadow-xl space-y-3 relative overflow-hidden" : "col-span-5 bg-gradient-to-br from-[#00674f] to-slate-900 text-white p-7 rounded-2xl shadow-xl flex flex-col justify-between relative overflow-hidden"}>
+                    <div className={isA4Portrait ? `bg-gradient-to-br ${isA4Portrait ? 'from-[#02296c] to-slate-900' : 'from-[#00674f] to-slate-900'} text-white p-7 rounded-2xl shadow-xl space-y-3 relative overflow-hidden` : `col-span-5 bg-gradient-to-br ${isA4Portrait ? 'from-[#02296c] to-slate-900' : 'from-[#00674f] to-slate-900'} text-white p-7 rounded-2xl shadow-xl flex flex-col justify-between relative overflow-hidden`}>
                       <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-2xl pointer-events-none" />
                       <div>
                         <div className="w-12 h-12 bg-white/15 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/30">
                           <Eye className="w-6 h-6 text-yellow-300" />
                         </div>
                         <h3 className="text-2xl font-bold text-white mb-2">Our Vision</h3>
-                        <div className="w-16 h-1 bg-yellow-400 rounded-full mb-4" />
+                        <div className="w-16 h-1 bg-orange-400 rounded-full mb-4" />
                         <p className="text-slate-100 text-sm lg:text-base leading-relaxed font-normal">
                           "{page.vision}"
                         </p>
                       </div>
-                      <div className="pt-4 border-t border-white/20 flex items-center gap-2 text-xs text-amber-300 font-bold font-mono">
+                      <div className="pt-4 border-t border-white/20 flex items-center gap-2 text-xs text-orange-300 font-bold font-mono">
                         <Sparkles className="w-4 h-4" />
                         <span>Sustainable Business Growth</span>
                       </div>
@@ -505,15 +529,15 @@ export default function CompanyProfilePage() {
                     <div className={isA4Portrait ? "bg-white border border-slate-200 p-7 rounded-2xl shadow-md space-y-3" : "col-span-7 bg-white border border-slate-200 p-7 rounded-2xl shadow-md flex flex-col justify-between"}>
                       <div>
                         <div className="flex items-center gap-3 mb-2">
-                          <Rocket className="w-7 h-7 text-[#00674f]" />
+                          <Rocket className={`w-7 h-7 ${primaryText}`} />
                           <h3 className="text-2xl font-bold text-slate-900">Our Mission</h3>
                         </div>
-                        <div className="w-16 h-1.5 bg-[#00674f] rounded-full mb-5" />
+                        <div className={`w-16 h-1.5 ${primaryBg} rounded-full mb-5`} />
 
                         <div className="space-y-3">
                           {page.missions && page.missions.map((m, midx) => (
-                            <div key={midx} className="flex items-start gap-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200">
-                              <CheckCircle2 className="w-5 h-5 text-[#00674f] shrink-0 mt-0.5" />
+                            <div key={midx} className={`flex items-start gap-3 p-3 rounded-xl ${cardLightBg}`}>
+                              <CheckCircle2 className={`w-5 h-5 ${primaryText} shrink-0 mt-0.5`} />
                               <span className="text-slate-900 text-sm lg:text-base font-bold">{m}</span>
                             </div>
                           ))}
@@ -532,13 +556,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div className="text-center max-w-2xl mx-auto">
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Core Services</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} mx-auto rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3 pt-2" : "grid grid-cols-4 gap-3 pt-2"}>
                       {page.servicesList && page.servicesList.map((srv, sidx) => (
-                        <div key={sidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-[#00674f] hover:bg-emerald-50/40 transition group">
-                          <div className="w-8 h-8 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center mb-2 group-hover:bg-[#00674f] group-hover:text-white transition">
+                        <div key={sidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-blue-600 transition group">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 transition ${cardBadgeClass} group-hover:bg-[#02296c] group-hover:text-white`}>
                             <Code className="w-4.5 h-4.5" />
                           </div>
                           <h4 className="text-xs font-bold text-slate-900 mb-1">{srv.name}</h4>
@@ -558,16 +582,16 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
-                        <Zap className="w-7 h-7 text-amber-500" />
+                        <Zap className="w-7 h-7 text-orange-500" />
                         <span>Digital Transformation Services</span>
                       </h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 pt-2">
                       {page.items && page.items.map((item, iidx) => (
-                        <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3 hover:border-[#00674f] transition">
-                          <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center shrink-0 mt-0.5 font-mono text-xs font-bold">
+                        <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3 hover:border-blue-600 transition">
+                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5 font-mono text-xs font-bold ${cardBadgeClass}`}>
                             0{iidx + 1}
                           </div>
                           <div>
@@ -589,22 +613,22 @@ export default function CompanyProfilePage() {
                   <div className="space-y-5">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Software Engineering</h2>
-                      <p className="text-xs text-[#00674f] font-bold uppercase tracking-wider mt-1">{page.subheading}</p>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <p className={`text-xs font-bold uppercase tracking-wider mt-1 ${primaryText}`}>{page.subheading}</p>
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                       {page.pillars && page.pillars.map((p, pidx) => (
-                        <div key={pidx} className="p-4 rounded-xl bg-white border border-emerald-200 text-center space-y-1 shadow-sm hover:border-[#00674f] transition">
-                          <ShieldCheck className="w-6 h-6 text-[#00674f] mx-auto" />
+                        <div key={pidx} className="p-4 rounded-xl bg-white border border-blue-200 text-center space-y-1 shadow-sm hover:border-blue-600 transition">
+                          <ShieldCheck className={`w-6 h-6 ${primaryText} mx-auto`} />
                           <h4 className="text-sm font-bold text-slate-900">{p.title}</h4>
                           <p className="text-[11px] text-slate-600 font-normal">{p.desc}</p>
                         </div>
                       ))}
                     </div>
 
-                    <div className="p-4 rounded-xl bg-[#00674f] text-white text-center border border-emerald-400 shadow-md">
-                      <p className="text-xs lg:text-sm font-bold tracking-wide text-amber-200">
+                    <div className={`p-4 rounded-xl ${primaryBg} text-white text-center border border-blue-400 shadow-md`}>
+                      <p className="text-xs lg:text-sm font-bold tracking-wide text-orange-200">
                         ✨ {page.outro}
                       </p>
                     </div>
@@ -620,13 +644,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Industries We Serve</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-3 gap-3 pt-2" : "grid grid-cols-5 gap-3 pt-2"}>
                       {page.industriesList && page.industriesList.map((ind, iidx) => (
-                        <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 text-center shadow-sm hover:border-[#00674f] hover:bg-emerald-50/60 transition">
-                          <Building2 className="w-6 h-6 text-[#00674f] mx-auto mb-1.5" />
+                        <div key={iidx} className="p-3.5 rounded-xl bg-white border border-slate-200 text-center shadow-sm hover:border-blue-600 transition">
+                          <Building2 className={`w-6 h-6 ${primaryText} mx-auto mb-1.5`} />
                           <h4 className="text-xs font-bold text-slate-900">{ind.name}</h4>
                         </div>
                       ))}
@@ -643,16 +667,16 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Technology Expertise</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-2 gap-4"}>
                       {page.categories && page.categories.map((cat, cidx) => (
                         <div key={cidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2">
-                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">{cat.title}</h4>
+                          <h4 className={`text-xs font-bold uppercase tracking-wider ${primaryText}`}>{cat.title}</h4>
                           <div className="flex flex-wrap gap-2">
                             {cat.skills.map((skill, skidx) => (
-                              <span key={skidx} className="px-3 py-1 rounded-md bg-emerald-50 border border-emerald-300 text-slate-900 text-xs font-bold shadow-sm">
+                              <span key={skidx} className={`px-3 py-1 rounded-md text-slate-900 text-xs font-bold shadow-sm ${cardBadgeClass}`}>
                                 {skill}
                               </span>
                             ))}
@@ -672,13 +696,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-5">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Development Process</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3 pt-2" : "grid grid-cols-7 gap-2 pt-2"}>
                       {page.steps && page.steps.map((st, stidx) => (
-                        <div key={stidx} className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1 hover:border-[#00674f] transition">
-                          <span className="text-xs font-mono font-bold text-[#00674f] bg-emerald-100 px-2 py-0.5 rounded-full">{st.num}</span>
+                        <div key={stidx} className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1 hover:border-blue-600 transition">
+                          <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${cardBadgeClass}`}>{st.num}</span>
                           <h4 className="text-xs font-bold text-slate-900 mt-1">{st.name}</h4>
                           <p className="text-[10px] text-slate-600 font-normal leading-tight">{st.desc}</p>
                         </div>
@@ -696,13 +720,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Why DIGI TALKS INDIA?</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       {page.reasons && page.reasons.map((r, ridx) => (
-                        <div key={ridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3 hover:border-emerald-500 transition">
-                          <div className="w-7 h-7 rounded-full bg-[#00674f] text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <div key={ridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3 hover:border-blue-600 transition">
+                          <div className={`w-7 h-7 rounded-full ${primaryBg} text-white flex items-center justify-center shrink-0 shadow-sm`}>
                             <Check className="w-4 h-4" />
                           </div>
                           <span className="text-sm font-bold text-slate-900">{r}</span>
@@ -721,13 +745,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Values</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                       {page.valuesList && page.valuesList.map((val, vidx) => (
-                        <div key={vidx} className="p-4 rounded-xl bg-white border border-emerald-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
-                          <HeartHandshake className="w-6 h-6 text-[#00674f]" />
+                        <div key={vidx} className="p-4 rounded-xl bg-white border border-blue-200 shadow-sm space-y-1 hover:border-blue-600 transition">
+                          <HeartHandshake className={`w-6 h-6 ${primaryText}`} />
                           <h4 className="text-xs font-bold text-slate-900">{val.title}</h4>
                           <p className="text-[11px] text-slate-600 font-normal leading-tight">{val.desc}</p>
                         </div>
@@ -745,13 +769,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">What Makes Us Different</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-3 gap-3"}>
                       {page.points && page.points.map((pt, pidx) => (
-                        <div key={pidx} className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 shadow-sm flex items-center gap-3">
-                          <Sparkles className="w-5 h-5 text-amber-500 shrink-0" />
+                        <div key={pidx} className={`p-4 rounded-xl shadow-sm flex items-center gap-3 ${cardLightBg}`}>
+                          <Sparkles className="w-5 h-5 text-orange-500 shrink-0" />
                           <span className="text-xs font-bold text-slate-900">{pt}</span>
                         </div>
                       ))}
@@ -768,13 +792,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Engagement Models</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-3 gap-3"}>
                       {page.models && page.models.map((mod, midx) => (
-                        <div key={midx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
-                          <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#00674f] flex items-center justify-center font-bold text-xs mb-1">
+                        <div key={midx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1 hover:border-blue-600 transition">
+                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs mb-1 ${cardBadgeClass}`}>
                             0{midx + 1}
                           </div>
                           <h4 className="text-xs font-bold text-slate-900">{mod.name}</h4>
@@ -794,13 +818,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Quality Standards</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                       {page.standardsList && page.standardsList.map((std, sidx) => (
-                        <div key={sidx} className="p-4 rounded-xl bg-white border border-emerald-200 text-center shadow-sm space-y-1">
-                          <ShieldCheck className="w-6 h-6 text-[#00674f] mx-auto" />
+                        <div key={sidx} className="p-4 rounded-xl bg-white border border-blue-200 text-center shadow-sm space-y-1">
+                          <ShieldCheck className={`w-6 h-6 ${primaryText} mx-auto`} />
                           <h4 className="text-xs font-bold text-slate-900">{std}</h4>
                         </div>
                       ))}
@@ -817,11 +841,11 @@ export default function CompanyProfilePage() {
                   <div className="max-w-3xl mx-auto space-y-6 text-center">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Commitment</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} mx-auto rounded-full mt-2`} />
                     </div>
 
-                    <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-300 shadow-md">
-                      <p className="text-xl lg:text-2xl font-bold text-[#00674f] italic">
+                    <div className={`p-6 rounded-2xl shadow-md ${cardLightBg}`}>
+                      <p className={`text-xl lg:text-2xl font-bold italic ${primaryText}`}>
                         "{page.quote}"
                       </p>
                     </div>
@@ -841,13 +865,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Future Focus</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3" : "grid grid-cols-4 gap-3"}>
                       {page.focusList && page.focusList.map((f, fidx) => (
-                        <div key={fidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1 hover:border-[#00674f] transition">
-                          <Rocket className="w-6 h-6 text-amber-500 mx-auto" />
+                        <div key={fidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-center space-y-1 hover:border-blue-600 transition">
+                          <Rocket className="w-6 h-6 text-orange-500 mx-auto" />
                           <h4 className="text-xs font-bold text-slate-900">{f}</h4>
                         </div>
                       ))}
@@ -864,13 +888,13 @@ export default function CompanyProfilePage() {
                   <div className="space-y-6">
                     <div className="text-center">
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Our Promise</h2>
-                      <div className="w-20 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
+                      <div className={`w-20 h-1.5 ${primaryBg} mx-auto rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-3 gap-3 pt-2" : "grid grid-cols-6 gap-3 pt-2"}>
                       {page.promiseSteps && page.promiseSteps.map((p, pidx) => (
-                        <div key={pidx} className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center shadow-sm space-y-2">
-                          <div className="w-8 h-8 rounded-full bg-[#00674f] text-white flex items-center justify-center mx-auto text-xs font-bold shadow-md">
+                        <div key={pidx} className={`p-4 rounded-xl text-center shadow-sm space-y-2 ${cardLightBg}`}>
+                          <div className={`w-8 h-8 rounded-full ${primaryBg} text-white flex items-center justify-center mx-auto text-xs font-bold shadow-md`}>
                             {pidx + 1}
                           </div>
                           <h4 className="text-xs font-bold text-slate-900">{p}</h4>
@@ -890,14 +914,14 @@ export default function CompanyProfilePage() {
                     <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
                       Let's Build Something Great Together
                     </h2>
-                    <div className="w-24 h-1.5 bg-[#00674f] mx-auto rounded-full" />
+                    <div className={`w-24 h-1.5 ${primaryBg} mx-auto rounded-full`} />
 
                     <p className="text-slate-800 text-base font-medium leading-relaxed">
                       {page.message}
                     </p>
 
-                    <div className="p-5 rounded-2xl bg-[#00674f] text-white shadow-xl">
-                      <h3 className="text-xl font-bold text-amber-300">
+                    <div className={`p-5 rounded-2xl ${primaryBg} text-white shadow-xl`}>
+                      <h3 className="text-xl font-bold text-orange-300">
                         {page.highlight}
                       </h3>
                     </div>
@@ -913,11 +937,11 @@ export default function CompanyProfilePage() {
                   <div className="space-y-5">
                     <div>
                       <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
-                        <Users className="w-8 h-8 text-[#00674f]" />
+                        <Users className={`w-8 h-8 ${primaryText}`} />
                         <span>OUR CLIENTS</span>
                       </h2>
-                      <p className="text-sm font-bold text-[#00674f] mt-1">{page.subheading}</p>
-                      <div className="w-24 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
+                      <p className={`text-sm font-bold mt-1 ${primaryText}`}>{page.subheading}</p>
+                      <div className={`w-24 h-1.5 bg-gradient-to-r ${isA4Portrait ? 'from-[#02296c] to-orange-400' : 'from-[#00674f] to-amber-400'} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "space-y-4" : "grid grid-cols-12 gap-6 items-center"}>
@@ -929,31 +953,31 @@ export default function CompanyProfilePage() {
                         ))}
                       </div>
 
-                      <div className={isA4Portrait ? "bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-3" : "col-span-5 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-3"}>
-                        <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Key Sectors Served</h4>
+                      <div className={isA4Portrait ? `p-6 rounded-2xl shadow-md space-y-3 ${cardLightBg}` : `col-span-5 p-6 rounded-2xl shadow-md space-y-3 ${cardLightBg}`}>
+                        <h4 className={`text-xs font-bold uppercase tracking-wider ${primaryText}`}>Key Sectors Served</h4>
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
-                            <Landmark className="w-4 h-4 text-[#00674f]" />
+                          <div className="p-2.5 rounded-lg bg-white border border-blue-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Landmark className={`w-4 h-4 ${primaryText}`} />
                             <span>Banking & Finance</span>
                           </div>
-                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
-                            <Building2 className="w-4 h-4 text-[#00674f]" />
+                          <div className="p-2.5 rounded-lg bg-white border border-blue-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Building2 className={`w-4 h-4 ${primaryText}`} />
                             <span>Real Estate</span>
                           </div>
-                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
-                            <Cpu className="w-4 h-4 text-[#00674f]" />
+                          <div className="p-2.5 rounded-lg bg-white border border-blue-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Cpu className={`w-4 h-4 ${primaryText}`} />
                             <span>Numerology SaaS</span>
                           </div>
-                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
-                            <Zap className="w-4 h-4 text-[#00674f]" />
+                          <div className="p-2.5 rounded-lg bg-white border border-blue-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Zap className={`w-4 h-4 ${primaryText}`} />
                             <span>Smart Automation</span>
                           </div>
-                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
-                            <DollarSign className="w-4 h-4 text-[#00674f]" />
+                          <div className="p-2.5 rounded-lg bg-white border border-blue-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <DollarSign className={`w-4 h-4 ${primaryText}`} />
                             <span>FinTech Invoicing</span>
                           </div>
-                          <div className="p-2.5 rounded-lg bg-white border border-emerald-200 text-xs font-bold text-slate-900 flex items-center gap-2">
-                            <Globe className="w-4 h-4 text-[#00674f]" />
+                          <div className="p-2.5 rounded-lg bg-white border border-blue-200 text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <Globe className={`w-4 h-4 ${primaryText}`} />
                             <span>Digital Marketing</span>
                           </div>
                         </div>
@@ -971,10 +995,10 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
-                        <span className="text-xs font-bold text-amber-600 uppercase tracking-wider font-mono">Case Study • Banking</span>
+                        <span className="text-xs font-bold text-orange-600 uppercase tracking-wider font-mono">Case Study • Banking</span>
                         <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
                       </div>
-                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-[#00674f] hover:bg-[#00674f] hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className={`px-3.5 py-1.5 rounded-lg hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm ${cardBadgeClass} ${btnHoverBg}`}>
                         <span>guntururban.bank.in</span>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
@@ -983,7 +1007,7 @@ export default function CompanyProfilePage() {
                     <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
                       <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
-                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
+                          <h4 className={`text-xs font-bold uppercase tracking-wider mb-1 ${primaryText}`}>Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
                         </div>
 
@@ -991,7 +1015,7 @@ export default function CompanyProfilePage() {
                           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Technologies Used</h4>
                           <div className="flex flex-wrap gap-1.5">
                             {page.techStack && page.techStack.map((tech, tidx) => (
-                              <span key={tidx} className="px-2.5 py-1 rounded-md bg-emerald-100/70 border border-emerald-300 text-slate-900 text-[11px] font-bold">
+                              <span key={tidx} className={`px-2.5 py-1 rounded-md text-slate-900 text-[11px] font-bold ${cardBadgeClass}`}>
                                 {tech}
                               </span>
                             ))}
@@ -1002,12 +1026,12 @@ export default function CompanyProfilePage() {
                       <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
                         <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
                           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                            <CheckCircle2 className="w-4 h-4 text-[#00674f]" />
+                            <CheckCircle2 className={`w-4 h-4 ${primaryText}`} />
                             <span>Business Benefits</span>
                           </h4>
                           <div className="grid grid-cols-2 gap-1.5">
                             {page.benefits && page.benefits.map((b, bidx) => (
-                              <div key={bidx} className="p-1.5 rounded bg-emerald-50 text-[11px] font-bold text-slate-800 border border-emerald-200">
+                              <div key={bidx} className={`p-1.5 rounded text-[11px] font-bold text-slate-800 ${cardLightBg}`}>
                                 ✓ {b}
                               </div>
                             ))}
@@ -1027,10 +1051,10 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
-                        <span className="text-xs font-bold text-amber-600 uppercase tracking-wider font-mono">Case Study • Real Estate</span>
+                        <span className="text-xs font-bold text-orange-600 uppercase tracking-wider font-mono">Case Study • Real Estate</span>
                         <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
                       </div>
-                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-[#00674f] hover:bg-[#00674f] hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className={`px-3.5 py-1.5 rounded-lg hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm ${cardBadgeClass} ${btnHoverBg}`}>
                         <span>srisavithru.in</span>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
@@ -1039,7 +1063,7 @@ export default function CompanyProfilePage() {
                     <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
                       <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
-                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
+                          <h4 className={`text-xs font-bold uppercase tracking-wider mb-1 ${primaryText}`}>Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
                         </div>
 
@@ -1047,7 +1071,7 @@ export default function CompanyProfilePage() {
                           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Services Delivered</h4>
                           <div className="flex flex-wrap gap-1.5">
                             {page.servicesDelivered && page.servicesDelivered.map((srv, sidx) => (
-                              <span key={sidx} className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-slate-800 text-[11px] font-bold">
+                              <span key={sidx} className={`px-2 py-0.5 rounded text-slate-800 text-[11px] font-bold ${cardBadgeClass}`}>
                                 {srv}
                               </span>
                             ))}
@@ -1056,12 +1080,12 @@ export default function CompanyProfilePage() {
                       </div>
 
                       <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
-                        <div className="p-3.5 rounded-xl bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 shadow-sm">
-                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1.5">Business Outcomes</h4>
+                        <div className={`p-3.5 rounded-xl shadow-sm ${cardLightBg}`}>
+                          <h4 className={`text-xs font-bold uppercase tracking-wider mb-1.5 ${primaryText}`}>Business Outcomes</h4>
                           <div className="space-y-1.5">
                             {page.outcomes && page.outcomes.map((o, oidx) => (
                               <div key={oidx} className="flex items-center gap-2 text-xs font-bold text-slate-900">
-                                <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                                <Sparkles className="w-3.5 h-3.5 text-orange-500 shrink-0" />
                                 <span>{o}</span>
                               </div>
                             ))}
@@ -1081,10 +1105,10 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div className="flex items-start justify-between border-b border-slate-200 pb-3">
                       <div>
-                        <span className="text-xs font-bold text-amber-600 uppercase tracking-wider font-mono">Case Study • Real Estate</span>
+                        <span className="text-xs font-bold text-orange-600 uppercase tracking-wider font-mono">Case Study • Real Estate</span>
                         <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">{page.clientName}</h2>
                       </div>
-                      <a href={page.website} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-[#00674f] hover:bg-[#00674f] hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm">
+                      <a href={page.website} target="_blank" rel="noopener noreferrer" className={`px-3.5 py-1.5 rounded-lg hover:text-white transition flex items-center gap-2 text-xs font-bold shadow-sm ${cardBadgeClass} ${btnHoverBg}`}>
                         <span>pulagamproperties.com</span>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
@@ -1093,7 +1117,7 @@ export default function CompanyProfilePage() {
                     <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-12 gap-4"}>
                       <div className={isA4Portrait ? "space-y-3" : "col-span-7 space-y-3"}>
                         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
-                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1">Project Overview</h4>
+                          <h4 className={`text-xs font-bold uppercase tracking-wider mb-1 ${primaryText}`}>Project Overview</h4>
                           <p className="text-xs text-slate-700 font-normal leading-relaxed">{page.overview}</p>
                         </div>
 
@@ -1101,7 +1125,7 @@ export default function CompanyProfilePage() {
                           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Services Delivered</h4>
                           <div className="flex flex-wrap gap-1.5">
                             {page.servicesDelivered && page.servicesDelivered.map((srv, sidx) => (
-                              <span key={sidx} className="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-slate-800 text-[11px] font-bold">
+                              <span key={sidx} className={`px-2 py-0.5 rounded text-slate-800 text-[11px] font-bold ${cardBadgeClass}`}>
                                 {srv}
                               </span>
                             ))}
@@ -1110,12 +1134,12 @@ export default function CompanyProfilePage() {
                       </div>
 
                       <div className={isA4Portrait ? "space-y-3" : "col-span-5 space-y-3"}>
-                        <div className="p-3.5 rounded-xl bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-300 shadow-sm">
-                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider mb-1.5">Business Outcomes</h4>
+                        <div className={`p-3.5 rounded-xl shadow-sm ${cardLightBg}`}>
+                          <h4 className={`text-xs font-bold uppercase tracking-wider mb-1.5 ${primaryText}`}>Business Outcomes</h4>
                           <div className="space-y-1.5">
                             {page.outcomes && page.outcomes.map((o, oidx) => (
                               <div key={oidx} className="flex items-center gap-2 text-xs font-bold text-slate-900">
-                                <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                                <Sparkles className="w-3.5 h-3.5 text-orange-500 shrink-0" />
                                 <span>{o}</span>
                               </div>
                             ))}
@@ -1299,17 +1323,17 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Technology Expertise Across Client Projects</h2>
-                      <p className="text-xs text-[#00674f] font-bold uppercase tracking-wider mt-1">{page.subheading}</p>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <p className={`text-xs font-bold uppercase tracking-wider mt-1 ${primaryText}`}>{page.subheading}</p>
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "space-y-3" : "grid grid-cols-2 gap-4"}>
                       {page.categories && page.categories.map((cat, cidx) => (
                         <div key={cidx} className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2">
-                          <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">{cat.title}</h4>
+                          <h4 className={`text-xs font-bold uppercase tracking-wider ${primaryText}`}>{cat.title}</h4>
                           <div className="flex flex-wrap gap-2">
                             {cat.items.map((item, itidx) => (
-                              <span key={itidx} className="px-3 py-1 rounded-md bg-emerald-50 border border-emerald-300 text-slate-900 text-xs font-bold shadow-sm">
+                              <span key={itidx} className={`px-3 py-1 rounded-md text-slate-900 text-xs font-bold shadow-sm ${cardBadgeClass}`}>
                                 {item}
                               </span>
                             ))}
@@ -1329,14 +1353,14 @@ export default function CompanyProfilePage() {
                   <div className="space-y-4">
                     <div>
                       <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Delivery Excellence</h2>
-                      <p className="text-xs text-[#00674f] font-bold uppercase tracking-wider mt-1">{page.subheading}</p>
-                      <div className="w-20 h-1.5 bg-[#00674f] rounded-full mt-2" />
+                      <p className={`text-xs font-bold uppercase tracking-wider mt-1 ${primaryText}`}>{page.subheading}</p>
+                      <div className={`w-20 h-1.5 ${primaryBg} rounded-full mt-2`} />
                     </div>
 
                     <div className={isA4Portrait ? "grid grid-cols-2 gap-3 pt-1" : "grid grid-cols-4 gap-3 pt-1"}>
                       {page.principles && page.principles.map((pr, pridx) => (
-                        <div key={pridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1 hover:border-[#00674f] transition">
-                          <Award className="w-5 h-5 text-amber-500" />
+                        <div key={pridx} className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1 hover:border-blue-600 transition">
+                          <Award className="w-5 h-5 text-orange-500" />
                           <h4 className="text-xs font-bold text-slate-900">{pr.title}</h4>
                           <p className="text-[11px] text-slate-600 font-normal leading-snug">{pr.desc}</p>
                         </div>
@@ -1354,23 +1378,23 @@ export default function CompanyProfilePage() {
                   <div className="max-w-3xl mx-auto space-y-6 text-center">
                     <div>
                       <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Growing Together</h2>
-                      <div className="w-24 h-1.5 bg-[#00674f] mx-auto rounded-full mt-2" />
+                      <div className={`w-24 h-1.5 ${primaryBg} mx-auto rounded-full mt-2`} />
                     </div>
 
-                    <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-300 shadow-md">
+                    <div className={`p-6 rounded-2xl shadow-md ${cardLightBg}`}>
                       <p className="text-slate-800 text-base lg:text-lg font-bold leading-relaxed">
                         "{page.message}"
                       </p>
                     </div>
 
                     <div className="flex flex-wrap justify-center gap-2.5">
-                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Banking</span>
-                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Real Estate</span>
-                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Numerology SaaS</span>
-                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Smart Building Automation</span>
-                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">FinTech Invoicing</span>
-                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Healthcare</span>
-                      <span className="px-4 py-1.5 rounded-full bg-[#00674f] text-white text-xs font-bold">Retail</span>
+                      <span className={`px-4 py-1.5 rounded-full text-white text-xs font-bold ${primaryBg}`}>Banking</span>
+                      <span className={`px-4 py-1.5 rounded-full text-white text-xs font-bold ${primaryBg}`}>Real Estate</span>
+                      <span className={`px-4 py-1.5 rounded-full text-white text-xs font-bold ${primaryBg}`}>Numerology SaaS</span>
+                      <span className={`px-4 py-1.5 rounded-full text-white text-xs font-bold ${primaryBg}`}>Smart Building Automation</span>
+                      <span className={`px-4 py-1.5 rounded-full text-white text-xs font-bold ${primaryBg}`}>FinTech Invoicing</span>
+                      <span className={`px-4 py-1.5 rounded-full text-white text-xs font-bold ${primaryBg}`}>Healthcare</span>
+                      <span className={`px-4 py-1.5 rounded-full text-white text-xs font-bold ${primaryBg}`}>Retail</span>
                     </div>
                   </div>
                 </InternalPageWrapper>
@@ -1385,17 +1409,17 @@ export default function CompanyProfilePage() {
                     <div className={isA4Portrait ? "space-y-4" : "col-span-7 space-y-4"}>
                       <div>
                         <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Contact Us</h2>
-                        <h3 className="text-xl lg:text-2xl font-bold text-[#00674f] mt-1">{page.companyName || 'DIGI TALKS INDIA'}</h3>
-                        <div className="w-24 h-1.5 bg-gradient-to-r from-[#00674f] to-amber-400 rounded-full mt-2" />
+                        <h3 className={`text-xl lg:text-2xl font-bold mt-1 ${primaryText}`}>{page.companyName || 'DIGI TALKS INDIA'}</h3>
+                        <div className={`w-24 h-1.5 bg-gradient-to-r ${isA4Portrait ? 'from-[#02296c] to-orange-400' : 'from-[#00674f] to-amber-400'} rounded-full mt-2`} />
                       </div>
 
                       {/* Highlighted Dual Phone Card */}
-                      <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 shadow-md flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-[#00674f] text-white flex items-center justify-center shrink-0 shadow-md">
+                      <div className={`p-4 rounded-xl shadow-md flex items-center gap-4 ${cardLightBg}`}>
+                        <div className={`w-12 h-12 rounded-xl ${primaryBg} text-white flex items-center justify-center shrink-0 shadow-md`}>
                           <Phone className="w-6 h-6 animate-pulse" />
                         </div>
                         <div className="space-y-0.5">
-                          <span className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Phone / WhatsApp Support</span>
+                          <span className={`text-xs font-bold uppercase tracking-wider ${primaryText}`}>Phone / WhatsApp Support</span>
                           <div className="flex flex-wrap gap-4 items-center">
                             <h4 className="text-xl lg:text-2xl font-bold text-slate-900 tracking-wide">+91 9966 824 854</h4>
                             <span className="text-slate-400 font-bold">•</span>
@@ -1407,17 +1431,17 @@ export default function CompanyProfilePage() {
                       {/* Email & Web */}
                       <div className="grid grid-cols-2 gap-3">
                         <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3">
-                          <Mail className="w-5 h-5 text-[#00674f] shrink-0" />
+                          <Mail className={`w-5 h-5 ${primaryText} shrink-0`} />
                           <div>
                             <span className="text-[11px] font-bold text-slate-500 uppercase">Email Support</span>
                             <p className="text-sm font-bold text-slate-900">info@digitalks.in</p>
                           </div>
                         </div>
-                        <a href="https://digitalks.in/" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3 hover:border-[#00674f] transition group">
-                          <Globe className="w-5 h-5 text-[#00674f] shrink-0 group-hover:scale-110 transition" />
+                        <a href="https://digitalks.in/" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3 hover:border-blue-600 transition group">
+                          <Globe className={`w-5 h-5 ${primaryText} shrink-0 group-hover:scale-110 transition`} />
                           <div>
                             <span className="text-[11px] font-bold text-slate-500 uppercase">Official Website</span>
-                            <p className="text-sm font-bold text-[#00674f] flex items-center gap-1">
+                            <p className={`text-sm font-bold flex items-center gap-1 ${primaryText}`}>
                               <span>https://digitalks.in/</span>
                               <ExternalLink className="w-3 h-3" />
                             </p>
@@ -1426,19 +1450,19 @@ export default function CompanyProfilePage() {
                       </div>
                     </div>
 
-                    <div className={isA4Portrait ? "bg-gradient-to-br from-emerald-50 via-white to-amber-50/50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-4 text-center" : "col-span-5 bg-gradient-to-br from-emerald-50 via-white to-amber-50/50 p-6 rounded-2xl border border-emerald-300 shadow-md space-y-4 text-center"}>
-                      <div className="w-12 h-12 bg-[#00674f] text-white rounded-full flex items-center justify-center mx-auto shadow-md">
+                    <div className={isA4Portrait ? `p-6 rounded-2xl shadow-md space-y-4 text-center ${cardLightBg}` : `col-span-5 p-6 rounded-2xl shadow-md space-y-4 text-center ${cardLightBg}`}>
+                      <div className={`w-12 h-12 ${primaryBg} text-white rounded-full flex items-center justify-center mx-auto shadow-md`}>
                         <Sparkles className="w-6 h-6 text-yellow-300" />
                       </div>
-                      <h4 className="text-xs font-bold text-[#00674f] uppercase tracking-wider">Services Summary</h4>
+                      <h4 className={`text-xs font-bold uppercase tracking-wider ${primaryText}`}>Services Summary</h4>
                       <div className="flex flex-wrap justify-center gap-2">
                         {page.servicesSummary && page.servicesSummary.map((s, sidx) => (
-                          <span key={sidx} className="px-3 py-1 bg-white border border-emerald-300 text-xs font-bold text-slate-900 rounded-lg shadow-sm">
+                          <span key={sidx} className="px-3 py-1 bg-white border border-blue-200 text-xs font-bold text-slate-900 rounded-lg shadow-sm">
                             {s}
                           </span>
                         ))}
                       </div>
-                      <p className="text-xs font-bold italic text-slate-700 font-serif pt-3 border-t border-emerald-200">
+                      <p className="text-xs font-bold italic text-slate-700 font-serif pt-3 border-t border-slate-200">
                         "{page.tagline || 'Empowering Businesses Through Digital Innovation'}"
                       </p>
                     </div>
@@ -1451,7 +1475,7 @@ export default function CompanyProfilePage() {
             return (
               <InternalPageWrapper key={page.id} badge={page.badge || 'Document'} pageNumber={idx + 1} totalPages={pages.length} activePageIdx={activePageIdx} isA4Portrait={isA4Portrait}>
                 <div className="a4-reading-content">
-                  {renderMarkdown(page.content)}
+                  {renderMarkdown(page.content, isA4Portrait)}
                 </div>
               </InternalPageWrapper>
             );

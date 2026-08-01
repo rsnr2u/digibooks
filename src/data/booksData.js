@@ -3650,18 +3650,18 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
   "digitalks-profile-a4": {
     id: "digitalks-profile-a4",
     title: "Digitalks Profile (A4 Portrait)",
-    teluguTitle: "Corporate Profile (A4 Printable)",
-    tagline: "Official Company Profile • Standard A4 Printable Size",
-    description: "Digitalks corporate company profile in standard A4 Portrait layout (8.27 x 11.69 in / 210 x 297 mm) with exact pagination, logo headers, and print optimization for physical document printing.",
+    teluguTitle: "Corporate Profile (A4 Royal Blue)",
+    tagline: "Official Company Profile • Royal Blue A4 Concept",
+    description: "Digitalks corporate company profile in Royal Navy Blue (#02296c) theme with the new tree-D branding, standard A4 Portrait layout (8.27 x 11.69 in / 210 x 297 mm), and print optimization.",
     iconName: "FileText",
-    badge: "A4 Portrait",
+    badge: "A4 Royal Blue",
     category: "Corporate",
     difficulty: "Executive",
     estimatedHours: "25 min",
     chaptersCount: 30,
     isA4Profile: true,
     isA4Portrait: true,
-    accentColor: "from-[#00674f] to-emerald-700",
+    accentColor: "from-[#02296c] to-blue-900",
     cardBg: "bg-white",
     chapters: [
       {
@@ -3673,8 +3673,8 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
         tagline: "Empowering Businesses Through Digital Innovation",
         services: ["Enterprise Software", "AI Solutions", "Web Applications", "Mobile Apps", "Digital Transformation"],
         quote: '"Building Technology That Builds Businesses"',
-        bgColor: "#00674f",
-        logoUrl: "/assets/digitalks-logo.png"
+        bgColor: "#02296c",
+        logoUrl: "/assets/digitalks-blue-logo.png"
       },
       {
         id: "page-2-about",
