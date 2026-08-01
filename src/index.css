@@ -128,6 +128,11 @@
 /* ─── BULLETPROOF 16:9 & A4 PORTRAIT PRINT & PDF EXPORT STYLES ─ */
 /* ───────────────────────────────────────────────────────────── */
 @media print {
+  @page {
+    margin: 0 !important;
+    size: auto;
+  }
+
   /* Absolutely hide all navigation headers, app footers, modals, search bars, and toolbars */
   header, nav, footer, .no-print, .no-print * {
     display: none !important;

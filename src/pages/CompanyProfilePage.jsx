@@ -306,8 +306,12 @@ export default function CompanyProfilePage() {
                     <span className="font-bold">3. Margins:</span>
                     <span className="px-2 py-0.5 bg-white rounded font-bold text-[#02296c] border border-blue-300">None</span>
                   </div>
+                  <div className="flex items-center justify-between border-b border-blue-200 pb-1.5">
+                    <span className="font-bold">4. Headers and footers:</span>
+                    <span className="px-2 py-0.5 bg-red-100 text-red-700 rounded font-bold border border-red-300">☐ UNCHECKED (Disabled)</span>
+                  </div>
                   <div className="flex items-center justify-between">
-                    <span className="font-bold">4. Background graphics:</span>
+                    <span className="font-bold">5. Background graphics:</span>
                     <span className="px-2 py-0.5 bg-[#02296c] text-white rounded font-bold">☑ ENABLED (Checked)</span>
                   </div>
                 </div>
