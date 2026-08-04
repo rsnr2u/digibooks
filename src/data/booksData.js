@@ -4157,7 +4157,7 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
     category: "Software Requirements Specification",
     difficulty: "Enterprise ERP SRS",
     estimatedHours: "SRS Document",
-    chaptersCount: 22,
+    chaptersCount: 23,
     isDocument: true,
     accentColor: "from-emerald-700 to-teal-800",
     cardBg: "bg-white",
@@ -4794,13 +4794,13 @@ Planned future module expansions and integrations:
 `
       },
       {
-        id: "section-22-quotation",
+        id: "section-22-quotation-scope",
         chapterNumber: 22,
-        title: "22. Commercial Proposal & Quotation",
-        readTime: "10 min spec",
-        summary: "Official Commercial Quotation DTI/QTN/2026/001, Pricing Breakdown, Payment Milestones & Terms.",
+        title: "22. Commercial Proposal & Scope",
+        readTime: "8 min spec",
+        summary: "Official Quotation DTI/QTN/2026/001 Scope, 19 ERP Modules, Tech Stack & Development Timeline.",
         content: `
-# 22. Commercial Proposal & Quotation
+# 22. Commercial Proposal & Scope
 
 ### Quotation Summary
 
@@ -4840,22 +4840,26 @@ Development of a web-based **Manufacturing Inventory & Production Management Sof
 
 ---
 
-### Technology Stack
+### Technology Stack & Timeline
 
-- **Backend:** Laravel
-- **Frontend:** React.js + Tailwind CSS
-- **Database:** MySQL
-- **Architecture:** REST API Architecture
-
----
-
-### Development Duration
-
+- **Backend:** Laravel 12 API Architecture
+- **Frontend:** React.js + Tailwind CSS SPA
+- **Database:** MySQL 8.0 Enterprise Database
 - **Estimated Timeline:** 60 Working Days (Approximately 3 Months)
+`
+      },
+      {
+        id: "section-23-quotation-commercials",
+        chapterNumber: 23,
+        title: "23. Commercial Proposal - Pricing & Terms",
+        readTime: "8 min spec",
+        summary: "Commercial Pricing Breakdown (₹1,10,000/-), Payment Milestones, Deliverables, Terms & Client Sign-off.",
+        content: `
+# 23. Commercial Proposal - Pricing & Terms
 
----
+### Commercial Proposal Breakdown
 
-### Commercial Proposal
+Quotation Reference: **DTI/QTN/2026/001** • Date: **04 August 2026**
 
 | Description | Amount (₹) |
 | :--- | :--- |
@@ -4872,7 +4876,7 @@ Development of a web-based **Manufacturing Inventory & Production Management Sof
 
 ---
 
-### Payment Terms
+### Payment Terms & Milestones
 
 | Milestone | Amount |
 | :--- | :--- |
@@ -4882,45 +4886,17 @@ Development of a web-based **Manufacturing Inventory & Production Management Sof
 
 ---
 
-### Deliverables
+### Deliverables & Warranty
 
-- Complete Web Application
-- Responsive Admin Panel
-- Source Code
-- Database
-- Installation & Deployment
-- Basic User Training
-- Documentation
-- 30 Days Bug Support After Delivery
+- **Deliverables:** Complete Web Application, Responsive Admin Panel, Source Code, Database, Installation & Deployment, Basic User Training, Documentation.
+- **Warranty:** 30 Days Free Bug Fix Support post-delivery.
 
 ---
 
-### Exclusions
+### Exclusions & Terms
 
-- Domain Registration
-- Web Hosting / VPS Server
-- SMS Gateway Charges
-- WhatsApp API Charges
-- Barcode/RFID Hardware
-- Third-Party Software Licenses
-- Data Entry / Data Migration
-
----
-
-### Warranty & Support
-
-- 30 Days Free Bug Fix Support
-- Additional enhancements or new feature requests will be quoted separately.
-
----
-
-### Terms & Conditions
-
-1. Development will begin after receipt of the advance payment.
-2. Any additional modules or change requests beyond the agreed scope will incur extra charges.
-3. Delivery timeline depends on timely approvals and feedback from the client.
-4. Source code will be handed over after full payment is received.
-5. This quotation is valid for **30 days** from the date of issue.
+- **Exclusions:** Domain, VPS Hosting, SMS/WhatsApp APIs, Hardware, Licenses, Data Migration.
+- **Terms:** Development begins post advance payment. Scope changes incur extra charges. Code handed over post full payment. Quotation valid 30 days.
 
 ---
 
@@ -4929,7 +4905,6 @@ Development of a web-based **Manufacturing Inventory & Production Management Sof
 **Client Name:** ___________________________  
 **Authorized Signature:** ___________________  
 **Date:** _________________________________  
-
 **Prepared By:** DIGI TALKS INDIA
 `
       }

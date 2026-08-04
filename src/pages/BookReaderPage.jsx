@@ -823,22 +823,22 @@ export default function BookReaderPage() {
       {/* ───────────────────────────────────────────────────────────── */}
       <div className="print-all-pages hidden-on-screen">
         {printMode === 'all' && (
-          <div className="book-print-page relative bg-[#02296c] text-white p-12 flex flex-col justify-between overflow-hidden">
+          <div className="book-print-page relative bg-[#02296c] text-white p-10 sm:p-12 flex flex-col justify-between overflow-hidden">
             {/* Top Bar Accent */}
-            <div className="absolute top-0 left-0 right-0 h-3 bg-amber-400" />
-            <div className="absolute bottom-0 left-0 right-0 h-3 bg-amber-400" />
+            <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400" />
+            <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400" />
 
             {/* Header Brand */}
-            <div className="relative z-10 flex items-center justify-between border-b border-blue-400/30 pb-6">
-              <div className="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
-                <img src="/assets/digitalks-blue-logo-transparent.png" alt="DIGI TALKS INDIA" className="h-8 object-contain brightness-200" />
+            <div className="relative z-10 flex items-center justify-between border-b border-blue-400/30 pb-5">
+              <div className="px-4 py-2 rounded-xl bg-white shadow-md border border-slate-100 flex items-center shrink-0">
+                <img src="/assets/digitalks-logo.png" alt="DIGI TALKS INDIA" className="h-8 object-contain" />
               </div>
               <span className="text-xs tracking-widest text-amber-300 font-mono uppercase font-bold">DIGI TALKS INDIA • DOCUMENT HUB</span>
             </div>
 
             {/* Middle Title Block */}
             <div className="relative z-10 my-auto space-y-6">
-              <span className="px-4 py-1.5 bg-amber-400 text-slate-950 text-xs font-extrabold rounded-full tracking-wider uppercase inline-block font-sans">
+              <span className="px-4 py-1.5 bg-amber-400 text-slate-950 text-xs font-extrabold rounded-full tracking-wider uppercase inline-block font-sans shadow-xs">
                 {currentBook.badge || 'Official Specification & Quotation Document'}
               </span>
               <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight font-sans">
@@ -864,9 +864,9 @@ export default function BookReaderPage() {
             </div>
 
             {/* Bottom Footer */}
-            <div className="relative z-10 border-t border-blue-400/30 pt-4 flex items-center justify-between text-xs text-blue-300 font-medium font-sans">
-              <span>https://digitalks.in/</span>
-              <span>Complete Single PDF Document • All {currentBook.chapters.length} Sections</span>
+            <div className="relative z-10 border-t border-blue-400/30 pt-4 flex items-center justify-between text-xs text-blue-200 font-medium font-sans">
+              <span className="text-amber-300 font-bold">https://digitalks.in/</span>
+              <span className="text-blue-100">Complete Single PDF Document • All {currentBook.chapters.length} Sections</span>
             </div>
           </div>
         )}
@@ -877,20 +877,19 @@ export default function BookReaderPage() {
             className="book-print-page relative bg-white text-slate-900 overflow-hidden flex flex-col justify-between"
           >
             {/* Top Accent Gradient Bar */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-700 via-amber-400 to-blue-700" />
-            <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-700 via-amber-400 to-blue-700" />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-[#02296c]" />
 
             {/* Print Header */}
-            <div className="relative z-10 px-6 pt-3 pb-2 flex items-center justify-between border-b border-slate-200">
+            <div className="relative z-10 px-8 pt-4 pb-2.5 flex items-center justify-between border-b border-slate-200">
               <div className="flex items-center gap-3">
-                <div className="px-2.5 py-1 rounded-xl bg-[#02296c] border border-blue-900 shadow-sm flex items-center shrink-0">
+                <div className="px-3 py-1 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center shrink-0">
                   <img
-                    src="/assets/digitalks-blue-logo-transparent.png"
+                    src="/assets/digitalks-logo.png"
                     alt="Digitalks Logo"
                     className="h-5 object-contain"
                   />
                 </div>
-                <div className={`px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold ${isDocument ? 'font-sans' : 'font-telugu'}`}>
+                <div className={`px-3 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-[#02296c] text-xs font-bold ${isDocument ? 'font-sans' : 'font-telugu'}`}>
                   {currentBook.title}
                 </div>
               </div>
@@ -900,26 +899,26 @@ export default function BookReaderPage() {
             </div>
 
             {/* Print Chapter Body Content */}
-            <div className="relative z-10 px-6 py-3 flex-1 flex flex-col justify-start overflow-hidden text-xs">
-              <div className="mb-2 pb-2 border-b border-slate-200 space-y-1">
+            <div className="relative z-10 px-8 py-4 flex-1 flex flex-col justify-start overflow-hidden text-xs">
+              <div className="mb-3 pb-2 border-b border-slate-200 space-y-1">
                 <span className={`text-[10px] font-bold text-blue-700 uppercase tracking-widest block ${isDocument ? 'font-sans' : 'font-telugu'}`}>
                   {currentBook.teluguTitle}
                 </span>
-                <h1 className={`text-lg sm:text-xl font-extrabold text-slate-900 ${isDocument ? 'font-sans' : 'font-telugu'} leading-tight`}>
+                <h1 className={`text-lg sm:text-xl font-extrabold text-[#02296c] ${isDocument ? 'font-sans' : 'font-telugu'} leading-tight`}>
                   {ch.title}
                 </h1>
-                <p className={`text-slate-700 text-xs ${isDocument ? 'font-sans' : 'font-telugu'} leading-snug font-medium bg-blue-50/70 p-2.5 rounded-lg border-l-4 border-blue-600`}>
+                <p className={`text-slate-700 text-xs ${isDocument ? 'font-sans' : 'font-telugu'} leading-relaxed font-medium bg-slate-50 p-2.5 rounded-lg border-l-4 border-[#02296c]`}>
                   {ch.summary}
                 </p>
               </div>
 
-              <div className={`reading-content text-xs leading-relaxed space-y-2 ${isDocument ? 'font-sans' : 'font-telugu'}`}>
+              <div className={`reading-content text-xs leading-relaxed space-y-2.5 ${isDocument ? 'font-sans' : 'font-telugu'}`}>
                 {renderMarkdownContent(ch.content)}
               </div>
             </div>
 
             {/* Print Footer */}
-            <div className="relative z-10 px-6 py-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+            <div className="relative z-10 px-8 py-2.5 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-medium">
               <span className="tracking-wider uppercase font-bold text-slate-600 font-sans">DIGI TALKS INDIA • {currentBook.title}</span>
               <span className="font-mono font-bold text-slate-400">{isDocument ? 'Section' : 'Chapter'} {chIdx + 1} of {chaptersToPrint.length}</span>
             </div>
