@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Hash, Sparkles, Compass, Hand, Wind, ArrowRight, Clock, BookOpen, Star, UserCheck, Briefcase } from 'lucide-react';
+import { Hash, Sparkles, Compass, Hand, Wind, ArrowRight, Clock, BookOpen, Star, UserCheck, Briefcase, Factory } from 'lucide-react';
 
 const ICON_MAP = {
   Hash: Hash,
@@ -10,7 +10,8 @@ const ICON_MAP = {
   Hand: Hand,
   Wind: Wind,
   UserCheck: UserCheck,
-  Briefcase: Briefcase
+  Briefcase: Briefcase,
+  Factory: Factory
 };
 
 const ACCENT_STYLES = {
@@ -21,7 +22,8 @@ const ACCENT_STYLES = {
   palmistry: { iconBg: 'bg-rose-600 text-white', badge: 'bg-rose-50 text-rose-700 border-rose-200', topBorder: 'bg-rose-600' },
   fengshui: { iconBg: 'bg-cyan-600 text-white', badge: 'bg-cyan-50 text-cyan-700 border-cyan-200', topBorder: 'bg-cyan-600' },
   'digitalks-profile': { iconBg: 'bg-amber-600 text-white', badge: 'bg-amber-50 text-amber-700 border-amber-200', topBorder: 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600' },
-  'digitalks-profile-a4': { iconBg: 'bg-[#02296c] text-white', badge: 'bg-blue-50 text-[#02296c] border-blue-300', topBorder: 'bg-gradient-to-r from-[#02296c] via-orange-400 to-[#02296c]' }
+  'digitalks-profile-a4': { iconBg: 'bg-[#02296c] text-white', badge: 'bg-blue-50 text-[#02296c] border-blue-300', topBorder: 'bg-gradient-to-r from-[#02296c] via-orange-400 to-[#02296c]' },
+  'manufacturing-inventory': { iconBg: 'bg-emerald-700 text-white', badge: 'bg-emerald-50 text-emerald-800 border-emerald-300', topBorder: 'bg-gradient-to-r from-emerald-700 via-teal-500 to-emerald-700' }
 };
 
 export default function BookCard({ book, index }) {
