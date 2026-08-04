@@ -217,6 +217,47 @@
     justify-content: space-between !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
+  }
+
+  .book-print-page h1 {
+    font-size: 14pt !important;
+    line-height: 1.2 !important;
+    margin-top: 4pt !important;
+    margin-bottom: 4pt !important;
+  }
+
+  .book-print-page h2 {
+    font-size: 12pt !important;
+    line-height: 1.25 !important;
+    margin-top: 6pt !important;
+    margin-bottom: 3pt !important;
+  }
+
+  .book-print-page h3 {
+    font-size: 10.5pt !important;
+    line-height: 1.25 !important;
+    margin-top: 5pt !important;
+    margin-bottom: 2.5pt !important;
+  }
+
+  .book-print-page p,
+  .book-print-page li {
+    font-size: 9.5pt !important;
+    line-height: 1.3 !important;
+    margin-bottom: 3pt !important;
+  }
+
+  .book-print-page table {
+    font-size: 8.5pt !important;
+    margin-top: 4pt !important;
+    margin-bottom: 4pt !important;
+  }
+
+  .book-print-page th,
+  .book-print-page td {
+    padding: 3pt 5pt !important;
   }
 
   .widescreen-page-16-9:last-child,

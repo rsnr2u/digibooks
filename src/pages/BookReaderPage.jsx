@@ -831,45 +831,45 @@ export default function BookReaderPage() {
             <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-700 via-amber-400 to-blue-700" />
 
             {/* Print Header */}
-            <div className="relative z-10 px-8 pt-4 pb-3 flex items-center justify-between border-b border-slate-200">
+            <div className="relative z-10 px-6 pt-3 pb-2 flex items-center justify-between border-b border-slate-200">
               <div className="flex items-center gap-3">
-                <div className="px-3 py-1 rounded-xl bg-[#02296c] border border-blue-900 shadow-sm flex items-center shrink-0">
+                <div className="px-2.5 py-1 rounded-xl bg-[#02296c] border border-blue-900 shadow-sm flex items-center shrink-0">
                   <img
                     src="/assets/digitalks-blue-logo-transparent.png"
                     alt="Digitalks Logo"
-                    className="h-6 object-contain"
+                    className="h-5 object-contain"
                   />
                 </div>
-                <div className="px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold font-telugu">
+                <div className={`px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold ${isDocument ? 'font-sans' : 'font-telugu'}`}>
                   {currentBook.title}
                 </div>
               </div>
-              <div className="text-xs text-slate-600 font-mono font-bold">
+              <div className="text-[11px] text-slate-600 font-mono font-bold">
                 DIGIBOOK EDITORIAL • {isDocument ? 'Section' : 'Chapter'} {chIdx + 1} of {chaptersToPrint.length}
               </div>
             </div>
 
             {/* Print Chapter Body Content */}
-            <div className="relative z-10 px-8 py-5 flex-1 flex flex-col justify-start overflow-hidden">
-              <div className="mb-4 pb-3 border-b border-slate-200 space-y-1.5">
-                <span className="text-[11px] font-bold text-blue-700 uppercase tracking-widest block font-telugu">
+            <div className="relative z-10 px-6 py-3 flex-1 flex flex-col justify-start overflow-hidden text-xs">
+              <div className="mb-2 pb-2 border-b border-slate-200 space-y-1">
+                <span className={`text-[10px] font-bold text-blue-700 uppercase tracking-widest block ${isDocument ? 'font-sans' : 'font-telugu'}`}>
                   {currentBook.teluguTitle}
                 </span>
-                <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-telugu leading-tight">
+                <h1 className={`text-lg sm:text-xl font-extrabold text-slate-900 ${isDocument ? 'font-sans' : 'font-telugu'} leading-tight`}>
                   {ch.title}
                 </h1>
-                <p className="text-slate-700 text-xs sm:text-sm font-telugu leading-relaxed font-medium bg-blue-50/70 p-3 rounded-xl border-l-4 border-blue-600">
+                <p className={`text-slate-700 text-xs ${isDocument ? 'font-sans' : 'font-telugu'} leading-snug font-medium bg-blue-50/70 p-2.5 rounded-lg border-l-4 border-blue-600`}>
                   {ch.summary}
                 </p>
               </div>
 
-              <div className="reading-content text-sm space-y-3 font-telugu">
+              <div className={`reading-content text-xs leading-relaxed space-y-2 ${isDocument ? 'font-sans' : 'font-telugu'}`}>
                 {renderMarkdownContent(ch.content)}
               </div>
             </div>
 
             {/* Print Footer */}
-            <div className="relative z-10 px-8 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-medium">
+            <div className="relative z-10 px-6 py-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500 font-medium">
               <span className="tracking-wider uppercase font-bold text-slate-600 font-sans">DIGI TALKS INDIA • {currentBook.title}</span>
               <span className="font-mono font-bold text-slate-400">{isDocument ? 'Section' : 'Chapter'} {chIdx + 1} of {chaptersToPrint.length}</span>
             </div>
