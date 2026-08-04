@@ -33,8 +33,8 @@ export default function BookReaderPage() {
     return !isNaN(requestedNum) && c.chapterNumber === requestedNum;
   });
 
-  const activeChapter = currentChapterIndex !== -1 ? currentBook.chapters[currentChapterIndex] : currentBook.chapters[0];
   const safeChapterIndex = currentChapterIndex !== -1 ? currentChapterIndex : 0;
+  const activeChapter = (currentBook && Array.isArray(currentBook.chapters) && currentBook.chapters[safeChapterIndex]) || { id: '', title: '', summary: '', content: '', readTime: '' };
 
   useEffect(() => {
     const handleScroll = () => {

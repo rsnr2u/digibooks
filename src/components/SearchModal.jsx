@@ -29,20 +29,27 @@ export default function SearchModal({ isOpen, onClose }) {
   if (query.trim()) {
     const q = query.toLowerCase();
     Object.values(BOOKS_DATA).forEach((book) => {
+      if (!book || !Array.isArray(book.chapters)) return;
       book.chapters.forEach((chapter) => {
+        const cTitle = (chapter.title || '').toLowerCase();
+        const cSummary = (chapter.summary || chapter.heading || chapter.overview || '').toLowerCase();
+        const cContent = (chapter.content || chapter.description || '').toLowerCase();
+        const bTitle = (book.title || '').toLowerCase();
+        const bTelugu = (book.teluguTitle || '').toLowerCase();
+
         if (
-          chapter.title.toLowerCase().includes(q) ||
-          chapter.summary.toLowerCase().includes(q) ||
-          chapter.content.toLowerCase().includes(q) ||
-          book.title.toLowerCase().includes(q) ||
-          book.teluguTitle.toLowerCase().includes(q)
+          cTitle.includes(q) ||
+          cSummary.includes(q) ||
+          cContent.includes(q) ||
+          bTitle.includes(q) ||
+          bTelugu.includes(q)
         ) {
           results.push({
             bookId: book.id,
             bookTitle: book.title,
             chapterId: chapter.id,
             chapterTitle: chapter.title,
-            chapterSummary: chapter.summary
+            chapterSummary: chapter.summary || chapter.heading || chapter.overview || ''
           });
         }
       });
