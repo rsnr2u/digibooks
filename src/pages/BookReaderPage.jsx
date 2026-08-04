@@ -23,6 +23,7 @@ export default function BookReaderPage() {
 
   const currentBook = BOOKS_DATA[bookId] || BOOKS_DATA.numerology;
   const isPersonalNumerology = currentBook.id === 'personal-numerology';
+  const isDocument = !!currentBook.isDocument;
 
   // Flexible Chapter Finder with legacy alias support
   const currentChapterIndex = currentBook.chapters.findIndex(c => {
@@ -522,8 +523,8 @@ export default function BookReaderPage() {
             <Menu className="w-4 h-4 text-blue-600 shrink-0" />
             <span className="font-telugu leading-none">
               {isSidebarOpen
-                ? (isPersonalNumerology ? 'ప్రొఫైల్స్ దాచు' : 'అధ్యాయాలు దాచు')
-                : (isPersonalNumerology ? 'ప్రొఫైల్స్ చూపు' : 'అధ్యాయాలు చూపు')}
+                ? (isPersonalNumerology ? 'ప్రొఫైల్స్ దాచు' : isDocument ? 'విభాగాలు దాచు' : 'అధ్యాయాలు దాచు')
+                : (isPersonalNumerology ? 'ప్రొఫైల్స్ చూపు' : isDocument ? 'విభాగాలు చూపు' : 'అధ్యాయాలు చూపు')}
             </span>
           </button>
 
@@ -607,7 +608,7 @@ export default function BookReaderPage() {
                         : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
-                    <span className="text-xs font-bold">Active Chapter</span>
+                    <span className="text-xs font-bold">{isDocument ? "Active Section" : "Active Chapter"}</span>
                     <span className="text-[11px] text-slate-500 font-normal truncate">
                       {activeChapter.title}
                     </span>
@@ -621,9 +622,9 @@ export default function BookReaderPage() {
                         : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
-                    <span className="text-xs font-bold">Entire E-Book</span>
+                    <span className="text-xs font-bold">{isDocument ? "Entire SRS Document" : "Entire E-Book"}</span>
                     <span className="text-[11px] text-slate-500 font-normal">
-                      All {currentBook.chapters.length} Chapters
+                      All {currentBook.chapters.length} {isDocument ? "Sections" : "Chapters"}
                     </span>
                   </button>
                 </div>
@@ -695,7 +696,7 @@ export default function BookReaderPage() {
           <div className="space-y-4">
             <div className="p-3.5 rounded-xl bg-gradient-to-br from-blue-50 to-slate-50 border border-blue-100">
               <span className="text-[10px] font-bold text-blue-700 uppercase tracking-widest block">
-                {isPersonalNumerology ? 'Profile Series' : 'Article Series'}
+                {isPersonalNumerology ? 'Profile Series' : isDocument ? 'SRS Document' : 'Article Series'}
               </span>
               <h3 className="text-base font-extrabold text-slate-900 font-telugu mt-0.5">
                 {currentBook.title}
@@ -708,7 +709,7 @@ export default function BookReaderPage() {
             {/* Chapter Index List */}
             <div className="space-y-1.5">
               <span className="text-[11px] font-bold text-slate-400 uppercase px-2 tracking-wider">
-                {isPersonalNumerology ? 'Profile Directory' : 'Article Directory'} ({currentBook.chapters.length})
+                {isPersonalNumerology ? 'Profile Directory' : isDocument ? 'SRS Document Sections' : 'Article Directory'} ({currentBook.chapters.length})
               </span>
               {currentBook.chapters.map((ch, idx) => {
                 const isActive = ch.id === activeChapter.id;
@@ -745,7 +746,7 @@ export default function BookReaderPage() {
             <header className="mb-8 pb-6 border-b border-slate-200 space-y-3">
               <div className="flex flex-wrap items-center gap-2.5">
                 <span className="px-3 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded-full border border-blue-200 uppercase tracking-wider">
-                  {isPersonalNumerology ? 'Profile' : 'Article'} {safeChapterIndex + 1} of {currentBook.chapters.length}
+                  {isPersonalNumerology ? 'Profile' : isDocument ? 'SRS Section' : 'Article'} {safeChapterIndex + 1} of {currentBook.chapters.length}
                 </span>
                 <span className="flex items-center gap-1 text-xs text-slate-500 font-medium">
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
@@ -841,7 +842,7 @@ export default function BookReaderPage() {
                 </div>
               </div>
               <div className="text-xs text-slate-600 font-mono font-bold">
-                DIGIBOOK EDITORIAL • Chapter {chIdx + 1} of {chaptersToPrint.length}
+                DIGIBOOK EDITORIAL • {isDocument ? 'Section' : 'Chapter'} {chIdx + 1} of {chaptersToPrint.length}
               </div>
             </div>
 
@@ -867,7 +868,7 @@ export default function BookReaderPage() {
             {/* Print Footer */}
             <div className="relative z-10 px-8 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-medium">
               <span className="tracking-wider uppercase font-bold text-slate-600 font-sans">DIGI TALKS INDIA • {currentBook.title}</span>
-              <span className="font-mono font-bold text-slate-400">Chapter {chIdx + 1} of {chaptersToPrint.length}</span>
+              <span className="font-mono font-bold text-slate-400">{isDocument ? 'Section' : 'Chapter'} {chIdx + 1} of {chaptersToPrint.length}</span>
             </div>
           </div>
         ))}

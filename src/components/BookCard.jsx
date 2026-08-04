@@ -75,7 +75,7 @@ export default function BookCard({ book, index }) {
           <div className="flex items-center justify-between text-xs text-slate-500 mb-6 py-3 border-y border-slate-100 font-medium">
             <div className="flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-blue-600" />
-              <span>{book.chaptersCount} {book.id === 'personal-numerology' ? 'Profiles' : book.isA4Profile ? 'Pages' : 'Chapters'}</span>
+              <span>{book.chaptersCount} {book.id === 'personal-numerology' ? 'Profiles' : book.isA4Profile ? 'Pages' : book.isDocument ? 'Sections' : 'Chapters'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-amber-600" />
@@ -91,7 +91,9 @@ export default function BookCard({ book, index }) {
             to={`/book/${book.id}`}
             className="w-full py-3 px-5 rounded-xl bg-slate-900 hover:bg-blue-600 text-white font-bold text-sm transition-all duration-200 flex items-center justify-between group/btn shadow-sm"
           >
-            <span className={book.isA4Profile ? 'font-sans' : 'font-telugu'}>{book.isA4Profile ? 'View Profile' : 'Start Learning (పాఠాలు చూడండి)'}</span>
+            <span className={book.isA4Profile || book.isDocument ? 'font-sans' : 'font-telugu'}>
+              {book.isA4Profile ? 'View Profile' : book.isDocument ? 'View SRS Specification Document' : 'Start Learning (పాఠాలు చూడండి)'}
+            </span>
             <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition" />
           </Link>
         </div>

@@ -4145,223 +4145,653 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
     ]
   }
 ,
-  "manufacturing-inventory": {
+"manufacturing-inventory": {
     id: "manufacturing-inventory",
     title: "Manufacturing Inventory & Production System",
-    teluguTitle: "తయారీ ఇన్వెంటరీ & ప్రొడక్షన్ మేనేజ్‌మెంట్ సిస్టమ్",
-    tagline: "End-to-End Enterprise Solution for Factory Operations, Raw Material Tracking & Production Workflows",
-    description: "తయారీ పరిశ్రమల (Manufacturing Industries) కోసం రా మెటీరియల్ మేనేజ్‌మెంట్, ప్రొడక్షన్ షెడ్యూలింగ్, క్వాలిటీ కంట్రోల్ మరియు ప్లాంట్ అటోమేషన్ గురించిన సమగ్ర గైడ్.",
+    documentName: "Software Requirements Specification (SRS)",
+    teluguTitle: "తయారీ ఇన్వెంటరీ & ప్రొడక్షన్ మేనేజ్‌మెంట్ సిస్టమ్ (SRS పత్రం)",
+    tagline: "Software Requirements Specification (SRS) v1.0 • Web Based ERP System",
+    description: "DIGI TALKS INDIA ద్వారా రూపొందించబడిన మాన్యుఫాక్చరింగ్ ఇన్వెంటరీ & ప్రొడక్షన్ మేనేజ్‌మెంట్ సిస్టమ్ వెబ్ ERP సాఫ్ట్‌వేర్ రిక్వైర్మెంట్స్ స్పెసిఫికేషన్ (SRS) పూర్తి అధికారిక పత్రం.",
     iconName: "Factory",
-    badge: "Enterprise System",
-    category: "Industrial Automation",
-    difficulty: "Advanced System",
-    estimatedHours: "15 Hours",
-    chaptersCount: 10,
+    badge: "SRS Document",
+    category: "Software Requirements Specification",
+    difficulty: "Enterprise ERP SRS",
+    estimatedHours: "SRS Spec v1.0",
+    chaptersCount: 21,
+    isDocument: true,
     accentColor: "from-emerald-700 to-teal-800",
     cardBg: "bg-white",
     chapters: [
       {
-        id: "chapter-1-system-overview",
+        id: "section-1-executive-summary",
         chapterNumber: 1,
-        title: "అధ్యాయం 1: తయారీ ఇన్వెంటరీ సిస్టమ్ పరిచయం (System Overview & Architecture)",
-        readTime: "12 min read",
-        summary: "మాన్యుఫాక్చరింగ్ ఇన్వెంటరీ సిస్టమ్స్ నిర్మాణం, BOM (Bill of Materials), వర్క్‌షాప్ ప్రాసెస్ మరియు ఇండస్ట్రీ 4.0 ప్రమాణాలు.",
+        title: "1. Version & Executive Summary",
+        readTime: "10 min spec",
+        summary: "Software Requirements Specification (SRS) Document Version, Metadata & Core Executive Summary.",
         content: `
-# తయారీ ఇన్వెంటరీ & ప్రొడక్షన్ మేనేజ్‌మెంట్ సిస్టమ్ పరిచయం (System Overview & Architecture)
+# 1. Version & Executive Summary
 
-**మాన్యుఫాక్చరింగ్ ఇన్వెంటరీ & ప్రొడక్షన్ మేనేజ్‌మెంట్ సిస్టమ్ (Manufacturing Inventory & Production System)** అనేది ఆధునిక ఫ్యాక్టరీలు మరియు తయారీ పరిశ్రమల డిజిటలైజేషన్ కోసం రూపొందించిన సమగ్ర సాఫ్ట్‌వేర్ ప్లాట్‌ఫారమ్.
+### Document Metadata (పత్ర వివరాలు)
 
-రా మెటీరియల్ సేకరణ (Raw Material Procurement) నుండి ప్రొడక్షన్ లైన్ అసెంబ్లీ (Assembly Routing), క్వాలిటీ కంట్రోల్ (Quality Assurance) మరియు ఫినిష్డ్ గూడ్స్ డిస్పాచ్ (Finished Goods Logistics) వరకు ప్రతీ దశను ఈ సిస్టమ్ నిజ-సమయంలో (Real-time) పర్యవేక్షిస్తుంది.
-
----
-
-### 1. తయారీ ఆర్కిటెక్చర్ ప్రాథమిక విభాగాలు (Core Modules):
-
-- **1. బిల్ ఆఫ్ మెటీరియల్స్ (Bill of Materials - BOM):**
-  - ప్రతి ఫినిష్డ్ ప్రొడక్ట్ తయారీకి కావలసిన రా మెటీరియల్స్, పార్ట్స్, సబ్-అసెంబ్లీలు మరియు స్క్రాప్ నిష్పత్తి పట్టిక.
-- **2. వర్క్ ఆర్డర్ & ప్రొడక్షన్ షెడ్యూలింగ్ (Work Order & Scheduling):**
-  - ప్లాంట్ సామర్థ్యం (Plant Capacity) మరియు కస్టమర్ డెలివరీ డెడ్‌లైన్స్ ఆధారంగా మెషిన్ అలోకేషన్ మరియు ఆపరేటర్ షెడ్యూలింగ్.
-- **3. వర్క్-ఇన్-ప్రోగ్రెస్ (Work-In-Progress - WIP):**
-  - అసెంబ్లీ లైన్‌లో ఉత్పత్తి ప్రాసెస్‌లో ఉన్న మెటీరియల్స్‌ను వేగంగా మరియు కచ్చితంగా ట్రాక్ చేసే విభాగాలు.
-- **4. క్వాలిటీ అస్యూరెన్స్ (Quality Control & Inspection):**
-  - ఇన్-లైన్ క్వాలిటీ చెక్స్, టాలరెన్స్ టెస్టింగ్ మరియు డిఫెక్ట్ లాగింగ్ సిస్టమ్.
+| Item | Details |
+| :--- | :--- |
+| **Document Name** | Manufacturing Inventory & Production Management System |
+| **Version** | 1.0 |
+| **Prepared By** | DIGI TALKS INDIA |
+| **Software Type** | Web Based ERP |
+| **Industry** | Manufacturing |
+| **Database** | MySQL |
+| **Backend** | Laravel API |
+| **Frontend** | React.js + TailwindCSS |
 
 ---
 
-### 2. ఇండస్ట్రీ 4.0 డిజిటల్ ట్రాన్స్‌ఫార్మేషన్ బెనిఫిట్స్:
+### Executive Summary
 
-| మాడ్యూల్ | సాంప్రదాయ విధానం (Manual) | మాన్యుఫాక్చరింగ్ ఇన్వెంటరీ సిస్టమ్ (Automated) |
-| :--- | :--- | :--- |
-| **రా మెటీరియల్ ట్రాకింగ్** | పేపర్ రిజిస్టర్లు / మాన్యువల్ కౌంట్ | బాకోడ్ / RFID సెన్సార్ ఆటోమేషన్ |
-| **BOM కాలిక్యులేషన్** | ఎక్సెల్ షీట్ మాన్యువల్ లెక్కింపు | మల్టీ-లెవెల్ ఆటోమేటిక్ BOM డిడక్షన్ |
-| **మెషిన్ డౌన్‌టైమ్** | ఆలస్యంగా గుర్తించడం | ఐఓటీ సెన్సార్లతో ప్రిడిక్టివ్ అలర్ట్స్ |
-| **స్టాక్ వేస్ట్ & స్క్రాప్** | అధిక వ్యయం | స్క్రాప్ రిడక్షన్ లీన్ మాన్యుఫాక్చరింగ్ |
+The objective of this software is to automate all inventory and manufacturing activities across factory units.
+
+The software manages:
+- **Raw Materials (ముడి పదార్థాలు)**
+- **Semi Finished Products (సగం పూర్తయిన ఉత్పత్తులు)**
+- **Finished Products (పూర్తి ఉత్పత్తులు)**
+- **Production (ఉత్పత్తి ప్రక్రియ)**
+- **Purchase (సమగ్ర కొనుగోళ్లు)**
+- **Warehouse (వేర్‌హౌస్ నిల్వలు)**
+- **Suppliers (సప్లయర్ల సేవలు)**
+- **Stock Movement (స్టాక్ బదిలీలు)**
+- **Reports (సమగ్ర నివేదికలు)**
+
+The system provides complete 360-degree stock visibility from purchasing until finished goods dispatch.
 `
       },
       {
-        id: "chapter-2-raw-material-management",
+        id: "section-2-business-flow",
         chapterNumber: 2,
-        title: "అధ్యాయం 2: రా మెటీరియల్ & స్టాక్ మేనేజ్‌మెంట్ (Raw Material & Warehouse Inventory)",
-        readTime: "15 min read",
-        summary: "ఇన్వర్డ్ గూడ్స్ ఇన్స్పెక్షన్, బ్యాచ్-సీరియల్ ట్రాకింగ్, సేఫ్టీ స్టాక్ మరియు రీ-ఆర్డర్ పాయింట్ అటోమేషన్.",
+        title: "2. Business Overview & Workflow",
+        readTime: "8 min spec",
+        summary: "Supplier procurement to customer dispatch complete operational flow.",
         content: `
-# రా మెటీరియల్ & స్టాక్ మేనేజ్‌మెంట్ (Raw Material & Warehouse Inventory)
+# 2. Business Overview & Operational Flow
 
-ఫ్యాక్టరీ సజావుగా నడవడానికి అవసరమైన **రా మెటీరియల్స్ (Raw Materials)** ను కచ్చితత్వంతో నిర్వహించడం ఈ మాడ్యూల్ యొక్క ప్రధాన ఉద్దేశ్యం.
+The complete end-to-end manufacturing and inventory workflow is structured as follows:
 
----
-
-### 1. ప్రధాన ఫీచర్లు (Key Capabilities):
-
-- **గూడ్స్ రిసీవ్డ్ నోట్ (Goods Received Note - GRN):**
-  - సప్లయర్ నుండి వచ్చిన ముడిసరుకు ఇన్స్పెక్షన్ పూర్తి కాగానే సిస్టమ్‌లోకి డిజిటల్ ఎంట్రీ.
-- **బ్యాచ్ & సీరియల్ నంబర్ ట్రాకింగ్ (Batch & Serial Tracking):**
-  - ప్రతి లోడ్‌కు యూనిక్యూ లాట్/బ్యాచ్ నంబర్ కేటాయించడం ద్వారా క్వాలిటీ లోపాలు వస్తే పాయింట్-టు-పాయింట్ ట్రేసబిలిటీ పొందవచ్చు.
-- **రీ-ఆర్డర్ పాయింట్ ఆటోమేషన్ (Auto Reorder Point - ROP):**
-  - రా మెటీరియల్ నిల్వలు కనీస స్థాయికి (Safety Stock) చేరిన వెంటనే సప్లయర్‌కు ఆటోమేటిక్ కొటేషన్ అభ్యర్థన (Auto PO Trigger).
-
-> [!TIP]
-> సేఫ్టీ స్టాక్ (Safety Stock) సరైన పరిమాణంలో నిర్వహిస్తే వర్కింగ్ క్యాపిటల్ (Working Capital) పక్కదారి పట్టకుండా 30% వరకు ఫ్యాక్టరీ ఖర్చులు తగ్గుతాయి.
+\`\`\`text
+Supplier (సప్లయర్)
+      ↓
+Purchase Order (పర్చేస్ ఆర్డర్)
+      ↓
+Goods Receipt - GRN (సరుకు రసీదు)
+      ↓
+Quality Inspection (నాణ్యత తనిఖీ)
+      ↓
+Warehouse Storage (వేర్‌హౌస్ నిల్వ)
+      ↓
+Raw Material Stock (ముడిసరుకు స్టాక్)
+      ↓
+Production Order (ప్రొడక్షన్ ఆర్డర్)
+      ↓
+Material Issue (మెటీరియల్ ఇష్యూ)
+      ↓
+Manufacturing Assembly (తయారీ ప్రాసెస్)
+      ↓
+Finished Goods (పూర్తి ఉత్పత్తులు)
+      ↓
+Packing (ప్యాకింగ్)
+      ↓
+Dispatch Logistics (డిస్పాచ్)
+      ↓
+Customer (కస్టమర్)
+\`\`\`
 `
       },
       {
-        id: "chapter-3-production-scheduling",
+        id: "section-3-user-roles",
         chapterNumber: 3,
-        title: "అధ్యాయం 3: ప్రొడక్షన్ షెడ్యూలింగ్ & వర్క్ ఆర్డర్లు (Production Scheduling & Work Orders)",
-        readTime: "14 min read",
-        summary: "వర్క్ ఆర్డర్ జనరేషన్, క్యాపాసిటీ ప్లానింగ్, లైన్ అసెంబ్లీ రూటింగ్ మరియు మెషిన్ అలోకేషన్.",
+        title: "3. User Roles & Permission Hierarchy",
+        readTime: "12 min spec",
+        summary: "Super Admin, Factory Manager, Purchase, Store, Production, Accounts, Quality & Sales roles.",
         content: `
-# ప్రొడక్షన్ షెడ్యూలింగ్ & వర్క్ ఆర్డర్లు (Production Scheduling & Work Orders)
+# 3. User Roles & Permission Hierarchy
 
-సేల్స్ ఆర్డర్ ఆధారంగా ఫ్యాక్టరీ ఫ్లోర్‌పై **వర్క్ ఆర్డర్లను (Work Orders)** జారీ చేయడం మరియు అందుబాటులోని మెషిన్లు, ఆపరేటర్లను క్రమబద్ధీకరించడం ఈ విభాగంలో జరుగుతుంది.
+The system defines strict role-based access control (RBAC) across factory operations:
 
----
+### 1. Super Admin
+- **Access Level:** Complete Administrative Control (System Configuration, User Management, Global Audit Logs).
 
-### 1. వర్క్ ఆర్డర్ లైఫ్‌సైకిల్ (Work Order Lifecycle):
+### 2. Factory Manager
+- **Access Level:** Production Management, Inventory Controls, Warehouse Operations, Executive Reports.
 
-1. **ఆర్డర్ క్రియేషన్ (Order Creation):** కస్టమర్ అవసరాల ఆధారంగా డెలివరీ తేదీలతో వర్క్ ఆర్డర్ రూపకల్పన.
-2. **మెటీరియల్ అలోకేషన్ (Material Reservation):** వర్క్ ఆర్డర్‌కు కావలసిన రా మెటీరియల్స్ ఇన్వెంటరీలో లాక్ చేయడం.
-3. **మెషిన్ రూటింగ్ (Machine Routing):** లేత్, సీఎన్సీ (CNC), షేపింగ్, అసెంబ్లీ యూనిట్లలో ప్రొడక్షన్ స్టెప్స్ నిర్ణయించడం.
-4. **ఆపరేటర్ అసైన్‌మెంట్ (Operator Shift Logs):** ఫ్యాక్టరీ షిఫ్ట్‌లకు తగినట్లుగా నిపుణులైన వర్కర్లను నియమించడం.
+### 3. Purchase Manager
+- **Access Level:** Purchase Requests, Purchase Orders (PO), Supplier Lifecycle, Goods Receipt Notes (GRN), Vendor Payments.
+
+### 4. Store Manager
+- **Access Level:** Stock In/Out, Material Issue Slips, Stock Receipts, Inter-Warehouse Transfers, Stock Returns.
+
+### 5. Production Manager
+- **Access Level:** Production Orders, Material Consumption Tracking, Machine Allocation, Shift Outputs & Work-In-Progress (WIP).
+
+### 6. Accounts
+- **Access Level:** Purchase Bills, Stock Valuation (FIFO/LIFO), Financial Ledger Integration, Cost of Goods Sold (COGS).
+
+### 7. Quality Team
+- **Access Level:** Incoming & In-Line Quality Inspection, Batch Approval, Defect Logging, Rejection Slips.
+
+### 8. Sales Team
+- **Access Level:** Finished Goods Stock Verification, Customer Orders, Packing Slips, Dispatch Logistics.
 `
       },
       {
-        id: "chapter-4-bill-of-materials",
+        id: "section-4-dashboard",
         chapterNumber: 4,
-        title: "అధ్యాయం 4: బిల్ ఆఫ్ మెటీరియల్స్ - BOM స్త్రక్చర్ (Bill of Materials - BOM Structure)",
-        readTime: "16 min read",
-        summary: "మల్టీ-లెవెల్ BOM, సబ్-అసెంబ్లీ వర్క్‌ఫ్లో, స్క్రాప్ లాస్ అంచనా మరియు కాంపోనెంట్ కిట్టింగ్.",
+        title: "4. Executive Dashboard Requirements",
+        readTime: "10 min spec",
+        summary: "Real-time KPI metrics, stock widgets, pending orders and operational alerts.",
         content: `
-# బిల్ ఆఫ్ మెటీరియల్స్ - BOM స్త్రక్చర్ (Bill of Materials - BOM Structure)
+# 4. Executive Dashboard Requirements
 
-**బిల్ ఆఫ్ మెటీరియల్స్ (BOM)** అనేది ఒక ప్రొడక్ట్ తయారు చేయడానికి కావలసిన అన్ని రకాల ముడి పదార్థాలు, విడిభాగాలు మరియు అసెంబ్లీల పూర్తి జాబితా (Recipe for Manufacturing).
+The Executive Dashboard displays real-time operational widgets and metrics:
 
----
-
-### 1. మల్టీ-లెవెల్ BOM ఉదాహరణ (Multi-Level BOM Hierarchy):
-
-| స్థాయి (Level) | విడిభాగం (Component) | పరిమాణం (Quantity) | యూనిట్ (Unit) |
-| :--- | :--- | :--- | :--- |
-| **Level 0** | ఇండస్ట్రియల్ ఎలక్ట్రిక్ మోటార్ (Final Product) | 1 | Unit |
-| **Level 1** | రోటర్ అసెంబ్లీ (Sub-Assembly) | 1 | Unit |
-| **Level 2** | కాపర్ వైండింగ్ వైర్ (Raw Material) | 2.5 | Kg |
-| **Level 2** | నికెల్ స్టీల్ షాఫ్ట్ (Raw Material) | 1 | Unit |
-| **Level 1** | క్యాస్ట్ ఐరన్ హౌసింగ్ (Casing) | 1 | Unit |
-| **Level 1** | బేరింగ్లు & బోల్టులు (Fasteners) | 8 | Pcs |
+- **Current Stock Value:** Real-time financial valuation of warehouse stock.
+- **Today's Purchase:** Total raw material purchases completed today.
+- **Today's Production:** Output volume produced across shifts today.
+- **Today's Dispatch:** Finished goods dispatched to customers today.
+- **Pending Purchase Orders:** Active POs awaiting supplier delivery.
+- **Pending Production Orders:** Work orders currently in assembly line.
+- **Low Stock Items:** Items approaching or below Reorder Point (ROP).
+- **Out of Stock Items:** Critical zero-stock alerts requiring replenishment.
+- **Pending Approvals:** Purchase & material issue slips awaiting manager sign-off.
+- **Supplier Count:** Total active registered vendors.
+- **Product Count:** Total finished goods and sub-assemblies in catalog.
+- **Warehouse Count:** Total active warehouses and storage bins.
+- **Recent Activities:** Live audit trail of recent stock transactions.
 `
       },
       {
-        id: "chapter-5-wip-shop-floor",
+        id: "section-5-inventory-module",
         chapterNumber: 5,
-        title: "అధ్యాయం 5: వర్క్ ఇన్ ప్రోగ్రెస్ (WIP) & షాప్ ఫ్లోర్ కంట్రోల్ (Work-in-Progress & Shop Floor)",
-        readTime: "13 min read",
-        summary: "రియల్-టైమ్ WIP ట్రాకింగ్, ఆపరేటర్ టైమ్ లాగ్స్, బాటిల్‌నెక్ గుర్తింపు మరియు OEE మెట్రిక్స్.",
+        title: "5. Inventory Module (Core Engine)",
+        readTime: "15 min spec",
+        summary: "Item Master, Stock Categories, and Stock Transaction types.",
         content: `
-# వర్క్ ఇన్ ప్రోగ్రెస్ (WIP) & షాప్ ఫ్లోర్ కంట్రోల్ (Work-in-Progress & Shop Floor)
+# 5. Inventory Module (Core Engine)
 
-**వర్క్-ఇన్-ప్రోగ్రెస్ (WIP)** అనేది రా మెటీరియల్ స్థాయి దాటి, ప్రొడక్షన్ లైన్‌లో మార్పులు పొందుతూ పూర్తి కాబడని స్థితిలో ఉన్న సరుకును సూచిస్తుంది.
+This is the core module governing all inventory items and stock movements.
+
+### 1. Item Master Fields
+- **Item Code / SKU**
+- **Item Name**
+- **Category & Sub Category**
+- **Measurement Unit (UOM)**
+- **HSN Code & GST Rate (%)**
+- **Purchase Rate & Average Cost**
+- **Minimum Stock & Maximum Stock**
+- **Reorder Level (ROP)**
+- **Preferred Supplier**
+- **Warehouse Location (Rack / Bin)**
+- **Barcode & QR Code Integration**
+- **Status (Active / Inactive)**
 
 ---
 
-### 1. షాప్ ఫ్లోర్ పర్యవేక్షణ మెట్రిక్స్ (Key Performance Indicators):
+### 2. Stock Categories
+1. **Raw Materials (ముడి పదార్థాలు)**
+2. **Packing Materials (ప్యాకింగ్ సామాగ్రి)**
+3. **Consumables (కన్స్యూమబుల్స్)**
+4. **Spare Parts (స్పేర్ పార్ట్స్)**
+5. **Tools (టూల్స్)**
+6. **Maintenance Items (మెయింటెనెన్స్ సామాగ్రి)**
+7. **Finished Goods (పూర్తి ఉత్పత్తులు)**
+8. **Semi Finished Goods (సగం పూర్తయిన వస్తువులు)**
+9. **Rejected Items (రిజెక్ట్ చేయబడినవి)**
+10. **Scrap (స్క్రాప్)**
 
-- **Overall Equipment Effectiveness (OEE):** మెషిన్ లభ్యత (Availability), ఉత్పత్తి వేగం (Performance), మరియు నాణ్యత (Quality) ల సమ్మేళనం.
-- **బాటిల్‌నెక్ విశ్లేషణ (Bottleneck Detection):** ఏ మెషిన్ వద్ద లైన్ ప్రాసెస్ నెమ్మదిగా ఉందో ఐఓటీ స్కానర్ల ద్వారా తక్షణమే గుర్తించడం.
+---
+
+### 3. Stock Transactions
+- **Stock In / Stock Out**
+- **Inter-Warehouse Transfer**
+- **Stock Adjustment (Audit Correction)**
+- **Production Consumption (WIP Issue)**
+- **Production Receipt (FG Receipt)**
+- **Purchase Receipt (GRN Entry)**
+- **Sales Dispatch**
+- **Customer / Vendor Returns**
+- **Damage & Scrap Logging**
 `
       },
       {
-        id: "chapter-6-quality-control",
+        id: "section-6-product-module",
         chapterNumber: 6,
-        title: "అధ్యాయం 6: క్వాలిటీ అస్యూరెన్స్ & ఇన్స్పెక్షన్ (Quality Control & QA Inspection)",
-        readTime: "11 min read",
-        summary: "ఇన్-ప్రాసెస్ QA ఇన్స్పెక్షన్లు, డిఫెక్ట్ లాగింగ్, Non-Conformance Reports (NCR) మరియు టాలరెన్స్ ప్రమాణాలు.",
+        title: "6. Product Module & Master Catalog",
+        readTime: "11 min spec",
+        summary: "Product Master specifications for Machinery & Industrial Equipment.",
         content: `
-# క్వాలిటీ అస్యూరెన్స్ & ఇన్స్పెక్షన్ (Quality Control & QA Inspection)
+# 6. Product Module & Master Catalog
 
-ఉత్పత్తి అయ్యే ప్రతీ వస్తువు కస్టమర్ లేదా ఇండస్ట్రీ క్వాలిటీ ప్రమాణాలకు (ISO Standards) అనుగుణంగా ఉందో లేదో తనిఖీ చేయడం క్వాలిటీ కంట్రోల్ విభాగం పని.
+Governs finished products manufactured by the plant (e.g., Pellet Cooler, Belt Conveyor, Bucket Elevator, Steam Condensate Tank, Rotary Valve, etc.).
 
----
-
-### 1. క్వాలిటీ వర్క్‌ఫ్లో (Quality Workflow):
-
-1. **ఇన్‌కమింగ్ ఇన్స్పెక్షన్ (IQC):** సప్లయర్ ముడిసరుకు నాణ్యత తనిఖీ.
-2. **ఇన్-ప్రాసెస్ ఇన్స్పెక్షన్ (IPQC):** లైన్ అసెంబ్లీ మధ్యలో డైమెన్షన్స్ & టాలరెన్స్ చెకింగ్.
-3. **ఫైనల్ ఇన్స్పెక్షన్ (FQC):** ఫినిష్డ్ ప్రొడక్ట్ పనితీరు మరియు ఫినిషింగ్ టెస్టింగ్.
+### Product Attributes:
+- **Product Code**
+- **Drawing Number & CAD Reference**
+- **Engineering Version**
+- **Product Category**
+- **Description & Technical Manual**
+- **Product Image & Schematics**
+- **Technical Specifications**
+- **Net Weight & Gross Weight**
+- **Measurement Unit (UOM)**
+- **Standard Production Cost**
+- **Selling Price**
+- **Warranty Period**
+- **Status**
 `
       },
       {
-        id: "chapter-7-finished-goods",
+        id: "section-7-bom-module",
         chapterNumber: 7,
-        title: "అధ్యాయం 7: ఫినిష్డ్ గూడ్స్ & వేర్‌హౌస్ లాజిస్టిక్స్ (Finished Goods & Warehouse Logistics)",
-        readTime: "12 min read",
-        summary: "ఫినిష్డ్ గూడ్స్ డిస్పాచ్, బార్‌కోడ్/RFID లేబులింగ్, ప్యాలెట్ మేనేజ్‌మెంట్ మరియు షిప్పింగ్ ఇంటిగ్రేషన్.",
+        title: "7. Bill of Materials (BOM) Module",
+        readTime: "14 min spec",
+        summary: "Multi-level BOM, raw material ratios, scrap %, machine requirements & operations.",
         content: `
-# ఫినిష్డ్ గూడ్స్ & వేర్‌హౌస్ లాజిస్టిక్స్ (Finished Goods & Warehouse Logistics)
+# 7. Bill of Materials (BOM) Module
 
-పూర్తయిన ఉత్పత్తులు క్వాలిటీ సర్టిఫికేషన్ పొందిన తరువాత వేర్‌హౌస్‌లో నిల్వ చేయడం మరియు డెలివరీ ఆర్డర్ల ఆధారంగా కస్టమర్లకు పంపడం ఈ మాడ్యూల్ ద్వారా జరుగుతుంది.
-`
-      },
-      {
-        id: "chapter-8-procurement-cycle",
-        chapterNumber: 8,
-        title: "అధ్యాయం 8: సప్లయర్ & పర్చేస్ ఆర్డర్ సైకిల్ (Procurement & Supplier Lifecycle)",
-        readTime: "14 min read",
-        summary: "వెండర్ కొటేషన్ అనాలసిస్, ఆటోమేటెడ్ పర్చేస్ ఆర్డర్లు (PO), GRN మరియు ఇన్వాయిస్ మ్యాచింగ్.",
-        content: `
-# సప్లయర్ & పర్చేస్ ఆర్డర్ సైకిల్ (Procurement & Supplier Lifecycle)
+Defines the exact component breakdown and operational sequence required to produce each finished product.
 
-సైనర్జీ సాధించడానికి సరైన సప్లయర్లను ఎంచుకోవడం, ధరల విశ్లేషణ మరియు ఆటోమేటెడ్ పర్చేస్ ఆర్డర్లు (PO) జారీ చేయడం వేర్‌హౌస్ నిర్వహణలో భాగం.
-`
-      },
-      {
-        id: "chapter-9-maintenance-equipment",
-        chapterNumber: 9,
-        title: "అధ్యాయం 9: మెయింటెనెన్స్ & మెషిన్ కేర్ (Preventive Maintenance & Equipment Health)",
-        readTime: "13 min read",
-        summary: "డౌన్‌టైమ్ నివారణ, ప్రివెంటివ్ మెయింటెనెన్స్ షెడ్యూళ్ళు, స్పేర్ పార్ట్స్ ఇన్వెంటరీ మరియు కాలిబ్రేషన్ లాగ్స్.",
-        content: `
-# మెయింటెనెన్స్ & మెషిన్ కేర్ (Preventive Maintenance & Equipment Health)
-
-ఫ్యాక్టరీ మెషిన్లు ఉన్నట్టుండి ఆగిపోకుండా (Unplanned Downtime) నిరోధించడానికి ప్రివెంటివ్ మెయింటెనెన్స్ షెడ్యూళ్ళు రూపొందించడం.
-`
-      },
-      {
-        id: "chapter-10-analytics-dashboards",
-        chapterNumber: 10,
-        title: "అధ్యాయం 10: అనలిటిక్స్, KPI లు & ఎగ్జిక్యూటివ్ రిపోర్టులు (Analytics, KPIs & Executive Dashboard)",
-        readTime: "15 min read",
-        summary: "ఇన్వెంటరీ టర్నోవర్ రేషియో, స్టాక్ వాల్యుయేషన్ (FIFO/LIFO), COGS విశ్లేషణ మరియు ప్రొడక్షన్ ఎఫిషియెన్సీ నివేదికలు.",
-        content: `
-# అనలిటిక్స్, KPI లు & ఎగ్జిక్యూటివ్ రిపోర్టులు (Analytics, KPIs & Executive Dashboard)
-
-ఫ్యాక్టరీ యజమానులు మరియు ఎగ్జిక్యూటివ్‌లు సమర్థవంతమైన నిర్ణయాలు తీసుకోవడానికి ఇన్వెంటరీ టర్నోవర్, లాభదాయకత మరియు ప్లాంట్ సామర్థ్య విశ్లేషణ నివేదికలు.
+### Each BOM Entry Contains:
+- **Raw Materials Required**
+- **Quantity & Measurement Unit**
+- **Scrap Loss Percentage (%)**
+- **Machine Required (Lathe, CNC, Welding, Assembly)**
+- **Operation Sequence Number**
+- **Estimated Operation Time (Hours / Mins)**
 
 ---
 
-### 1. ప్రధాన రిపోర్టులు (Executive Reports):
+### Product Assembly Breakdown Example:
 
-- **ఇన్వెంటరీ వాల్యుయేషన్ (Inventory Valuation):** FIFO (First-In First-Out) మరియు వెయిటెడ్ యావరేజ్ పద్ధతుల్లో స్టాక్ విలువ లెక్కింపు.
-- **ఉత్పత్తి వ్యయ నివేదిక (Cost of Goods Sold - COGS):** డైరెక్ట్ రా మెటీరియల్ + లేబర్ ఖర్చులతో ఉత్పత్తుల అసలు వ్యయం విశ్లేషణ.
+\`\`\`text
+Pellet Cooler (Finished Product)
+      ↓
+Steel Sheet (Cut & Shaped)
+      ↓
+Bearing Assembly
+      ↓
+Electric Motor
+      ↓
+Fasteners & Bolts
+      ↓
+Industrial Paint & Coating
+      ↓
+Packaging Materials
+\`\`\`
+`
+      },
+      {
+        id: "section-8-purchase-module",
+        chapterNumber: 8,
+        title: "8. Purchase Module",
+        readTime: "12 min spec",
+        summary: "Supplier Management, Purchase Requests, Purchase Orders, GRN and Vendor Payments.",
+        content: `
+# 8. Purchase Module
+
+Manages procurement workflows from purchase request to vendor payment reconciliation.
+
+### Features:
+- **Supplier Management (Vendor Registry)**
+- **Purchase Request (PR) Approval Chain**
+- **Purchase Order (PO) Generation & Email Dispatch**
+- **Goods Receipt Note (GRN) Verification**
+- **Purchase Invoice Entry**
+- **Purchase Return Management**
+- **Vendor Ledger & Outstanding Payments**
+- **Payment Status Tracking (Pending / Partial / Paid)**
+`
+      },
+      {
+        id: "section-9-supplier-module",
+        chapterNumber: 9,
+        title: "9. Supplier Module",
+        readTime: "10 min spec",
+        summary: "Supplier profiles, GST/PAN compliance, bank details, credit limits and ledgers.",
+        content: `
+# 9. Supplier Module
+
+Maintains comprehensive profile and compliance records for all raw material vendors.
+
+### Supplier Master Attributes:
+- **Supplier Name & Business Entity**
+- **GSTIN & PAN Details**
+- **Registered Address & Plant Address**
+- **Phone Number & Official Email**
+- **Bank Account Details (IFSC, Account No)**
+- **Primary Contact Person & Designation**
+- **Credit Limit & Credit Period (Days)**
+- **Outstanding Balance Ledger**
+- **Compliance Documents & Contracts**
+`
+      },
+      {
+        id: "section-10-warehouse-module",
+        chapterNumber: 10,
+        title: "10. Warehouse & Location Management",
+        readTime: "11 min spec",
+        summary: "Multi-warehouse setup, rack-shelf-bin mapping, capacity planning & transfers.",
+        content: `
+# 10. Warehouse & Location Management
+
+Manages multi-warehouse storage facilities and micro-locations (Racks, Shelves, Bins).
+
+### Features:
+- **Multiple Warehouse Support (Main Plant, Raw Material Yard, FG Store)**
+- **Warehouse Location Hierarchy (Warehouse → Zone → Rack → Shelf → Bin)**
+- **Storage Capacity Limits & Volume Utilization**
+- **Warehouse Manager Designation**
+- **Real-Time Warehouse Stock Valuation**
+- **Inter-Warehouse Transfer Management**
+`
+      },
+      {
+        id: "section-11-grn-module",
+        chapterNumber: 11,
+        title: "11. Goods Receipt Note (GRN) Module",
+        readTime: "12 min spec",
+        summary: "PO selection, inward inspection, accepted/rejected quantities & batching.",
+        content: `
+# 11. Goods Receipt Note (GRN) Module
+
+Records incoming shipment details against active Purchase Orders upon gate entry.
+
+### GRN Entry Fields:
+- **Purchase Order (PO) Selection**
+- **Supplier Details**
+- **Received Quantity**
+- **Accepted Quantity (Post Inspection)**
+- **Rejected Quantity & Defect Reason**
+- **Lot / Batch Number Assignment**
+- **Supplier Invoice Number & Date**
+- **Delivery Vehicle Number & LR Copy**
+- **Quality Inspection Status (Passed / Pending / Rejected)**
+`
+      },
+      {
+        id: "section-12-material-issue",
+        chapterNumber: 12,
+        title: "12. Material Issue Module",
+        readTime: "10 min spec",
+        summary: "Issue slips, production order linkage, requester/approver workflow & balance stock.",
+        content: `
+# 12. Material Issue Module
+
+Controls raw material movement from warehouse to assembly line based on approved Work Orders.
+
+### Features:
+- **Material Issue Slip Generation**
+- **Production Order Linkage**
+- **Requested By (Shift Supervisor)**
+- **Approved By (Store Manager)**
+- **Material Consumption List**
+- **Issued Quantity vs. Balance Required Quantity**
+- **Remarks & Handover Signatures**
+`
+      },
+      {
+        id: "section-13-production-module",
+        chapterNumber: 13,
+        title: "13. Production Module",
+        readTime: "15 min spec",
+        summary: "Production orders, machine allocation, operator shifts, WIP consumption & rework.",
+        content: `
+# 13. Production Module
+
+Monitors assembly line operations, machine efficiency, and production output tracking.
+
+### Operational Parameters:
+- **Production Order Execution**
+- **Machine Allocation (Lathe, CNC, Press, Assembly)**
+- **Operator Assignment & Shift Schedule**
+- **Actual Start Time & End Time**
+- **Actual Raw Material Consumed (WIP)**
+- **Finished Output Quantity Produced**
+- **Rejected Quantity & Rework Quantity**
+- **Machine Downtime Logging & Cause Code**
+- **Supervisor Operational Remarks**
+`
+      },
+      {
+        id: "section-14-finished-goods",
+        chapterNumber: 14,
+        title: "14. Finished Goods Module",
+        readTime: "10 min spec",
+        summary: "Batching, production date, QA certificate, warehouse storage & dispatch readiness.",
+        content: `
+# 14. Finished Goods Module
+
+Governs completed products post-assembly and final quality testing.
+
+### Parameters:
+- **Product Name & Model Code**
+- **Batch / Serial Number Generation**
+- **Production Completion Date**
+- **Expiry Date (If Applicable)**
+- **Designated Warehouse Location**
+- **Current Available Stock**
+- **Final Quality Inspection Certificate**
+- **Ready for Dispatch Status Tag**
+`
+      },
+      {
+        id: "section-15-dispatch-module",
+        chapterNumber: 15,
+        title: "15. Dispatch & Delivery Module",
+        readTime: "11 min spec",
+        summary: "Sales order matching, packing slips, vehicle loading, E-way bill & dispatch invoice.",
+        content: `
+# 15. Dispatch & Delivery Module
+
+Handles customer sales order fulfillment, shipping documentation, and logistics tracking.
+
+### Workflow Steps:
+1. **Sales Order Selection**
+2. **Customer Address & Delivery Instructions**
+3. **Packing Slip & Wooden Crate Labeling**
+4. **Vehicle Loading Verification**
+5. **Tax Invoice Generation**
+6. **E-Way Bill Generation & Govt Portal Sync**
+7. **Dispatch Status Tracking (In-Transit / Delivered)**
+`
+      },
+      {
+        id: "section-16-reports-module",
+        chapterNumber: 16,
+        title: "16. Reports & Business Intelligence Module",
+        readTime: "16 min spec",
+        summary: "Inventory, Purchase, Production, and Sales Analytical Reports.",
+        content: `
+# 16. Reports & Business Intelligence Module
+
+Provides comprehensive analytical reporting across all operational domains.
+
+### 1. Inventory Reports
+- **Current Stock Report (Item-wise & Warehouse-wise)**
+- **Item Stock Ledger & Transaction History**
+- **Stock Movement Summary**
+- **Negative Stock & Anomaly Reports**
+- **Stock Valuation Report (FIFO / LIFO / Weighted Average)**
+- **ABC Analysis (High Value / Medium Value / Low Value)**
+- **FSN Analysis (Fast / Slow / Non Moving Stock)**
+- **Dead Stock & Aging Inventory Report**
+
+---
+
+### 2. Purchase Reports
+- **Supplier-wise Purchase Analytics**
+- **Monthly & Annual Purchase Summaries**
+- **Pending Purchase Orders Tracking**
+- **GRN Inspection & Rejection Reports**
+- **Purchase Returns Summary**
+- **Vendor Outstanding Ledger**
+
+---
+
+### 3. Production Reports
+- **Material Consumption vs. BOM Standard**
+- **Production Line Efficiency (OEE)**
+- **Machine Utilization & Downtime Log**
+- **Operator Productivity Metrics**
+- **Production Cost Breakdown (Direct Labor + Material)**
+- **Daily / Monthly Production Summary**
+- **Rejected & Rework Material Analytics**
+
+---
+
+### 4. Sales & Dispatch Reports
+- **Finished Goods Dispatch Summary**
+- **Pending Customer Sales Orders**
+- **Customer-wise Sales Analytics**
+`
+      },
+      {
+        id: "section-17-notifications",
+        chapterNumber: 17,
+        title: "17. System Notifications & Alerts",
+        readTime: "9 min spec",
+        summary: "Automated alerts for low stock, PO approvals, production delays and maintenance.",
+        content: `
+# 17. System Notifications & Alerts
+
+Automated real-time notifications via In-App Alert Badges, Email, and SMS:
+
+- **Low Stock Alert:** Triggered when stock falls below Reorder Level (ROP).
+- **PO Approval Required:** Alert sent to Manager for high-value Purchase Orders.
+- **GRN Pending Inspection:** Alert to Quality Team on gate arrival of shipments.
+- **Material Shortage Warning:** Alert to Production Manager before launching Work Order.
+- **Machine Maintenance Due:** Alert to Maintenance Team based on operating hours.
+- **Production Delay Alert:** Triggered when shift output falls behind schedule.
+- **Stock Mismatch Alert:** Triggered during audit physical count vs. system ledger variance.
+- **Expiry Alert:** Triggered for perishable/chemical raw materials nearing expiration.
+`
+      },
+      {
+        id: "section-18-audit-log",
+        chapterNumber: 18,
+        title: "18. Audit Log & Security Traceability",
+        readTime: "9 min spec",
+        summary: "Login logs, user activities, record updates, approvals, IP and browser metadata.",
+        content: `
+# 18. Audit Log & Security Traceability
+
+Ensures complete system accountability and security audit trails.
+
+### Tracked Security Parameters:
+- **User Login & Logout History**
+- **User Activity Log (Create / Read / Update / Delete)**
+- **Deleted Records Retention & Soft Delete Trail**
+- **Updated Records Field-Level Variance History**
+- **Approval Sign-off History & Digital Signatures**
+- **Client IP Address Logging**
+- **Browser User-Agent & Device Metadata**
+- **Timestamp (UTC & IST)**
+`
+      },
+      {
+        id: "section-19-database-design",
+        chapterNumber: 19,
+        title: "19. Database Design & Entity Schema",
+        readTime: "18 min spec",
+        summary: "33 Core relational database tables for MySQL 8 architecture (60-80 tables full ERP).",
+        content: `
+# 19. Database Design & Entity Schema
+
+The database architecture is designed in MySQL 8.0 normalized schema (Approximately 60–80 total database tables in full ERP deployment).
+
+### Core Database Tables List:
+
+\`\`\`sql
+1.  users                    -- Application user credentials & profiles
+2.  roles                    -- Role definitions (Admin, Store, Production, etc.)
+3.  permissions              -- Granular permission capabilities
+4.  role_permissions         -- Role-permission mapping table
+5.  warehouses               -- Storage facility master
+6.  warehouse_locations     -- Rack, shelf, bin micro-locations
+7.  item_categories          -- Primary item categories (Raw, Scrap, etc.)
+8.  item_subcategories       -- Sub-categories for granular categorization
+9.  items                    -- Central Item Master repository
+10. units                    -- Units of Measurement (Kg, Ltr, Pcs, Mtr)
+11. products                 -- Finished goods product master
+12. product_categories       -- Finished product categories
+13. bom                      -- Bill of Materials header
+14. bom_items                -- BOM component breakdown & scrap %
+15. suppliers                -- Vendor master registry
+16. purchase_requests        -- Internal PR requisitions
+17. purchase_orders          -- Official PO records
+18. purchase_order_items     -- PO line items
+19. grn                      -- Goods Receipt Notes header
+20. grn_items                -- GRN line items & inspection status
+21. stock                    -- Current warehouse stock quantities
+22. stock_transactions       -- Master ledger for all stock movements
+23. stock_adjustments        -- Physical audit adjustments
+24. production_orders        -- Work Order master header
+25. production_materials     -- Work Order raw material consumption (WIP)
+26. production_outputs       -- Work Order finished output produced
+27. finished_goods           -- Finished goods stock inventory
+28. dispatch                 -- Customer dispatch shipments
+29. customers                -- Customer master registry
+30. notifications            -- Real-time notification queue
+31. attachments              -- Digital document & drawing uploads
+32. audit_logs               -- Security & activity log trail
+33. settings                 -- Plant global configuration settings
+\`\`\`
+`
+      },
+      {
+        id: "section-20-technology-stack",
+        chapterNumber: 20,
+        title: "20. Technology Stack & Specifications",
+        readTime: "10 min spec",
+        summary: "Laravel 12 API, React.js + Vite, Tailwind CSS, MySQL 8, Sanctum Auth & Reporting.",
+        content: `
+# 20. Technology Stack & Specifications
+
+The software is engineered on modern web technologies for maximum performance, security, and scalability.
+
+| Layer | Technology | Specifications |
+| :--- | :--- | :--- |
+| **Backend API** | Laravel 12 API | RESTful Architecture, Service Repository Pattern |
+| **Frontend UI** | React.js + Vite | Single Page Application (SPA), Tailwind CSS Styling |
+| **Database** | MySQL 8.0 | InnoDB Storage Engine, Transactions, Foreign Keys |
+| **Authentication** | Laravel Sanctum | Token-based API Authentication & Role Middleware |
+| **File Storage** | Local Storage / AWS S3 | Encrypted CAD Drawings, Invoices & Attachments |
+| **Reporting & Export** | Excel / PDF / Barcode | Native Excel Export, PDF Generation, Barcode/QR Code Libraries |
+| **Deployment** | Nginx / Apache / Docker | Containerized CI/CD Deployment |
+`
+      },
+      {
+        id: "section-21-future-enhancements",
+        chapterNumber: 21,
+        title: "21. Future Enhancements & Roadmap",
+        readTime: "12 min spec",
+        summary: "Barcode/QR/RFID scanner, Mobile Apps, MRP, AI Demand Forecasting, SAP/Tally sync.",
+        content: `
+# 21. Future Enhancements & Strategic Roadmap
+
+Planned future version upgrades and module expansions:
+
+- **1. Barcode Scanner Integration:** Handheld Bluetooth barcode scanner support for instant stock check-in.
+- **2. QR Code Inventory Tracking:** Dynamic QR code generation for pallet and crate identification.
+- **3. RFID Inventory Management:** Long-range RFID gate sensors for automated warehouse entry/exit.
+- **4. Native Mobile Applications:** Native Android & iOS apps for factory floor operators and store managers.
+- **5. Material Requirements Planning (MRP II):** Automated MPS and MRP calculation engine.
+- **6. Machine Maintenance Module:** Predictive maintenance engine utilizing IoT sensor data.
+- **7. Quality Management System (QMS):** Advanced Statistical Process Control (SPC) and Pareto charts.
+- **8. Costing & Budget Control:** Cost center budgeting and variance tracking.
+- **9. AI-Based Demand Forecasting:** Machine learning models predicting raw material demand based on historical seasonality.
+- **10. Vendor Portal:** Self-service portal for suppliers to view POs and submit GRNs.
+- **11. Customer Portal:** Portal for customers to track order production status and dispatch tracking.
+- **12. Multi-Factory & Multi-Company Support:** Enterprise multi-tenant capability.
+- **13. Multi-Currency & Multi-Language:** Global trade support.
+- **14. ERP Integration:** Direct API connectors for Tally Prime, SAP S/4HANA, and Oracle ERP.
+- **15. Power BI & Tableau Dashboards:** Embedded analytics for C-suite executive reporting.
 `
       }
     ]
