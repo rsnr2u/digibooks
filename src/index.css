@@ -195,7 +195,8 @@
     print-color-adjust: exact !important;
   }
 
-  .a4-portrait-page {
+  .a4-portrait-page,
+  .book-print-page {
     width: 210mm !important;
     height: 297mm !important;
     min-height: 297mm !important;
@@ -220,6 +221,7 @@
 
   .widescreen-page-16-9:last-child,
   .a4-portrait-page:last-child,
+  .book-print-page:last-child,
   .print-page:last-child {
     page-break-after: avoid !important;
     break-after: avoid !important;

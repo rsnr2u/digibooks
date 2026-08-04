@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { BOOKS_DATA } from '../data/booksData';
 import {
   BookOpen, ChevronRight, Bookmark, ArrowLeft, ArrowRight,
-  Menu, Share2, Check, Clock, Calendar, Sparkles, UserCheck, Briefcase, User, Compass, Printer, Home
+  Menu, Share2, Check, Clock, Calendar, Sparkles, UserCheck, Briefcase, User, Compass, Printer, Home,
+  FileText, Layers, Download, X, Info, ShieldCheck, ExternalLink, Globe
 } from 'lucide-react';
 import SyntaxHighlighter from '../components/SyntaxHighlighter';
 
@@ -16,6 +18,8 @@ export default function BookReaderPage() {
   const [bookmarks, setBookmarks] = useState([]);
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [showPrintModal, setShowPrintModal] = useState(false);
+  const [printMode, setPrintMode] = useState('current'); // 'current' or 'all'
 
   const currentBook = BOOKS_DATA[bookId] || BOOKS_DATA.numerology;
   const isPersonalNumerology = currentBook.id === 'personal-numerology';
@@ -87,8 +91,15 @@ export default function BookReaderPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePrint = () => {
-    window.print();
+  const handleOpenPrintModal = () => {
+    setShowPrintModal(true);
+  };
+
+  const executePrint = () => {
+    setShowPrintModal(false);
+    setTimeout(() => {
+      window.print();
+    }, 300);
   };
 
   const goToChapter = (cId) => {
@@ -143,88 +154,15 @@ export default function BookReaderPage() {
 
   // Vastu 3x3 Grid Dataset for Chapter 13
   const vastuGridData = [
-    {
-      direction: "వాయువ్యము (North-West)",
-      shortDir: "NW",
-      numbers: "7",
-      planet: "కేతువు",
-      element: "జల (Water)",
-      bg: "bg-sky-50/80 border-sky-200 text-sky-950",
-      badgeBg: "bg-sky-600 text-white"
-    },
-    {
-      direction: "ఉత్తరము (North)",
-      shortDir: "NORTH",
-      numbers: "2, 5",
-      planet: "చంద్రుడు / బుధుడు",
-      element: "జల / భూమి",
-      bg: "bg-blue-50/80 border-blue-200 text-blue-950",
-      badgeBg: "bg-blue-600 text-white"
-    },
-    {
-      direction: "ఈశాన్యము (North-East)",
-      shortDir: "NE",
-      numbers: "1, 3",
-      planet: "సూర్యుడు / గురువు",
-      element: "ఈశ్వర స్థానం / జల",
-      bg: "bg-amber-50/80 border-amber-200 text-amber-950",
-      badgeBg: "bg-amber-600 text-white"
-    },
-    {
-      direction: "పడమర (West)",
-      shortDir: "WEST",
-      numbers: "3, 8",
-      planet: "గురువు / శని",
-      element: "వాయు (Air)",
-      bg: "bg-indigo-50/80 border-indigo-200 text-indigo-950",
-      badgeBg: "bg-indigo-600 text-white"
-    },
-    {
-      direction: "మధ్య భాగము (Center)",
-      shortDir: "CENTER",
-      numbers: "5",
-      planet: "బుధుడు",
-      element: "ఆకాశం (Space)",
-      isCenter: true,
-      bg: "bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-50 border-amber-400 text-amber-950 shadow-md ring-2 ring-amber-300/80",
-      badgeBg: "bg-amber-500 text-white font-black"
-    },
-    {
-      direction: "తూర్పు (East)",
-      shortDir: "EAST",
-      numbers: "1, 4",
-      planet: "సూర్యుడు / రాహువు",
-      element: "అగ్ని (Fire)",
-      bg: "bg-orange-50/80 border-orange-200 text-orange-950",
-      badgeBg: "bg-orange-600 text-white"
-    },
-    {
-      direction: "నైరుతి (South-West)",
-      shortDir: "SW",
-      numbers: "8, 4",
-      planet: "శని / రాహువు",
-      element: "భూమి (Earth)",
-      bg: "bg-emerald-50/80 border-emerald-200 text-emerald-950",
-      badgeBg: "bg-emerald-600 text-white"
-    },
-    {
-      direction: "దక్షిణము (South)",
-      shortDir: "SOUTH",
-      numbers: "9",
-      planet: "కుజుడు",
-      element: "అగ్ని (Fire)",
-      bg: "bg-rose-50/80 border-rose-200 text-rose-950",
-      badgeBg: "bg-rose-600 text-white"
-    },
-    {
-      direction: "ఆగ్నేయము (South-East)",
-      shortDir: "SE",
-      numbers: "6",
-      planet: "శుక్రుడు",
-      element: "అగ్ని / జల",
-      bg: "bg-purple-50/80 border-purple-200 text-purple-950",
-      badgeBg: "bg-purple-600 text-white"
-    }
+    { direction: "వాయువ్యము (North-West)", shortDir: "NW", numbers: "7", planet: "కేతువు", element: "జల (Water)", bg: "bg-sky-50/80 border-sky-200 text-sky-950", badgeBg: "bg-sky-600 text-white" },
+    { direction: "ఉత్తరము (North)", shortDir: "NORTH", numbers: "2, 5", planet: "చంద్రుడు / బుధుడు", element: "జల / భూమి", bg: "bg-blue-50/80 border-blue-200 text-blue-950", badgeBg: "bg-blue-600 text-white" },
+    { direction: "ఈశాన్యము (North-East)", shortDir: "NE", numbers: "1, 3", planet: "సూర్యుడు / గురువు", element: "ఈశ్వర స్థానం / జల", bg: "bg-amber-50/80 border-amber-200 text-amber-950", badgeBg: "bg-amber-600 text-white" },
+    { direction: "పడమర (West)", shortDir: "WEST", numbers: "3, 8", planet: "గురువు / శని", element: "వాయు (Air)", bg: "bg-indigo-50/80 border-indigo-200 text-indigo-950", badgeBg: "bg-indigo-600 text-white" },
+    { direction: "మధ్య భాగము (Center)", shortDir: "CENTER", numbers: "5", planet: "బుధుడు", element: "ఆకాశం (Space)", isCenter: true, bg: "bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-50 border-amber-400 text-amber-950 shadow-md ring-2 ring-amber-300/80", badgeBg: "bg-amber-500 text-white font-black" },
+    { direction: "తూర్పు (East)", shortDir: "EAST", numbers: "1, 4", planet: "సూర్యుడు / రాహువు", element: "అగ్ని (Fire)", bg: "bg-orange-50/80 border-orange-200 text-orange-950", badgeBg: "bg-orange-600 text-white" },
+    { direction: "నైరుతి (South-West)", shortDir: "SW", numbers: "8, 4", planet: "శని / రాహువు", element: "భూమి (Earth)", bg: "bg-emerald-50/80 border-emerald-200 text-emerald-950", badgeBg: "bg-emerald-600 text-white" },
+    { direction: "దక్షిణము (South)", shortDir: "SOUTH", numbers: "9", planet: "కుజుడు", element: "అగ్ని (Fire)", bg: "bg-rose-50/80 border-rose-200 text-rose-950", badgeBg: "bg-rose-600 text-white" },
+    { direction: "ఆగ్నేయము (South-East)", shortDir: "SE", numbers: "6", planet: "శుక్రుడు", element: "అగ్ని / జల", bg: "bg-purple-50/80 border-purple-200 text-purple-950", badgeBg: "bg-purple-600 text-white" }
   ];
 
   // Full Article & Card Block Renderer with Reduced Compact Headings
@@ -490,7 +428,7 @@ export default function BookReaderPage() {
         tableRows = [];
       }
 
-      // Skip top-level '# ' heading to prevent duplicate title (since header already renders activeChapter.title)
+      // Skip top-level '# ' heading to prevent duplicate title
       if (line.startsWith('# ')) {
         return;
       } else if (line.startsWith('## ')) {
@@ -560,10 +498,12 @@ export default function BookReaderPage() {
     return elements;
   };
 
+  const chaptersToPrint = printMode === 'all' ? currentBook.chapters : [activeChapter];
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       {/* Top Reading Progress Indicator */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-slate-200 z-50">
+      <div className="no-print fixed top-0 left-0 right-0 h-1 bg-slate-200 z-50">
         <div
           className="h-full bg-blue-600 transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
@@ -571,7 +511,7 @@ export default function BookReaderPage() {
       </div>
 
       {/* Reader Sub-Header (Content-Constrained Toolbar) */}
-      <div className="sticky top-[49px] z-40 bg-slate-50/95 backdrop-blur-md border-b border-slate-200/80 py-2">
+      <div className="no-print sticky top-[49px] z-40 bg-slate-50/95 backdrop-blur-md border-b border-slate-200/80 py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Left: Toggle Directory Icon & Button */}
           <button
@@ -601,11 +541,11 @@ export default function BookReaderPage() {
 
             {/* Print / Save PDF Button */}
             <button
-              onClick={handlePrint}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs leading-none"
+              onClick={handleOpenPrintModal}
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#02296c] hover:bg-blue-900 text-white rounded-xl text-xs font-bold transition shadow-md leading-none"
               title="Print or Save Profile as PDF"
             >
-              <Printer className="w-4 h-4 text-white shrink-0" />
+              <Printer className="w-4 h-4 text-amber-400 shrink-0" />
               <span className="hidden sm:inline font-telugu leading-none">PDF / Print</span>
             </button>
 
@@ -627,8 +567,125 @@ export default function BookReaderPage() {
         </div>
       </div>
 
-      {/* Main Layout: Article Index Sidebar + Center Canvas */}
-      <div className="flex-1 max-w-7xl w-full mx-auto flex relative py-6 px-4 sm:px-6">
+      {/* PDF Export Settings Modal */}
+      <AnimatePresence>
+        {showPrintModal && (
+          <div className="no-print fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white text-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-2xl border-2 border-blue-600 relative space-y-4 font-sans"
+            >
+              <button onClick={() => setShowPrintModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1">
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
+                <div className="w-10 h-10 rounded-xl bg-[#02296c] text-white flex items-center justify-center font-bold">
+                  <Printer className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Export {currentBook.title} as PDF</h3>
+                  <p className="text-xs text-slate-500 font-telugu">
+                    Standard A4 Portrait Clean Print (No Margins / No URLs / No Extra Text)
+                  </p>
+                </div>
+              </div>
+
+              {/* Mode Selection */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wider block">
+                  Export Selection:
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setPrintMode('current')}
+                    className={`p-3 rounded-xl border text-left transition flex flex-col gap-1 ${
+                      printMode === 'current'
+                        ? 'bg-blue-50 border-blue-600 text-[#02296c] font-bold shadow-sm'
+                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span className="text-xs font-bold">Active Chapter</span>
+                    <span className="text-[11px] text-slate-500 font-normal truncate">
+                      {activeChapter.title}
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => setPrintMode('all')}
+                    className={`p-3 rounded-xl border text-left transition flex flex-col gap-1 ${
+                      printMode === 'all'
+                        ? 'bg-blue-50 border-blue-600 text-[#02296c] font-bold shadow-sm'
+                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span className="text-xs font-bold">Entire E-Book</span>
+                    <span className="text-[11px] text-slate-500 font-normal">
+                      All {currentBook.chapters.length} Chapters
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Settings Checklist */}
+              <div className="space-y-2 text-xs text-slate-700">
+                <p className="font-bold text-slate-900 flex items-center gap-2 text-sm">
+                  <Info className="w-4 h-4 text-blue-700" />
+                  <span>Important Browser Print Settings:</span>
+                </p>
+
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl space-y-2 font-medium">
+                  <div className="flex items-center justify-between border-b border-blue-200 pb-1.5">
+                    <span className="font-bold">1. Destination:</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#02296c] border border-blue-300">Save as PDF</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-blue-200 pb-1.5">
+                    <span className="font-bold">2. Layout / Orientation:</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#02296c] border border-blue-300">Portrait (A4 Size)</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-blue-200 pb-1.5">
+                    <span className="font-bold">3. Margins:</span>
+                    <span className="px-2 py-0.5 bg-white rounded font-bold text-[#02296c] border border-blue-300">None</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-blue-200 pb-1.5">
+                    <span className="font-bold">4. Headers and footers:</span>
+                    <span className="px-2 py-0.5 bg-red-100 text-red-700 rounded font-bold border border-red-300">☐ UNCHECKED (Disabled)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold">5. Background graphics:</span>
+                    <span className="px-2 py-0.5 bg-[#02296c] text-white rounded font-bold">☑ ENABLED (Checked)</span>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-slate-500 italic">
+                  * Unchecking "Headers and footers" ensures NO extra URLs, page titles, or dates appear around the page borders!
+                </p>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  onClick={() => setShowPrintModal(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200 transition text-xs"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={executePrint}
+                  className="px-5 py-2.5 rounded-xl bg-[#02296c] text-white font-bold hover:bg-blue-900 transition text-xs flex items-center gap-2 shadow-md"
+                >
+                  <Printer className="w-4 h-4 text-amber-400" />
+                  <span>Open Print Dialog Now</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Layout: Article Index Sidebar + Center Canvas (On Screen View) */}
+      <div className="no-print flex-1 max-w-7xl w-full mx-auto flex relative py-6 px-4 sm:px-6">
         {/* Left Article Index Sidebar */}
         <aside
           className={`${
@@ -684,7 +741,7 @@ export default function BookReaderPage() {
         {/* Main Center Article Canvas */}
         <main className="flex-1 min-w-0 bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 md:p-12 shadow-sm">
           <div className="max-w-3xl mx-auto">
-            {/* Article Header (Compact & Balanced Font Sizes) */}
+            {/* Article Header */}
             <header className="mb-8 pb-6 border-b border-slate-200 space-y-3">
               <div className="flex flex-wrap items-center gap-2.5">
                 <span className="px-3 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded-full border border-blue-200 uppercase tracking-wider">
@@ -700,7 +757,7 @@ export default function BookReaderPage() {
                 </span>
               </div>
 
-              {/* Reduced Main Article Title */}
+              {/* Main Article Title */}
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-telugu leading-tight">
                 {activeChapter.title}
               </h1>
@@ -754,6 +811,66 @@ export default function BookReaderPage() {
             </footer>
           </div>
         </main>
+      </div>
+
+      {/* ───────────────────────────────────────────────────────────── */}
+      {/* ─── DEDICATED PRINT / PDF EXPORT CONTAINER (A4 PRINT MODE) ─ */}
+      {/* ───────────────────────────────────────────────────────────── */}
+      <div className="print-all-pages hidden-on-screen">
+        {chaptersToPrint.map((ch, chIdx) => (
+          <div
+            key={ch.id}
+            className="book-print-page relative bg-white text-slate-900 overflow-hidden flex flex-col justify-between"
+          >
+            {/* Top Accent Gradient Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-700 via-amber-400 to-blue-700" />
+            <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-700 via-amber-400 to-blue-700" />
+
+            {/* Print Header */}
+            <div className="relative z-10 px-8 pt-4 pb-3 flex items-center justify-between border-b border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="px-3 py-1 rounded-xl bg-[#02296c] border border-blue-900 shadow-sm flex items-center shrink-0">
+                  <img
+                    src="/assets/digitalks-blue-logo-transparent.png"
+                    alt="Digitalks Logo"
+                    className="h-6 object-contain"
+                  />
+                </div>
+                <div className="px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold font-telugu">
+                  {currentBook.title}
+                </div>
+              </div>
+              <div className="text-xs text-slate-600 font-mono font-bold">
+                DIGIBOOK EDITORIAL • Chapter {chIdx + 1} of {chaptersToPrint.length}
+              </div>
+            </div>
+
+            {/* Print Chapter Body Content */}
+            <div className="relative z-10 px-8 py-5 flex-1 flex flex-col justify-start overflow-hidden">
+              <div className="mb-4 pb-3 border-b border-slate-200 space-y-1.5">
+                <span className="text-[11px] font-bold text-blue-700 uppercase tracking-widest block font-telugu">
+                  {currentBook.teluguTitle}
+                </span>
+                <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-telugu leading-tight">
+                  {ch.title}
+                </h1>
+                <p className="text-slate-700 text-xs sm:text-sm font-telugu leading-relaxed font-medium bg-blue-50/70 p-3 rounded-xl border-l-4 border-blue-600">
+                  {ch.summary}
+                </p>
+              </div>
+
+              <div className="reading-content text-sm space-y-3 font-telugu">
+                {renderMarkdownContent(ch.content)}
+              </div>
+            </div>
+
+            {/* Print Footer */}
+            <div className="relative z-10 px-8 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span className="tracking-wider uppercase font-bold text-slate-600 font-sans">DIGI TALKS INDIA • {currentBook.title}</span>
+              <span className="font-mono font-bold text-slate-400">Chapter {chIdx + 1} of {chaptersToPrint.length}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
