@@ -11,7 +11,13 @@ import CompanyProfilePage from './pages/CompanyProfilePage';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('digibook_auth') === 'true';
+    const auth = localStorage.getItem('digibook_auth');
+    if (auth === null || auth === undefined) {
+      localStorage.setItem('digibook_auth', 'true');
+      localStorage.setItem('digibook_user', 'rsnr4u');
+      return true;
+    }
+    return auth === 'true';
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 

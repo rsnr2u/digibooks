@@ -26,12 +26,15 @@ export default function BookReaderPage() {
   const isDocument = !!currentBook.isDocument;
 
   // Flexible Chapter Finder with legacy alias support
-  const currentChapterIndex = currentBook.chapters.findIndex(c => {
-    if (c.id === chapterId) return true;
-    if (chapterId === 'chapter-5-lucky-remedies' && c.chapterNumber === 5) return true;
-    const requestedNum = chapterId ? parseInt(chapterId.replace(/\D/g, ''), 10) : NaN;
-    return !isNaN(requestedNum) && c.chapterNumber === requestedNum;
-  });
+  const currentChapterIndex = (currentBook && Array.isArray(currentBook.chapters))
+    ? currentBook.chapters.findIndex(c => {
+        if (!c) return false;
+        if (c.id === chapterId) return true;
+        if (chapterId === 'chapter-5-lucky-remedies' && c.chapterNumber === 5) return true;
+        const requestedNum = typeof chapterId === 'string' ? parseInt(chapterId.replace(/\D/g, ''), 10) : NaN;
+        return !isNaN(requestedNum) && c.chapterNumber === requestedNum;
+      })
+    : -1;
 
   const safeChapterIndex = currentChapterIndex !== -1 ? currentChapterIndex : 0;
   const activeChapter = (currentBook && Array.isArray(currentBook.chapters) && currentBook.chapters[safeChapterIndex]) || { id: '', title: '', summary: '', content: '', readTime: '' };
