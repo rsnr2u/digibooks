@@ -19,7 +19,7 @@ export default function BookReaderPage() {
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showPrintModal, setShowPrintModal] = useState(false);
-  const [printMode, setPrintMode] = useState('current'); // 'current' or 'all'
+  const [printMode, setPrintMode] = useState('all'); // Default to 'all' for exporting all pages in single PDF
 
   const currentBook = BOOKS_DATA[bookId] || BOOKS_DATA.numerology;
   const isPersonalNumerology = currentBook.id === 'personal-numerology';
@@ -96,6 +96,7 @@ export default function BookReaderPage() {
   };
 
   const handleOpenPrintModal = () => {
+    setPrintMode('all');
     setShowPrintModal(true);
   };
 
@@ -547,10 +548,10 @@ export default function BookReaderPage() {
             <button
               onClick={handleOpenPrintModal}
               className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#02296c] hover:bg-blue-900 text-white rounded-xl text-xs font-bold transition shadow-md leading-none"
-              title="Print or Save Profile as PDF"
+              title="Export All Pages into a Single PDF Document"
             >
               <Printer className="w-4 h-4 text-amber-400 shrink-0" />
-              <span className="hidden sm:inline font-telugu leading-none">PDF / Print</span>
+              <span className="font-sans leading-none">Export All Pages (Single PDF)</span>
             </button>
 
             {/* Bookmark / Save Button */}
@@ -821,6 +822,55 @@ export default function BookReaderPage() {
       {/* ─── DEDICATED PRINT / PDF EXPORT CONTAINER (A4 PRINT MODE) ─ */}
       {/* ───────────────────────────────────────────────────────────── */}
       <div className="print-all-pages hidden-on-screen">
+        {printMode === 'all' && (
+          <div className="book-print-page relative bg-[#02296c] text-white p-12 flex flex-col justify-between overflow-hidden">
+            {/* Top Bar Accent */}
+            <div className="absolute top-0 left-0 right-0 h-3 bg-amber-400" />
+            <div className="absolute bottom-0 left-0 right-0 h-3 bg-amber-400" />
+
+            {/* Header Brand */}
+            <div className="relative z-10 flex items-center justify-between border-b border-blue-400/30 pb-6">
+              <div className="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
+                <img src="/assets/digitalks-blue-logo-transparent.png" alt="DIGI TALKS INDIA" className="h-8 object-contain brightness-200" />
+              </div>
+              <span className="text-xs tracking-widest text-amber-300 font-mono uppercase font-bold">DIGI TALKS INDIA • DOCUMENT HUB</span>
+            </div>
+
+            {/* Middle Title Block */}
+            <div className="relative z-10 my-auto space-y-6">
+              <span className="px-4 py-1.5 bg-amber-400 text-slate-950 text-xs font-extrabold rounded-full tracking-wider uppercase inline-block font-sans">
+                {currentBook.badge || 'Official Specification & Quotation Document'}
+              </span>
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight font-sans">
+                {currentBook.title}
+              </h1>
+              <p className="text-blue-100 text-sm leading-relaxed font-sans max-w-xl">
+                {currentBook.description}
+              </p>
+              <div className="pt-6 border-t border-blue-400/30 grid grid-cols-3 gap-6 text-xs text-blue-200 font-sans">
+                <div>
+                  <span className="block text-[10px] text-amber-300 uppercase font-bold">Total Sections</span>
+                  <span className="font-extrabold text-white text-lg">{currentBook.chapters.length} Sections</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] text-amber-300 uppercase font-bold">Document Type</span>
+                  <span className="font-extrabold text-white text-lg">{currentBook.documentName || 'Web Based ERP SRS'}</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] text-amber-300 uppercase font-bold">Prepared By</span>
+                  <span className="font-extrabold text-white text-lg">DIGI TALKS INDIA</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Footer */}
+            <div className="relative z-10 border-t border-blue-400/30 pt-4 flex items-center justify-between text-xs text-blue-300 font-medium font-sans">
+              <span>https://digitalks.in/</span>
+              <span>Complete Single PDF Document • All {currentBook.chapters.length} Sections</span>
+            </div>
+          </div>
+        )}
+
         {chaptersToPrint.map((ch, chIdx) => (
           <div
             key={ch.id}
