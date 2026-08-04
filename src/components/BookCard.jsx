@@ -60,12 +60,12 @@ export default function BookCard({ book, index }) {
           <h3 className="text-xl font-extrabold text-slate-900 mb-1 group-hover:text-blue-600 transition">
             {book.title}
           </h3>
-          <h4 className="text-base font-bold text-blue-700 font-telugu mb-3">
+          <h4 className={`text-base font-bold text-blue-700 ${book.isDocument ? 'font-sans' : 'font-telugu'} mb-3`}>
             {book.teluguTitle}
           </h4>
 
           {/* Description */}
-          <p className="text-slate-600 text-sm leading-relaxed mb-6 font-telugu">
+          <p className={`text-slate-600 text-sm leading-relaxed mb-6 ${book.isDocument ? 'font-sans' : 'font-telugu'}`}>
             {book.description}
           </p>
         </div>

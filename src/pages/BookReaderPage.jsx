@@ -524,10 +524,10 @@ export default function BookReaderPage() {
             title={isSidebarOpen ? "Hide Directory" : "Show Directory"}
           >
             <Menu className="w-4 h-4 text-blue-600 shrink-0" />
-            <span className="font-telugu leading-none">
+            <span className={isDocument ? "font-sans leading-none" : "font-telugu leading-none"}>
               {isSidebarOpen
-                ? (isPersonalNumerology ? 'ప్రొఫైల్స్ దాచు' : isDocument ? 'విభాగాలు దాచు' : 'అధ్యాయాలు దాచు')
-                : (isPersonalNumerology ? 'ప్రొఫైల్స్ చూపు' : isDocument ? 'విభాగాలు చూపు' : 'అధ్యాయాలు చూపు')}
+                ? (isPersonalNumerology ? 'ప్రొఫైల్స్ దాచు' : isDocument ? 'Hide Sections' : 'అధ్యాయాలు దాచు')
+                : (isPersonalNumerology ? 'ప్రొఫైల్స్ చూపు' : isDocument ? 'Show Sections' : 'అధ్యాయాలు చూపు')}
             </span>
           </button>
 
@@ -701,10 +701,10 @@ export default function BookReaderPage() {
               <span className="text-[10px] font-bold text-blue-700 uppercase tracking-widest block">
                 {isPersonalNumerology ? 'Profile Series' : isDocument ? 'SRS Document' : 'Article Series'}
               </span>
-              <h3 className="text-base font-extrabold text-slate-900 font-telugu mt-0.5">
+              <h3 className={`text-base font-extrabold text-slate-900 ${isDocument ? 'font-sans' : 'font-telugu'} mt-0.5`}>
                 {currentBook.title}
               </h3>
-              <p className="text-xs text-slate-500 font-telugu mt-0.5 font-medium">
+              <p className={`text-xs text-slate-500 ${isDocument ? 'font-sans' : 'font-telugu'} mt-0.5 font-medium`}>
                 {currentBook.teluguTitle}
               </p>
             </div>
@@ -730,7 +730,7 @@ export default function BookReaderPage() {
                       {idx + 1}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <h5 className="text-xs sm:text-sm truncate font-telugu leading-snug">{ch.title}</h5>
+                      <h5 className={`text-xs sm:text-sm truncate ${isDocument ? 'font-sans font-semibold' : 'font-telugu'} leading-snug`}>{ch.title}</h5>
                       <span className={`text-[10px] block mt-0.5 ${isActive ? 'text-blue-100' : 'text-slate-400'}`}>
                         {ch.readTime}
                       </span>
@@ -762,13 +762,13 @@ export default function BookReaderPage() {
               </div>
 
               {/* Main Article Title */}
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-telugu leading-tight">
+              <h1 className={`text-2xl sm:text-3xl font-extrabold text-slate-900 ${isDocument ? 'font-sans' : 'font-telugu'} leading-tight`}>
                 {activeChapter.title}
               </h1>
 
               {/* Lead Summary */}
               <div className="bg-gradient-to-r from-blue-50/70 to-slate-50 p-4 sm:p-5 rounded-xl border-l-4 border-blue-600 shadow-sm">
-                <p className="text-slate-700 text-sm sm:text-base font-telugu leading-relaxed font-medium">
+                <p className={`text-slate-700 text-sm sm:text-base ${isDocument ? 'font-sans' : 'font-telugu'} leading-relaxed font-medium`}>
                   {activeChapter.summary}
                 </p>
               </div>

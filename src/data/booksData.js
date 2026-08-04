@@ -4149,14 +4149,14 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
     id: "manufacturing-inventory",
     title: "Manufacturing Inventory & Production System",
     documentName: "Software Requirements Specification (SRS)",
-    teluguTitle: "తయారీ ఇన్వెంటరీ & ప్రొడక్షన్ మేనేజ్‌మెంట్ సిస్టమ్ (SRS పత్రం)",
-    tagline: "Software Requirements Specification (SRS) v1.0 • Web Based ERP System",
-    description: "DIGI TALKS INDIA ద్వారా రూపొందించబడిన మాన్యుఫాక్చరింగ్ ఇన్వెంటరీ & ప్రొడక్షన్ మేనేజ్‌మెంట్ సిస్టమ్ వెబ్ ERP సాఫ్ట్‌వేర్ రిక్వైర్మెంట్స్ స్పెసిఫికేషన్ (SRS) పూర్తి అధికారిక పత్రం.",
+    teluguTitle: "Manufacturing Inventory & Production Management System",
+    tagline: "Software Requirements Specification (SRS) • Web Based ERP System",
+    description: "Complete official Software Requirements Specification (SRS) document for Manufacturing Inventory & Production Management System prepared by DIGI TALKS INDIA.",
     iconName: "Factory",
     badge: "SRS Document",
     category: "Software Requirements Specification",
     difficulty: "Enterprise ERP SRS",
-    estimatedHours: "SRS Spec v1.0",
+    estimatedHours: "SRS Document",
     chaptersCount: 21,
     isDocument: true,
     accentColor: "from-emerald-700 to-teal-800",
@@ -4165,18 +4165,17 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
       {
         id: "section-1-executive-summary",
         chapterNumber: 1,
-        title: "1. Version & Executive Summary",
+        title: "1. Executive Summary",
         readTime: "10 min spec",
-        summary: "Software Requirements Specification (SRS) Document Version, Metadata & Core Executive Summary.",
+        summary: "Software Requirements Specification (SRS) Document Metadata & Core Executive Summary.",
         content: `
-# 1. Version & Executive Summary
+# 1. Executive Summary
 
-### Document Metadata (పత్ర వివరాలు)
+### Document Metadata
 
 | Item | Details |
 | :--- | :--- |
 | **Document Name** | Manufacturing Inventory & Production Management System |
-| **Version** | 1.0 |
 | **Prepared By** | DIGI TALKS INDIA |
 | **Software Type** | Web Based ERP |
 | **Industry** | Manufacturing |
@@ -4191,15 +4190,15 @@ With a strong focus on innovation, quality, and long-term partnerships, we help 
 The objective of this software is to automate all inventory and manufacturing activities across factory units.
 
 The software manages:
-- **Raw Materials (ముడి పదార్థాలు)**
-- **Semi Finished Products (సగం పూర్తయిన ఉత్పత్తులు)**
-- **Finished Products (పూర్తి ఉత్పత్తులు)**
-- **Production (ఉత్పత్తి ప్రక్రియ)**
-- **Purchase (సమగ్ర కొనుగోళ్లు)**
-- **Warehouse (వేర్‌హౌస్ నిల్వలు)**
-- **Suppliers (సప్లయర్ల సేవలు)**
-- **Stock Movement (స్టాక్ బదిలీలు)**
-- **Reports (సమగ్ర నివేదికలు)**
+- **Raw Materials**
+- **Semi Finished Products**
+- **Finished Products**
+- **Production**
+- **Purchase**
+- **Warehouse**
+- **Suppliers**
+- **Stock Movement**
+- **Reports**
 
 The system provides complete 360-degree stock visibility from purchasing until finished goods dispatch.
 `
@@ -4216,31 +4215,31 @@ The system provides complete 360-degree stock visibility from purchasing until f
 The complete end-to-end manufacturing and inventory workflow is structured as follows:
 
 \`\`\`text
-Supplier (సప్లయర్)
-      ↓
-Purchase Order (పర్చేస్ ఆర్డర్)
-      ↓
-Goods Receipt - GRN (సరుకు రసీదు)
-      ↓
-Quality Inspection (నాణ్యత తనిఖీ)
-      ↓
-Warehouse Storage (వేర్‌హౌస్ నిల్వ)
-      ↓
-Raw Material Stock (ముడిసరుకు స్టాక్)
-      ↓
-Production Order (ప్రొడక్షన్ ఆర్డర్)
-      ↓
-Material Issue (మెటీరియల్ ఇష్యూ)
-      ↓
-Manufacturing Assembly (తయారీ ప్రాసెస్)
-      ↓
-Finished Goods (పూర్తి ఉత్పత్తులు)
-      ↓
-Packing (ప్యాకింగ్)
-      ↓
-Dispatch Logistics (డిస్పాచ్)
-      ↓
-Customer (కస్టమర్)
+Supplier
+   ↓
+Purchase Order
+   ↓
+Goods Receipt (GRN)
+   ↓
+Quality Inspection
+   ↓
+Warehouse Storage
+   ↓
+Raw Material Stock
+   ↓
+Production Order
+   ↓
+Material Issue
+   ↓
+Manufacturing Assembly
+   ↓
+Finished Goods
+   ↓
+Packing
+   ↓
+Dispatch Logistics
+   ↓
+Customer
 \`\`\`
 `
       },
@@ -4334,16 +4333,16 @@ This is the core module governing all inventory items and stock movements.
 ---
 
 ### 2. Stock Categories
-1. **Raw Materials (ముడి పదార్థాలు)**
-2. **Packing Materials (ప్యాకింగ్ సామాగ్రి)**
-3. **Consumables (కన్స్యూమబుల్స్)**
-4. **Spare Parts (స్పేర్ పార్ట్స్)**
-5. **Tools (టూల్స్)**
-6. **Maintenance Items (మెయింటెనెన్స్ సామాగ్రి)**
-7. **Finished Goods (పూర్తి ఉత్పత్తులు)**
-8. **Semi Finished Goods (సగం పూర్తయిన వస్తువులు)**
-9. **Rejected Items (రిజెక్ట్ చేయబడినవి)**
-10. **Scrap (స్క్రాప్)**
+1. **Raw Materials**
+2. **Packing Materials**
+3. **Consumables**
+4. **Spare Parts**
+5. **Tools**
+6. **Maintenance Items**
+7. **Finished Goods**
+8. **Semi Finished Goods**
+9. **Rejected Items**
+10. **Scrap**
 
 ---
 
@@ -4373,7 +4372,7 @@ Governs finished products manufactured by the plant (e.g., Pellet Cooler, Belt C
 ### Product Attributes:
 - **Product Code**
 - **Drawing Number & CAD Reference**
-- **Engineering Version**
+- **Engineering Specification**
 - **Product Category**
 - **Description & Technical Manual**
 - **Product Image & Schematics**
@@ -4411,17 +4410,17 @@ Defines the exact component breakdown and operational sequence required to produ
 
 \`\`\`text
 Pellet Cooler (Finished Product)
-      ↓
+   ↓
 Steel Sheet (Cut & Shaped)
-      ↓
+   ↓
 Bearing Assembly
-      ↓
+   ↓
 Electric Motor
-      ↓
+   ↓
 Fasteners & Bolts
-      ↓
+   ↓
 Industrial Paint & Coating
-      ↓
+   ↓
 Packaging Materials
 \`\`\`
 `
@@ -4749,7 +4748,7 @@ The database architecture is designed in MySQL 8.0 normalized schema (Approximat
         chapterNumber: 20,
         title: "20. Technology Stack & Specifications",
         readTime: "10 min spec",
-        summary: "Laravel 12 API, React.js + Vite, Tailwind CSS, MySQL 8, Sanctum Auth & Reporting.",
+        summary: "Laravel API, React.js + Vite, Tailwind CSS, MySQL 8, Sanctum Auth & Reporting.",
         content: `
 # 20. Technology Stack & Specifications
 
@@ -4757,7 +4756,7 @@ The software is engineered on modern web technologies for maximum performance, s
 
 | Layer | Technology | Specifications |
 | :--- | :--- | :--- |
-| **Backend API** | Laravel 12 API | RESTful Architecture, Service Repository Pattern |
+| **Backend API** | Laravel API | RESTful Architecture, Service Repository Pattern |
 | **Frontend UI** | React.js + Vite | Single Page Application (SPA), Tailwind CSS Styling |
 | **Database** | MySQL 8.0 | InnoDB Storage Engine, Transactions, Foreign Keys |
 | **Authentication** | Laravel Sanctum | Token-based API Authentication & Role Middleware |
@@ -4775,7 +4774,7 @@ The software is engineered on modern web technologies for maximum performance, s
         content: `
 # 21. Future Enhancements & Strategic Roadmap
 
-Planned future version upgrades and module expansions:
+Planned future module expansions and integrations:
 
 - **1. Barcode Scanner Integration:** Handheld Bluetooth barcode scanner support for instant stock check-in.
 - **2. QR Code Inventory Tracking:** Dynamic QR code generation for pallet and crate identification.
@@ -4796,5 +4795,4 @@ Planned future version upgrades and module expansions:
       }
     ]
   }
-
 };
