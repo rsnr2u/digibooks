@@ -474,6 +474,21 @@ export default function BookReaderPage() {
       else if (line.trim() === '---') {
         elements.push(<hr key={index} className="my-6 border-slate-200" />);
       }
+      // Markdown Image
+      else if (line.startsWith('![')) {
+        const match = line.match(/^!\[(.*?)\]\((.*?)\)/);
+        if (match) {
+          elements.push(
+            <div key={index} className="my-6 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-slate-950 max-w-xl mx-auto">
+              <img
+                src={match[2]}
+                alt={match[1]}
+                className="w-full h-auto object-cover max-h-[650px] mx-auto block rounded-2xl"
+              />
+            </div>
+          );
+        }
+      }
       // Bullet list items
       else if (line.startsWith('- ') || line.startsWith('* ')) {
         elements.push(
@@ -748,6 +763,15 @@ export default function BookReaderPage() {
           <div className="max-w-3xl mx-auto">
             {/* Article Header */}
             <header className="mb-8 pb-6 border-b border-slate-200 space-y-3">
+              {currentBook.coverImage && safeChapterIndex === 0 && (
+                <div className="mb-6 rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-950 max-w-xl mx-auto">
+                  <img
+                    src={currentBook.coverImage}
+                    alt={currentBook.title}
+                    className="w-full h-auto object-cover max-h-[600px] mx-auto block"
+                  />
+                </div>
+              )}
               <div className="flex flex-wrap items-center gap-2.5">
                 <span className="px-3 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded-full border border-blue-200 uppercase tracking-wider">
                   {isPersonalNumerology ? 'Profile' : isDocument ? 'SRS Section' : 'Article'} {safeChapterIndex + 1} of {currentBook.chapters.length}
