@@ -4913,6 +4913,7 @@ Quotation Reference: **DTI/QTN/2026/001** • Date: **04 August 2026**
 "dna-astrology": {
     id: "dna-astrology",
     title: "DNA Astrology Master Guide",
+    coverImage: "/assets/dna-astrology-cover.png",
     documentName: "DNA Astrology Guide",
     teluguTitle: "డిఎన్ఏ ఆస్ట్రాలజీ సంపూర్ణ మార్గదర్శి (DNA Astrology Master Guide)",
     tagline: "Genetic Karma, Ancestral Patterns & Planetary Gene Codes",
@@ -4934,9 +4935,11 @@ Quotation Reference: **DTI/QTN/2026/001** • Date: **04 August 2026**
         readTime: "5 min read",
         summary: "డిఎన్ఏ ఆస్ట్రాలజీ సంపూర్ణ మార్గదర్శి గ్రంథ ముఖచిత్రం, పరిచయం మరియు విషయసూచిక.",
         content: `
-# డిఎన్ఏ ఆస్ట్రాలజీ సంపూర్ణ మార్గదర్శి (DNA Astrology Master Guide)
+# 🧬 DNA ASTROLOGY MASTER GUIDE
 
-### Genetic Karma, Ancestral Patterns & Planetary Gene Codes
+![DNA Astrology Cover](/assets/dna-astrology-cover.png)
+
+### DISCOVER YOUR COSMIC BLUEPRINT • THE SCIENCE OF STARS. THE CODE OF YOU.
 
 ---
 

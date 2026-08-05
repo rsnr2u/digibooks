@@ -823,75 +823,85 @@ export default function BookReaderPage() {
       {/* ───────────────────────────────────────────────────────────── */}
       <div className="print-all-pages hidden-on-screen">
         {printMode === 'all' && (
-          <div className="book-print-page relative bg-[#02296c] text-white px-12 py-10 flex flex-col justify-between overflow-hidden font-sans">
-            {/* Top & Bottom Accent Bars */}
-            <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400" />
-            <div className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400" />
+          currentBook.coverImage ? (
+            <div className="book-print-page relative bg-slate-950 text-white overflow-hidden flex flex-col justify-between items-center p-0 font-sans">
+              <img
+                src={currentBook.coverImage}
+                alt={currentBook.title}
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+          ) : (
+            <div className="book-print-page relative bg-[#02296c] text-white px-12 py-10 flex flex-col justify-between overflow-hidden font-sans">
+              {/* Top & Bottom Accent Bars */}
+              <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400" />
+              <div className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400" />
 
-            {/* Header Brand */}
-            <div className="relative z-10 flex items-center justify-between border-b border-blue-400/30 pb-6 pt-2">
-              <div className="flex items-center gap-3">
-                <div className="px-4 py-2 rounded-xl bg-white shadow-md flex items-center shrink-0 border border-slate-100">
-                  <img src="/assets/digitalks-logo.png" alt="DIGI TALKS INDIA" className="h-8 w-auto object-contain" />
+              {/* Header Brand */}
+              <div className="relative z-10 flex items-center justify-between border-b border-blue-400/30 pb-6 pt-2">
+                <div className="flex items-center gap-3">
+                  <div className="px-4 py-2 rounded-xl bg-white shadow-md flex items-center shrink-0 border border-slate-100">
+                    <img src="/assets/digitalks-logo.png" alt="DIGI TALKS INDIA" className="h-8 w-auto object-contain" />
+                  </div>
+                  <div>
+                    <span className="text-sm font-extrabold text-white block tracking-wide">DIGI TALKS INDIA</span>
+                    <span className="text-[10px] text-amber-300 font-mono tracking-widest uppercase block font-semibold">Corporate Knowledge Portal</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-sm font-extrabold text-white block tracking-wide">DIGI TALKS INDIA</span>
-                  <span className="text-[10px] text-amber-300 font-mono tracking-widest uppercase block font-semibold">Corporate Knowledge Portal</span>
+                <div className="text-right">
+                  <span className="px-3 py-1 bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold rounded-full font-mono tracking-wider">
+                    OFFICIAL SRS & QUOTATION
+                  </span>
                 </div>
               </div>
-              <div className="text-right">
-                <span className="px-3 py-1 bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold rounded-full font-mono tracking-wider">
-                  OFFICIAL SRS & QUOTATION
-                </span>
+
+              {/* Main Center Content Section */}
+              <div className="relative z-10 my-auto py-6 space-y-6 text-center max-w-2xl mx-auto">
+                <div className="inline-block">
+                  <span className="px-5 py-2 bg-amber-400 text-slate-950 text-xs font-black rounded-full tracking-widest uppercase shadow-md">
+                    {currentBook.badge || 'Software Requirements Specification (SRS)'}
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  <h1 className="text-3xl sm:text-4xl font-black text-white leading-tight tracking-tight">
+                    {currentBook.title}
+                  </h1>
+                  <div className="w-24 h-1 bg-amber-400 mx-auto rounded-full" />
+                  <p className="text-blue-100 text-sm leading-relaxed max-w-lg mx-auto font-medium">
+                    {currentBook.description}
+                  </p>
+                </div>
+
+                {/* 3-Column Info Cards */}
+                <div className="grid grid-cols-3 gap-4 pt-4 text-left">
+                  <div className="p-4 rounded-2xl bg-blue-900/50 border border-blue-400/30 backdrop-blur-sm">
+                    <span className="block text-[10px] text-amber-300 uppercase font-extrabold tracking-wider mb-1">Total Sections</span>
+                    <span className="font-black text-white text-xl block">{currentBook.chapters.length} Sections</span>
+                    <span className="text-[10px] text-blue-200 block mt-1 font-mono">Full Spec & Pricing</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-blue-900/50 border border-blue-400/30 backdrop-blur-sm">
+                    <span className="block text-[10px] text-amber-300 uppercase font-extrabold tracking-wider mb-1">Document Type</span>
+                    <span className="font-black text-white text-base block truncate">{currentBook.documentName || 'Web Based ERP SRS'}</span>
+                    <span className="text-[10px] text-blue-200 block mt-1 font-mono">Technical Architecture</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-blue-900/50 border border-blue-400/30 backdrop-blur-sm">
+                    <span className="block text-[10px] text-amber-300 uppercase font-extrabold tracking-wider mb-1">Prepared By</span>
+                    <span className="font-black text-white text-base block truncate">DIGI TALKS INDIA</span>
+                    <span className="text-[10px] text-blue-200 block mt-1 font-mono">Technology Division</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Footer Bar */}
+              <div className="relative z-10 border-t border-blue-400/30 pt-4 pb-2 flex items-center justify-between text-xs font-sans">
+                <span className="text-amber-300 font-extrabold tracking-wide">https://digitalks.in/</span>
+                <span className="text-blue-100 font-semibold">Single Complete PDF Document • All {currentBook.chapters.length} Sections</span>
               </div>
             </div>
-
-            {/* Main Center Content Section */}
-            <div className="relative z-10 my-auto py-6 space-y-6 text-center max-w-2xl mx-auto">
-              <div className="inline-block">
-                <span className="px-5 py-2 bg-amber-400 text-slate-950 text-xs font-black rounded-full tracking-widest uppercase shadow-md">
-                  {currentBook.badge || 'Software Requirements Specification (SRS)'}
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                <h1 className="text-3xl sm:text-4xl font-black text-white leading-tight tracking-tight">
-                  {currentBook.title}
-                </h1>
-                <div className="w-24 h-1 bg-amber-400 mx-auto rounded-full" />
-                <p className="text-blue-100 text-sm leading-relaxed max-w-lg mx-auto font-medium">
-                  {currentBook.description}
-                </p>
-              </div>
-
-              {/* 3-Column Info Cards */}
-              <div className="grid grid-cols-3 gap-4 pt-4 text-left">
-                <div className="p-4 rounded-2xl bg-blue-900/50 border border-blue-400/30 backdrop-blur-sm">
-                  <span className="block text-[10px] text-amber-300 uppercase font-extrabold tracking-wider mb-1">Total Sections</span>
-                  <span className="font-black text-white text-xl block">{currentBook.chapters.length} Sections</span>
-                  <span className="text-[10px] text-blue-200 block mt-1 font-mono">Full Spec & Pricing</span>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-blue-900/50 border border-blue-400/30 backdrop-blur-sm">
-                  <span className="block text-[10px] text-amber-300 uppercase font-extrabold tracking-wider mb-1">Document Type</span>
-                  <span className="font-black text-white text-base block truncate">{currentBook.documentName || 'Web Based ERP SRS'}</span>
-                  <span className="text-[10px] text-blue-200 block mt-1 font-mono">Technical Architecture</span>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-blue-900/50 border border-blue-400/30 backdrop-blur-sm">
-                  <span className="block text-[10px] text-amber-300 uppercase font-extrabold tracking-wider mb-1">Prepared By</span>
-                  <span className="font-black text-white text-base block truncate">DIGI TALKS INDIA</span>
-                  <span className="text-[10px] text-blue-200 block mt-1 font-mono">Technology Division</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Footer Bar */}
-            <div className="relative z-10 border-t border-blue-400/30 pt-4 pb-2 flex items-center justify-between text-xs font-sans">
-              <span className="text-amber-300 font-extrabold tracking-wide">https://digitalks.in/</span>
-              <span className="text-blue-100 font-semibold">Single Complete PDF Document • All {currentBook.chapters.length} Sections</span>
-            </div>
-          </div>
+          )
         )}
 
         {chaptersToPrint.map((ch, chIdx) => (

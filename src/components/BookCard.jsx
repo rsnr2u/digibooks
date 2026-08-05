@@ -40,23 +40,41 @@ export default function BookCard({ book, index }) {
       whileHover={{ y: -5 }}
       className="h-full"
     >
-      <div className="h-full flex flex-col justify-between bg-white rounded-2xl p-6 sm:p-7 relative border border-slate-200 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 group">
+      <div className="h-full flex flex-col justify-between bg-white rounded-2xl p-6 sm:p-7 relative border border-slate-200 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 group overflow-hidden">
         {/* Top Accent Strip */}
-        <div className={`absolute top-0 left-0 right-0 h-1.5 rounded-t-2xl ${style.topBorder}`} />
+        <div className={`absolute top-0 left-0 right-0 h-1.5 rounded-t-2xl z-10 ${style.topBorder}`} />
 
         <div>
-          {/* Header */}
-          <div className="flex items-center justify-between mb-5 pt-1">
-            <div className={`w-12 h-12 rounded-xl ${style.iconBg} flex items-center justify-center shadow-md group-hover:scale-105 transition transform`}>
-              <IconComponent className="w-6 h-6" />
+          {book.coverImage && (
+            <div className="-mx-6 -mt-6 sm:-mx-7 sm:-mt-7 mb-5 h-48 bg-slate-900 relative overflow-hidden">
+              <img
+                src={book.coverImage}
+                alt={book.title}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+              {book.badge && (
+                <span className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold border font-sans tracking-wide shadow-md z-10 ${style.badge}`}>
+                  {book.badge}
+                </span>
+              )}
             </div>
+          )}
 
-            {book.badge && (
-              <span className={`px-3 py-1 rounded-full text-xs font-bold border font-sans tracking-wide ${style.badge}`}>
-                {book.badge}
-              </span>
-            )}
-          </div>
+          {/* Header */}
+          {!book.coverImage && (
+            <div className="flex items-center justify-between mb-5 pt-1">
+              <div className={`w-12 h-12 rounded-xl ${style.iconBg} flex items-center justify-center shadow-md group-hover:scale-105 transition transform`}>
+                <IconComponent className="w-6 h-6" />
+              </div>
+
+              {book.badge && (
+                <span className={`px-3 py-1 rounded-full text-xs font-bold border font-sans tracking-wide ${style.badge}`}>
+                  {book.badge}
+                </span>
+              )}
+            </div>
+          )}
 
           {/* Titles */}
           <h3 className="text-xl font-extrabold text-slate-900 mb-1 group-hover:text-blue-600 transition">
