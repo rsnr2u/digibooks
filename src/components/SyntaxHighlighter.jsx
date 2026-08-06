@@ -9,6 +9,17 @@ export default function SyntaxHighlighter({ code, language = 'javascript' }) {
     Prism.highlightAll();
   }, [code, language]);
 
+  const lang = (language || 'javascript').toLowerCase();
+
+  // Plain text or diagrams use light background with high contrast readable text
+  if (lang === 'text' || lang === 'plain' || lang === 'diagram') {
+    return (
+      <div className="my-5 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 text-slate-900 font-telugu text-sm sm:text-base leading-relaxed shadow-md overflow-x-auto whitespace-pre font-semibold">
+        {code}
+      </div>
+    );
+  }
+
   return (
     <div className="relative group my-4 rounded-xl overflow-hidden border border-slate-800 shadow-lg">
       <div className="bg-slate-900 px-4 py-2 flex items-center justify-between border-b border-slate-800 text-xs text-slate-400 font-mono">
