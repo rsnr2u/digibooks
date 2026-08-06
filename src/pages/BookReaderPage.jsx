@@ -448,6 +448,12 @@ export default function BookReaderPage() {
             {parseInlineMarkdown(line.replace('### ', ''))}
           </h3>
         );
+      } else if (/^#{4,6}\s+/.test(line)) {
+        elements.push(
+          <h4 key={index} className="text-sm sm:text-base font-bold text-slate-800 mt-4 mb-2 font-telugu">
+            {parseInlineMarkdown(line.replace(/^#{4,6}\s+/, ''))}
+          </h4>
+        );
       }
       // Callout Box
       else if (line.startsWith('> [!NOTE]')) {
