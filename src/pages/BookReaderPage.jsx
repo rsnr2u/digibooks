@@ -361,40 +361,11 @@ export default function BookReaderPage() {
     let codeLang = 'javascript';
     let inTable = false;
     let tableRows = [];
+    let unorderedListItems = [];
+    let orderedListItems = [];
 
-    lines.forEach((line, index) => {
-      if (line.trim().startsWith('```')) {
-        if (inCodeBlock) {
-          inCodeBlock = false;
-          elements.push(
-            <SyntaxHighlighter
-              key={`code-${index}`}
-              code={codeBuffer.join('\n')}
-              language={codeLang || 'javascript'}
-            />
-          );
-          codeBuffer = [];
-        } else {
-          inCodeBlock = true;
-          codeLang = line.trim().replace('```', '') || 'javascript';
-        }
-        return;
-      }
-
-      if (inCodeBlock) {
-        codeBuffer.push(line);
-        return;
-      }
-
-      // Table parsing
-      if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
-        if (!inTable) {
-          inTable = true;
-          tableRows = [];
-        }
-        tableRows.push(line.trim());
-        return;
-      } else if (inTable) {
+    const flushTable = (idx) => {
+      if (inTable && tableRows.length > 0) {
         inTable = false;
         const headerRow = tableRows[0];
         const dataRows = tableRows.slice(2);
@@ -402,7 +373,7 @@ export default function BookReaderPage() {
         const headers = parseCells(headerRow);
 
         elements.push(
-          <div key={`table-${index}`} className="my-6 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
+          <div key={`table-${idx}`} className="my-6 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
             <table className="w-full text-left border-collapse text-xs sm:text-sm font-telugu">
               <thead>
                 <tr className="bg-slate-100 border-b border-slate-200 text-slate-900 font-extrabold">
@@ -432,6 +403,95 @@ export default function BookReaderPage() {
         );
         tableRows = [];
       }
+    };
+
+    const flushUnorderedList = (idx) => {
+      if (unorderedListItems.length > 0) {
+        elements.push(
+          <ul key={`ul-${idx}`} className="list-disc pl-6 space-y-1.5 my-3 font-telugu text-slate-800 leading-relaxed text-base">
+            {unorderedListItems.map((item, i) => (
+              <li key={i}>{parseInlineMarkdown(item.replace(/^[-*]\s+/, ''))}</li>
+            ))}
+          </ul>
+        );
+        unorderedListItems = [];
+      }
+    };
+
+    const flushOrderedList = (idx) => {
+      if (orderedListItems.length > 0) {
+        elements.push(
+          <ol key={`ol-${idx}`} className="list-decimal pl-6 space-y-1.5 my-3 font-telugu text-slate-800 leading-relaxed text-base font-medium">
+            {orderedListItems.map((item, i) => (
+              <li key={i}>{parseInlineMarkdown(item.replace(/^\d+\.\s+/, ''))}</li>
+            ))}
+          </ol>
+        );
+        orderedListItems = [];
+      }
+    };
+
+    const flushAll = (idx) => {
+      flushTable(idx);
+      flushUnorderedList(idx);
+      flushOrderedList(idx);
+    };
+
+    lines.forEach((line, index) => {
+      if (line.trim().startsWith('```')) {
+        flushAll(index);
+        if (inCodeBlock) {
+          inCodeBlock = false;
+          elements.push(
+            <SyntaxHighlighter
+              key={`code-${index}`}
+              code={codeBuffer.join('\n')}
+              language={codeLang || 'javascript'}
+            />
+          );
+          codeBuffer = [];
+        } else {
+          inCodeBlock = true;
+          codeLang = line.trim().replace('```', '') || 'javascript';
+        }
+        return;
+      }
+
+      if (inCodeBlock) {
+        codeBuffer.push(line);
+        return;
+      }
+
+      // Table parsing
+      if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+        flushUnorderedList(index);
+        flushOrderedList(index);
+        if (!inTable) {
+          inTable = true;
+          tableRows = [];
+        }
+        tableRows.push(line.trim());
+        return;
+      }
+
+      // Bullet list items
+      if (line.startsWith('- ') || line.startsWith('* ')) {
+        flushTable(index);
+        flushOrderedList(index);
+        unorderedListItems.push(line);
+        return;
+      }
+
+      // Numbered list items
+      if (/^\d+\.\s+/.test(line)) {
+        flushTable(index);
+        flushUnorderedList(index);
+        orderedListItems.push(line);
+        return;
+      }
+
+      // Flush any active table or list before non-list/non-table elements
+      flushAll(index);
 
       // Skip top-level '# ' heading to prevent duplicate title
       if (line.startsWith('# ')) {
@@ -494,22 +554,6 @@ export default function BookReaderPage() {
           );
         }
       }
-      // Bullet list items
-      else if (line.startsWith('- ') || line.startsWith('* ')) {
-        elements.push(
-          <li key={index} className="text-slate-800 ml-4 mb-2 font-telugu list-disc leading-relaxed text-base">
-            {parseInlineMarkdown(line.replace(/^[-*]\s+/, ''))}
-          </li>
-        );
-      }
-      // Numbered list items
-      else if (/^\d+\.\s+/.test(line)) {
-        elements.push(
-          <li key={index} className="text-slate-800 ml-4 mb-2 font-telugu list-decimal leading-relaxed text-base font-medium">
-            {parseInlineMarkdown(line.replace(/^\d+\.\s+/, ''))}
-          </li>
-        );
-      }
       // Regular Article Paragraphs
       else if (line.trim()) {
         elements.push(
@@ -519,6 +563,8 @@ export default function BookReaderPage() {
         );
       }
     });
+
+    flushAll(lines.length);
 
     return elements;
   };
