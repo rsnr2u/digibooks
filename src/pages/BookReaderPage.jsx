@@ -444,9 +444,8 @@ export default function BookReaderPage() {
         );
       } else if (line.startsWith('### ')) {
         elements.push(
-          <h3 key={index} className="text-base sm:text-lg font-bold text-slate-900 mt-5 mb-2.5 font-telugu flex items-center gap-2">
-            <span className="w-1.5 h-5 bg-blue-600 rounded-full inline-block"></span>
-            <span>{parseInlineMarkdown(line.replace('### ', ''))}</span>
+          <h3 key={index} className="text-base sm:text-lg font-bold text-slate-900 mt-5 mb-2.5 font-telugu">
+            {parseInlineMarkdown(line.replace('### ', ''))}
           </h3>
         );
       }
