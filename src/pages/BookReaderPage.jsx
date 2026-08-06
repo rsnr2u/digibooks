@@ -363,6 +363,7 @@ export default function BookReaderPage() {
     let tableRows = [];
     let unorderedListItems = [];
     let orderedListItems = [];
+    let blockquoteLines = [];
 
     const flushTable = (idx) => {
       if (inTable && tableRows.length > 0) {
@@ -431,10 +432,24 @@ export default function BookReaderPage() {
       }
     };
 
+    const flushBlockquote = (idx) => {
+      if (blockquoteLines.length > 0) {
+        elements.push(
+          <blockquote key={`bq-${idx}`} className="p-4 sm:p-5 my-5 rounded-2xl bg-gradient-to-r from-slate-50 to-blue-50/40 border-l-4 border-slate-700 font-telugu text-base leading-relaxed text-slate-800 shadow-sm space-y-2">
+            {blockquoteLines.map((bline, bi) => (
+              <p key={bi}>{parseInlineMarkdown(bline.replace(/^>\s*/, ''))}</p>
+            ))}
+          </blockquote>
+        );
+        blockquoteLines = [];
+      }
+    };
+
     const flushAll = (idx) => {
       flushTable(idx);
       flushUnorderedList(idx);
       flushOrderedList(idx);
+      flushBlockquote(idx);
     };
 
     lines.forEach((line, index) => {
@@ -528,12 +543,12 @@ export default function BookReaderPage() {
             <strong className="block mb-1 text-amber-800 font-bold">ముఖ్యమైన సూచన (Key Takeaway):</strong>
           </div>
         );
-      } else if (line.startsWith('> ')) {
-        elements.push(
-          <blockquote key={index} className="p-4 my-4 rounded-xl bg-gradient-to-r from-slate-50 to-blue-50/40 border-l-4 border-slate-700 italic text-slate-800 font-telugu text-base leading-relaxed shadow-sm">
-            {parseInlineMarkdown(line.replace('> ', ''))}
-          </blockquote>
-        );
+      } else if (line.startsWith('> ') || line.trim() === '>') {
+        flushTable(index);
+        flushUnorderedList(index);
+        flushOrderedList(index);
+        blockquoteLines.push(line);
+        return;
       }
       // Horizontal Rule
       else if (line.trim() === '---') {
