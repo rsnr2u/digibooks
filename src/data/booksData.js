@@ -4912,12 +4912,11 @@ Quotation Reference: **DTI/QTN/2026/001** • Date: **04 August 2026**
   },
   "dna-astrology": {
     id: "dna-astrology",
-    title: "DNA Astrology Master Guide",
-    coverImage: "/assets/dna-astrology-cover.png",
+    title: "DNA ASTROLOGY",
     documentName: "DNA Astrology Guide",
-    teluguTitle: "డిఎన్ఏ ఆస్ట్రాలజీ సంపూర్ణ మార్గదర్శి (DNA Astrology Lessons)",
-    tagline: "Genetic Karma, Ancestral Patterns & Planetary Gene Codes",
-    description: "డిఎన్ఏ ఆస్ట్రాలజీ మరియు సాంప్రదాయ జ్యోతిష్యానికి మధ్య ఉన్న ప్రాథమిక వ్యత్యాసాలు, కర్మ సిద్ధాంతం మరియు 4 డైమెన్షన్ల విశ్లేషణా పాఠాలు.",
+    teluguTitle: "డిఎన్ఏ ఆస్ట్రాలజీ పాఠాలు",
+    tagline: "The Science of Stars. The Code of You.",
+    description: "మీ కర్మ ఏంటో మీకు తెలియనంత వరకు మీ జీవిత గమ్యం స్పష్టపడదు. పరిహారాల కంటే కర్మను గుర్తించి, ప్రవర్తనలోనూ, నిర్ణయాల్లోనూ మార్పు చేసుకోవడమే DNA ఆస్ట్రాలజీ యొక్క అసలైన లక్ష్యం.",
     iconName: "Dna",
     badge: "New Book",
     category: "Karmic & Genetic Astrology",
@@ -4931,23 +4930,21 @@ Quotation Reference: **DTI/QTN/2026/001** • Date: **04 August 2026**
       {
         id: "chapter-0-cover",
         chapterNumber: 0,
-        title: "గ్రంథ ముఖచిత్రము (Book Cover Page & Overview)",
+        title: "DNA ASTROLOGY (పరిచయం & ముఖచిత్రము)",
         readTime: "3 min read",
-        summary: "డిఎన్ఏ ఆస్ట్రాలజీ సంపూర్ణ మార్గదర్శి గ్రంథ ముఖచిత్రం మరియు పరిచయం.",
+        summary: "DNA ASTROLOGY కర్మ సిద్ధాంత గ్రంథ పరిచయం.",
         content: `
-# 🧬 DNA ASTROLOGY MASTER GUIDE
+# DNA ASTROLOGY
 
-![DNA Astrology Cover](/assets/dna-astrology-cover.png)
-
-### DISCOVER YOUR COSMIC BLUEPRINT • THE SCIENCE OF STARS. THE CODE OF YOU.
+### మీ కర్మ ఏంటో మీకు తెలియనంత వరకు మీ జీవిత గమ్యం స్పష్టపడదు. పరిహారాల కంటే కర్మను గుర్తించి, ప్రవర్తనలోనూ, నిర్ణయాల్లోనూ మార్పు చేసుకోవడమే DNA ఆస్ట్రాలజీ యొక్క అసలైన లక్ష్యం.
 
 ---
 
 ### గ్రంథ పరిచయం (Executive Book Overview)
 
-**డిఎన్ఏ ఆస్ట్రాలజీ (DNA Astrology)** అనేది ఆధునిక విజ్ఞాన శాస్త్రం (Genetics) మరియు ప్రాచీన వేద జ్యోతిష్యాల కలయికతో రూపొందించబడిన విశిష్టమైన కర్మ విశ్లేషణా పద్ధతి.
-
-ఈ గ్రంథంలో **జ్యోతిష్యంలోని 4 డైమెన్షన్లు**, **సాంప్రదాయ జ్యోతిష్య పరిమితులు**, **కర్మ డీకోడింగ్** మరియు **ఆచరణాత్మక కర్మ సవరణ పాఠ్యాంశాలు** అధ్యాయాల వారీగా అందించబడతాయి.
+- **గ్రంథ నామము:** DNA ASTROLOGY
+- **ప్రధాన ధ్యేయం:** కర్మ డీకోడింగ్, 4 డైమెన్షన్లు మరియు ఆచరణాత్మక కర్మ సవరణ పాఠ్యాంశాలు
+- **ప్రచురణ:** DIGI TALKS INDIA
 `
       },
       {
